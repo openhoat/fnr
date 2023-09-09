@@ -1,0 +1,28 @@
+paths:
+  health:
+    get:
+      tags:
+        - Health
+      summary: Healthcheck
+      description: |
+        Healthcheck used to check if the service is still alive or down, usually consumed by infrastructure probes.
+      responses:
+        '200':
+          description: Health.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Health'
+      security: []
+components:
+  schemas:
+    Health:
+      type: object
+      required:
+        - web
+      properties:
+        web:
+          type: string
+          enum:
+            - HEALTHY
+          description: Health.

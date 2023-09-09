@@ -1,0 +1,6 @@
+#!/bin/env node
+
+const { resolve } = require('path')
+const { version } = require(resolve(__dirname, '..', '..', 'package.json'))
+
+console.log(version)

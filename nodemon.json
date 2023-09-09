@@ -1,0 +1,10 @@
+{
+  "ext": "js,jsx,json,html,scss,svg",
+  "watch": [
+    "src",
+    ".env",
+    "package.json",
+    "nodemon.json",
+    "vite.config.js"
+  ]
+}

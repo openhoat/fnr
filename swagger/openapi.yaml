@@ -1,0 +1,42 @@
+openapi: '3.0.2'
+info:
+  title: Node React TypeScript template
+  version: '0.0.1'
+  description: Node React TypeScript API Documentation.
+paths:
+  /health:
+    $ref: 'health.yaml#/paths/health'
+  /auth/token:
+    $ref: 'auth/token.yaml#/paths/token'
+  /api/v1/config:
+    $ref: 'api/config.yaml#/paths/config'
+components:
+  schemas:
+    Error:
+      type: object
+      required:
+        - error
+        - message
+        - statusCode
+      properties:
+        error:
+          type: string
+          description: Error type.
+        message:
+          type: string
+          description: Error message.
+        statusCode:
+          type: number
+          description: Status code.
+  responses:
+    UnauthorizedError:
+      description: Authentication information is missing or invalid.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT

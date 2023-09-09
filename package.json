@@ -1,0 +1,717 @@
+{
+  "name": "node-react-ts-demo",
+  "version": "1.0.0",
+  "description": "Node React TypeScript template",
+  "main": "src/back/main/index.ts",
+  "scripts": {
+    "build": "wireit",
+    "build:apidoc": "wireit",
+    "build:back": "wireit",
+    "build:back:main": "wireit",
+    "build:back:test": "wireit",
+    "build:back:check-typedefs": "wireit",
+    "build:back:check-typedefs:main": "wireit",
+    "build:back:check-typedefs:test": "wireit",
+    "build:back:transpile": "wireit",
+    "build:back:transpile:main": "wireit",
+    "build:back:transpile:test": "wireit",
+    "build:front": "wireit",
+    "build:front:check-typedefs": "wireit",
+    "clean": "wireit",
+    "clean:npm": "wireit",
+    "clean:npm:cache": "wireit",
+    "clean:npm:cache:npx": "wireit",
+    "clean:npm:deps": "wireit",
+    "clean:wireit": "wireit",
+    "cover": "wireit",
+    "cover:open": "wireit",
+    "cover:back": "wireit",
+    "cover:back:open": "wireit",
+    "cover:back:e2e": "wireit",
+    "cover:back:e2e:open": "wireit",
+    "cover:back:integration": "wireit",
+    "cover:back:integration:open": "wireit",
+    "cover:back:unit": "wireit",
+    "cover:back:unit:open": "wireit",
+    "deps:check": "wireit",
+    "deps:version:check": "wireit",
+    "deps:version:update": "wireit",
+    "dev": "npm run start:development --watch",
+    "dev:front": "ladle dev",
+    "install:husky": "husky install",
+    "lint": "wireit",
+    "lint:src": "wireit",
+    "lint:back": "wireit",
+    "lint:back:main": "wireit",
+    "lint:back:test": "wireit",
+    "lint:front": "wireit",
+    "lint:front:main": "wireit",
+    "lint:front:test": "wireit",
+    "npip:install": "wireit",
+    "prepare": "npm run install:husky",
+    "show-env-var-specs": "wireit",
+    "sonar:scan": "wireit",
+    "sonar:scan:only": "wireit",
+    "start": "per-env",
+    "start:development": "wireit",
+    "start:production": "wireit",
+    "test": "wireit",
+    "test:open": "wireit",
+    "test:back": "wireit",
+    "test:back:open": "wireit",
+    "test:back:e2e": "wireit",
+    "test:back:e2e:open": "wireit",
+    "test:back:integration": "wireit",
+    "test:back:integration:open": "wireit",
+    "test:back:unit": "wireit",
+    "test:back:unit:open": "wireit",
+    "test:front": "wireit",
+    "test:front:e2e": "wireit",
+    "test:front:e2e:codegen": "wireit",
+    "test:front:e2e:ui": "wireit",
+    "test:front:e2e:open": "wireit",
+    "validate": "wireit",
+    "validate:docker": "bin/test-docker-container.sh beauty-plan-web",
+    "with:depcheck": "npx -y depcheck@1.4.3",
+    "with:npm-check-updates": "npx -y npm-check-updates@16.7.12",
+    "with:opener": "npx -y opener@1.5.2",
+    "with:redoc-cli": "npx -y @redocly/cli@1.0.0-beta.124",
+    "with:release-it": "npx -y release-it@15.8.0"
+  },
+  "author": "Olivier Penhoat <openhoat@gmail.com> (http://headwood.net/)",
+  "license": "ISC",
+  "wireit": {
+    "build": {
+      "dependencies": [
+        "build:back",
+        "build:front",
+        "build:apidoc"
+      ]
+    },
+    "build:apidoc": {
+      "command": "npm run with:redoc-cli build-docs swagger/openapi.yaml -- -o dist/apidoc/index.html",
+      "files": [
+        "swagger/**/*.yaml"
+      ],
+      "output": [
+        "dist/apidoc/**"
+      ]
+    },
+    "build:back": {
+      "dependencies": [
+        "build:back:check-typedefs",
+        "build:back:transpile"
+      ]
+    },
+    "build:back:main": {
+      "dependencies": [
+        "build:back:check-typedefs:main",
+        "build:back:transpile:main"
+      ]
+    },
+    "build:back:check-typedefs": {
+      "command": "tsc --noemit --preserveWatchOutput -p src/back/tsconfig.json",
+      "files": [
+        "src/back/**/*.ts",
+        "src/**/tsconfig.json"
+      ],
+      "output": []
+    },
+    "build:back:check-typedefs:main": {
+      "command": "tsc --noemit --preserveWatchOutput -p src/back/main/tsconfig.json",
+      "files": [
+        "src/back/main/**/*.ts",
+        "src/**/tsconfig.json"
+      ],
+      "output": []
+    },
+    "build:back:check-typedefs:test": {
+      "command": "tsc --noemit --preserveWatchOutput -p src/back/test/tsconfig.json",
+      "files": [
+        "src/back/**/*.ts",
+        "src/**/tsconfig.json"
+      ],
+      "output": []
+    },
+    "build:back:test": {
+      "dependencies": [
+        "build:back:check-typedefs:test",
+        "build:back:transpile:test"
+      ]
+    },
+    "build:back:transpile": {
+      "command": "swc -s -d lib src/back",
+      "files": [
+        "src/back/**/*.ts",
+        "src/**/tsconfig.json"
+      ],
+      "output": [
+        "lib/back/**"
+      ]
+    },
+    "build:back:transpile:main": {
+      "command": "swc -s -d lib src/back/main",
+      "files": [
+        "src/back/main/**/*.ts",
+        "src/**/tsconfig.json"
+      ],
+      "output": [
+        "lib/back/main/**"
+      ]
+    },
+    "build:back:transpile:test": {
+      "command": "swc -s -d lib src/back/test",
+      "files": [
+        "src/back/test/**/*.ts",
+        "src/**/tsconfig.json"
+      ],
+      "output": [
+        "lib/back/test/**"
+      ]
+    },
+    "build:front": {
+      "command": "vite build --emptyOutDir",
+      "dependencies": [
+        "build:front:check-typedefs"
+      ],
+      "env": {
+        "NODE_ENV": "production"
+      },
+      "files": [
+        "assets/**",
+        "src/front/**/*.ts[x]",
+        "src/**/tsconfig.json",
+        "vite.config.js"
+      ],
+      "output": [
+        "dist/client/**"
+      ]
+    },
+    "build:front:check-typedefs": {
+      "command": "tsc --noemit --preserveWatchOutput -p src/front/tsconfig.json",
+      "files": [
+        "src/front/**/*.ts[x]",
+        "src/**/tsconfig.json"
+      ],
+      "output": []
+    },
+    "clean": {
+      "command": "rimraf dist lib"
+    },
+    "clean:npm": {
+      "dependencies": [
+        "clean:npm:deps",
+        "clean:npm:cache"
+      ]
+    },
+    "clean:npm:cache": {
+      "command": "npm cache clean --force",
+      "dependencies": [
+        "clean:npm:cache:npx"
+      ]
+    },
+    "clean:npm:cache:npx": {
+      "command": "npx -y clear-npx-cache"
+    },
+    "clean:npm:deps": {
+      "command": "rimraf node_modules python_modules package-lock.json"
+    },
+    "clean:wireit": {
+      "command": "rimraf .wireit"
+    },
+    "cover": {
+      "dependencies": [
+        "cover:back"
+      ]
+    },
+    "cover:open": {
+      "dependencies": [
+        "cover:back:open"
+      ]
+    },
+    "cover:back": {
+      "command": "jest --coverage --runInBand -c src/back/test/jest.config.ts",
+      "files": [
+        "src/back/main/**",
+        "src/back/test/**"
+      ],
+      "output": [
+        "dist/coverage/back/all/**",
+        "dist/test/back/**"
+      ],
+      "dependencies": [
+        "build:apidoc"
+      ],
+      "env": {
+        "CI": {
+          "external": true
+        }
+      }
+    },
+    "cover:back:open": {
+      "command": "npm run with:opener dist/coverage/back/all/index.html"
+    },
+    "cover:back:e2e": {
+      "command": "jest --coverage --runInBand -c src/back/test/e2e/jest.config.ts",
+      "files": [
+        "src/back/main/**",
+        "src/back/test/e2e/**",
+        "src/back/test/*",
+        "dist/front"
+      ],
+      "output": [
+        "dist/coverage/back/e2e/**",
+        "dist/test/back/e2e-tests-report.html"
+      ],
+      "dependencies": [
+        "build:apidoc",
+        "build:front"
+      ],
+      "env": {
+        "CI": {
+          "external": true
+        }
+      }
+    },
+    "cover:back:e2e:open": {
+      "command": "npm run with:opener dist/coverage/back/e2e/index.html"
+    },
+    "cover:back:integration": {
+      "command": "jest --coverage --runInBand -c src/back/test/integration/jest.config.ts",
+      "files": [
+        "src/back/test/integration/**",
+        "src/back/test/*"
+      ],
+      "output": [
+        "dist/coverage/back/integration/**",
+        "dist/test/back/integration-tests-report.html"
+      ],
+      "dependencies": [
+        "build:apidoc"
+      ],
+      "env": {
+        "CI": {
+          "external": true
+        }
+      }
+    },
+    "cover:back:integration:open": {
+      "command": "npm run with:opener dist/coverage/back/integration/index.html"
+    },
+    "cover:back:unit": {
+      "command": "jest --coverage -c src/back/test/unit/jest.config.ts",
+      "files": [
+        "src/back/test/unit/**",
+        "src/back/test/*"
+      ],
+      "output": [
+        "dist/coverage/back/unit/**",
+        "dist/test/back/unit-tests-report.html"
+      ],
+      "env": {
+        "CI": {
+          "external": true
+        }
+      }
+    },
+    "cover:back:unit:open": {
+      "command": "npm run with:opener dist/coverage/back/unit/index.html"
+    },
+    "deps:check": {
+      "command": "npm run with:depcheck",
+      "files": [
+        "src/**/*.[jt]s",
+        "package.json",
+        ".depcheckrc"
+      ],
+      "output": []
+    },
+    "deps:version:check": {
+      "command": "npm run with:npm-check-updates",
+      "files": [
+        "package.json"
+      ]
+    },
+    "deps:version:update": {
+      "command": "npm run with:npm-check-updates -- -u",
+      "files": [
+        "package.json",
+        "package-lock.json"
+      ],
+      "output": []
+    },
+    "lint": {
+      "dependencies": [
+        "lint:back",
+        "lint:front"
+      ]
+    },
+    "lint:back": {
+      "dependencies": [
+        "lint:back:main",
+        "lint:back:test"
+      ]
+    },
+    "lint:back:main": {
+      "command": "eslint src/back/main",
+      "files": [
+        "src/back/main/**"
+      ],
+      "output": []
+    },
+    "lint:back:test": {
+      "command": "eslint src/back/test",
+      "files": [
+        "src/back/test/**/*.ts",
+        ".eslintrc"
+      ],
+      "output": []
+    },
+    "lint:front": {
+      "dependencies": [
+        "lint:front:main",
+        "lint:front:test"
+      ]
+    },
+    "lint:front:main": {
+      "command": "eslint src/front/main",
+      "files": [
+        "src/front/main/**/*.ts[x]"
+      ],
+      "output": []
+    },
+    "lint:front:test": {
+      "command": "eslint src/front/test",
+      "files": [
+        "src/front/test/**/*.spec.ts"
+      ],
+      "output": []
+    },
+    "prettier": {
+      "command": "prettier --check .",
+      "output": []
+    },
+    "sonar:scan": {
+      "command": "dotenv -c -- docker-compose -f sonar/docker-compose.yaml up --force-recreate --no-deps sonar-scanner",
+      "dependencies": [
+        "cover"
+      ]
+    },
+    "sonar:scan:only": {
+      "command": "dotenv -c -- docker-compose -f sonar/docker-compose.yaml up --force-recreate --no-deps sonar-scanner"
+    },
+    "start:development": {
+      "command": "node -r @swc-node/register src/back/main",
+      "env": {
+        "NODE_ENV": "development"
+      },
+      "service": true,
+      "files": [
+        "src/back/main/**/*.ts",
+        "swagger/**/*.yaml",
+        ".env",
+        ".env.local",
+        ".envrc",
+        "package.json",
+        "package-lock.json"
+      ],
+      "dependencies": [
+        {
+          "script": "build:back:check-typedefs",
+          "cascade": false
+        }
+      ]
+    },
+    "start:production": {
+      "command": "node --enable-source-maps lib/back/main",
+      "env": {
+        "NODE_ENV": "production"
+      },
+      "service": true,
+      "files": [
+        "lib/back/main/**/*.js",
+        "swagger/**/*.yaml",
+        ".env",
+        ".env.local",
+        ".envrc",
+        "package.json",
+        "package-lock.json"
+      ]
+    },
+    "test": {
+      "dependencies": [
+        "test:back"
+      ]
+    },
+    "test:open": {
+      "dependencies": [
+        "test:back:open"
+      ]
+    },
+    "test:back": {
+      "command": "jest --runInBand -c src/back/test/jest.config.ts",
+      "files": [
+        "src/back/main/**",
+        "src/back/test/**"
+      ],
+      "output": [
+        "dist/test/back/**"
+      ],
+      "dependencies": [
+        "build:apidoc"
+      ],
+      "env": {
+        "CI": {
+          "external": true
+        }
+      }
+    },
+    "test:back:open": {
+      "command": "npm run with:opener dist/test/back/all-tests-report.html"
+    },
+    "test:back:e2e": {
+      "command": "jest --runInBand -c src/back/test/e2e/jest.config.ts",
+      "files": [
+        "src/back/main/**",
+        "src/back/test/e2e/**",
+        "src/back/test/*",
+        "dist/front"
+      ],
+      "output": [
+        "dist/test/back/e2e-tests-report.html"
+      ],
+      "dependencies": [
+        "build:apidoc",
+        "build:front"
+      ],
+      "env": {
+        "CI": {
+          "external": true
+        }
+      }
+    },
+    "test:back:e2e:open": {
+      "command": "npm run with:opener dist/test/back/e2e-tests-report.html"
+    },
+    "test:back:integration": {
+      "command": "jest --runInBand -c src/back/test/integration/jest.config.ts",
+      "files": [
+        "src/back/test/integration/**",
+        "src/back/test/*"
+      ],
+      "output": [
+        "dist/test/back/integration-tests-report.html"
+      ],
+      "dependencies": [
+        "build:apidoc"
+      ],
+      "env": {
+        "CI": {
+          "external": true
+        }
+      }
+    },
+    "test:back:integration:open": {
+      "command": "npm run with:opener dist/test/back/integration-tests-report.html"
+    },
+    "test:back:unit": {
+      "command": "jest -c src/back/test/unit/jest.config.ts",
+      "files": [
+        "src/back/test/unit/**",
+        "src/back/test/*"
+      ],
+      "output": [
+        "dist/test/back/unit-tests-report.html"
+      ],
+      "env": {
+        "CI": {
+          "external": true
+        }
+      }
+    },
+    "test:back:unit:open": {
+      "command": "npm run with:opener dist/test/back/unit-tests-report.html"
+    },
+    "test:front": {
+      "dependencies": [
+        "test:front:e2e"
+      ]
+    },
+    "test:front:e2e": {
+      "command": "playwright test",
+      "dependencies": [
+        "build:back",
+        "build:front"
+      ],
+      "files": [
+        "src/**",
+        "playwright*.ts"
+      ],
+      "output": [],
+      "env": {
+        "CI": {
+          "external": true
+        }
+      }
+    },
+    "test:front:e2e:codegen": {
+      "command": "playwright codegen",
+      "dependencies": [
+        "start"
+      ]
+    },
+    "test:front:e2e:ui": {
+      "command": "playwright test --ui",
+      "dependencies": [
+        "build:back",
+        "build:front"
+      ],
+      "files": [
+        "src/**",
+        "playwright*.ts"
+      ],
+      "env": {
+        "CI": {
+          "external": true
+        }
+      }
+    },
+    "test:front:e2e:open": {
+      "command": "npm run with:opener dist/test/front/e2e/index.html"
+    },
+    "validate": {
+      "dependencies": [
+        "deps:check",
+        "build",
+        "lint",
+        "cover"
+      ]
+    },
+    "with:depcheck": {
+      "command": "npx -y depcheck@1.4.3"
+    },
+    "with:npm-check-updates": {
+      "command": "npx -y npm-check-updates@16.6.2",
+      "files": [
+        "package.json"
+      ],
+      "output": [
+        "node_modules/.bin/npm-check-update"
+      ]
+    },
+    "with:opener": {
+      "command": "npx -y opener@1.5.2",
+      "files": [
+        "package.json"
+      ],
+      "output": [
+        "node_modules/.bin/opener"
+      ]
+    },
+    "with:redoc-cli": {
+      "command": "npx -y @redocly/cli@1.0.0-beta.124",
+      "files": [
+        "package.json"
+      ],
+      "output": [
+        "node_modules/.bin/redoc-cli"
+      ]
+    },
+    "with:release-it": {
+      "command": "npx -y release-it@15.6.0",
+      "files": [
+        "package.json"
+      ],
+      "output": [
+        "node_modules/.bin/release-it"
+      ]
+    }
+  },
+  "engines": {
+    "node": "^18.17.0",
+    "npm": "^9.8.0"
+  },
+  "volta": {
+    "node": "18.17.1",
+    "npm": "9.8.1"
+  },
+  "dependencies": {
+    "@fastify/accepts": "4.2.0",
+    "@fastify/basic-auth": "5.0.0",
+    "@fastify/cookie": "9.0.4",
+    "@fastify/cors": "8.3.0",
+    "@fastify/formbody": "7.4.0",
+    "@fastify/jwt": "7.2.1",
+    "@fastify/static": "6.10.2",
+    "@fastify/swagger": "8.10.0",
+    "@fastify/swagger-ui": "1.9.3",
+    "@fastify/vite": "4.0.0",
+    "@hapi/boom": "10.0.1",
+    "change-case": "4.1.2",
+    "common-tags": "1.8.2",
+    "dotenv": "16.3.1",
+    "fastify": "4.21.0",
+    "fastify-plugin": "4.5.1",
+    "find-root": "1.1.0",
+    "http-status-codes": "2.2.0",
+    "jwt-decode": "3.1.2",
+    "per-env": "1.0.2",
+    "pino": "8.15.0",
+    "pino-pretty": "10.2.0",
+    "yup": "1.2.0"
+  },
+  "devDependencies": {
+    "@babel/core": "7.22.10",
+    "@babel/eslint-parser": "7.22.10",
+    "@babel/preset-react": "7.22.5",
+    "@jest/types": "29.6.3",
+    "@swc-jotai/react-refresh": "0.1.0",
+    "@swc-node/register": "1.6.6",
+    "@swc/cli": "0.1.62",
+    "@swc/core": "1.3.77",
+    "@swc/jest": "0.2.29",
+    "@types/common-tags": "1.8.2",
+    "@types/find-root": "1.1.2",
+    "@types/jest": "29.5.4",
+    "@types/node": "20.5.9",
+    "@types/react": "18.2.21",
+    "@types/react-dom": "18.2.7",
+    "@typescript-eslint/eslint-plugin": "6.6.0",
+    "@typescript-eslint/parser": "6.6.0",
+    "@vitejs/plugin-react": "4.0.4",
+    "@vitejs/plugin-react-swc": "3.3.2",
+    "commitlint": "17.7.1",
+    "cross-env": "7.0.3",
+    "dotenv-cli": "7.3.0",
+    "eslint": "8.48.0",
+    "eslint-config-prettier": "9.0.0",
+    "eslint-plugin-jsx-a11y": "6.7.1",
+    "eslint-plugin-playwright": "0.16.0",
+    "eslint-plugin-prettier": "5.0.0",
+    "eslint-plugin-react": "7.33.2",
+    "eslint-plugin-react-hooks": "4.6.0",
+    "eslint-plugin-simple-import-sort": "10.0.0",
+    "eslint-plugin-sonarjs": "0.21.0",
+    "eslint-plugin-sort-keys-shorthand": "2.2.0",
+    "husky": "8.0.3",
+    "jest": "29.6.4",
+    "jest-html-reporter": "3.10.2",
+    "jest-when": "3.6.0",
+    "jotai": "2.4.0",
+    "jsdoc": "4.0.2",
+    "jsdoc-tsimport-plugin": "1.0.5",
+    "pactum": "3.5.1",
+    "pactum-matchers": "1.1.6",
+    "prettier": "3.0.1",
+    "react": "18.2.0",
+    "react-dom": "18.2.0",
+    "react-refresh": "0.14.0",
+    "react-router-dom": "6.15.0",
+    "rimraf": "5.0.1",
+    "sass": "1.65.1",
+    "ts-node": "10.9.1",
+    "typescript": "5.2.2",
+    "vite": "4.4.9",
+    "wireit": "0.13.0"
+  }
+}

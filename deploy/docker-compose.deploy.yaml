@@ -1,0 +1,31 @@
+version: '3.8'
+
+services:
+  app:
+    image: "${CONTAINER_REGISTRY_PREFIX}${APP_IMAGE_NAME}:${VERSION:-latest}"
+    container_name: "${APP_IMAGE_NAME}"
+    expose:
+      - '${PORT}'
+    healthcheck:
+      test: curl -f -s -o /dev/null http://localhost:${PORT}/health && echo OK
+      retries: 3
+      timeout: 3s
+    environment:
+      - AUTH_PASSWORD
+      - AUTH_USERNAME
+      - COOKIE_SECRET
+      - CORS_ORIGIN
+      - HOST
+      - JWT_SECRET
+      - LOG_LEVEL
+      - NODE_ENV=production
+      - NODE_TLS_REJECT_UNAUTHORIZED
+      - PORT
+    labels:
+      - "com.centurylinklabs.watchtower.enable=true"
+      - "traefik.enable=true"
+      - "traefik.http.routers.${APP_IMAGE_NAME}.rule=Host(`${TRAEFIK_APP_VIRTUAL_HOST:-${APP_IMAGE_NAME}.localdomain}`)"
+      - "traefik.http.routers.${APP_IMAGE_NAME}.entrypoints=${TRAEFIK_APP_ENTRYPOINTS:-web}"
+      - "traefik.http.services.${APP_IMAGE_NAME}.loadbalancer.server.port=${PORT}"
+    network_mode: bridge
+    restart: unless-stopped
