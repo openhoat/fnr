@@ -1,0 +1,111 @@
+import type {
+  FastifyInstance,
+  FastifyListenOptions,
+  FastifyServerOptions,
+} from 'fastify'
+import Fastify from 'fastify'
+import pino from 'pino'
+
+import type { Config } from './config'
+import config from './config'
+import { registerFeatures } from './features'
+import { registerRoutes } from './routes/router'
+import { errorHandler } from './util/error.handler'
+import { isKey } from './util/helper'
+import { notFoundHandler } from './util/not-found.handler'
+
+declare module 'fastify' {
+  export interface FastifyInstance {
+    config: Config
+    vite: { ready: () => Promise<void> }
+  }
+  export interface FastifyReply {
+    html: () => void
+  }
+}
+
+const newLogger = () =>
+  pino({
+    level: config.logLevel,
+    transport: {
+      target: 'pino-pretty',
+    },
+  })
+
+const init: () => FastifyInstance = () => {
+  const fastifyOptions: FastifyServerOptions = {
+    disableRequestLogging: true,
+    exposeHeadRoutes: false,
+    logger: newLogger(),
+  }
+  return Fastify(fastifyOptions)
+}
+
+const configure = async (fastify: FastifyInstance) => {
+  const { log } = fastify
+  fastify.config = config
+  log.debug(
+    `Loaded config:\n\t${Object.keys(config)
+      .sort()
+      .reduce(
+        (lines, key: string) =>
+          isKey(config, key)
+            ? [...lines, [key, config[key]].join(': ')]
+            : lines,
+        [] as string[],
+      )
+      .join('\n\t')}`,
+  )
+  fastify.addHook('onRoute', (route) => {
+    log.debug(`Registered route: ${route.method} ${route.url}`)
+  })
+  fastify.setNotFoundHandler(notFoundHandler)
+  fastify.setErrorHandler(errorHandler)
+  fastify.addHook('onRequest', (request) => {
+    log.info(
+      `Incoming request (#${request.id}): ${request.method} ${request.url}`,
+    )
+    return Promise.resolve()
+  })
+  fastify.addHook('onResponse', (request, reply) => {
+    const time = reply.getResponseTime()
+    log.debug(
+      `Request completed (#${request.id}): ${request.method} ${request.url} [HTTP ${reply.statusCode}] (${time}ms)`,
+    )
+    return Promise.resolve()
+  })
+  await registerFeatures(fastify)
+  await registerRoutes(fastify)
+  await fastify.ready()
+  log.trace(`Plugins registration details:\n${fastify.printPlugins()}`)
+}
+
+const start = async (fastifyInstance?: FastifyInstance) => {
+  let fastify: FastifyInstance
+  if (fastifyInstance) {
+    fastify = fastifyInstance
+  } else {
+    fastify = init()
+    await configure(fastify)
+  }
+  const { log } = fastify
+  const fastifyListenOptions: FastifyListenOptions = {
+    ...(config.host && { host: config.host }),
+    listenTextResolver: (address) => {
+      const addressToConnect =
+        process.platform === 'linux'
+          ? address.replace('127.0.0.1', 'localhost')
+          : address
+      return `Server listening at ${addressToConnect}`
+    },
+    port: config.port,
+  }
+  log.trace(`Fastify listen options : ${JSON.stringify(fastifyListenOptions)}`)
+  await fastify.listen(fastifyListenOptions)
+}
+
+const stop = async (fastify: FastifyInstance) => {
+  await fastify.close()
+}
+
+export default { configure, init, start, stop }
