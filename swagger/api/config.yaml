@@ -1,0 +1,29 @@
+paths:
+  config:
+    get:
+      tags:
+        - Config
+      summary: App configuration
+      description: |
+        Configuration dynamically built by the backend and used in the frontend app.
+      responses:
+        '200':
+          description: Config.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Config'
+              example:
+                isDevelopment: false
+      security:
+        - bearerAuth: [ ]
+components:
+  schemas:
+    Config:
+      type: object
+      required:
+        - isDevelopoment
+      properties:
+        isDevelopoment:
+          type: boolean
+          description: True if development mode is enabled.

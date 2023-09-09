@@ -1,0 +1,53 @@
+paths:
+  token:
+    post:
+      tags:
+        - Token
+      summary: Token creation
+      description: |
+        Generate a token.
+      requestBody:
+        description: Credentials.
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Credentials'
+      responses:
+        '200':
+          description: JWT.
+          headers:
+            Set-Cookie:
+              schema:
+                type: string
+              description: Token secured HTTP only cookie.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Token'
+              example:
+                token: '2023-02-15T13:41:50.000Z'
+        '401':
+          $ref: '../openapi.yaml#/components/responses/UnauthorizedError'
+components:
+  schemas:
+    Credentials:
+      type: object
+      required:
+        - username
+        - password
+      properties:
+        username:
+          type: string
+          description: Username.
+        password:
+          type: string
+          description: User password.
+    Token:
+      type: object
+      required:
+        - token
+      properties:
+        token:
+          type: string
+          description: JWT value.
