@@ -25,14 +25,16 @@ const defaultPort = 3000
 const configSchema = object({
   host: string().optional(),
   isDevelopment: boolean().required(),
+  jwtSecret: string().default('mybigsecret'),
   logLevel: string().oneOf(logLevels).default('info'),
   port: number().default(defaultPort),
 })
 
-const envVarNames = ['HOST', 'LOG_LEVEL', 'PORT']
+const envVarNames = ['HOST', 'JWT_SECRET', 'LOG_LEVEL', 'PORT']
 
 const envConfig = envVarNames.reduce(
-  (acc, name) => ({ ...acc, [camelCase(name)]: process.env[name] }),
+  (acc, name) =>
+    name ? { ...acc, [camelCase(name)]: process.env[name] } : acc,
   {},
 )
 

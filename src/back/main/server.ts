@@ -2,6 +2,7 @@ import type {
   FastifyInstance,
   FastifyListenOptions,
   FastifyServerOptions,
+  preHandlerAsyncHookHandler,
 } from 'fastify'
 import Fastify from 'fastify'
 import pino from 'pino'
@@ -17,10 +18,17 @@ import { notFoundHandler } from './util/not-found.handler'
 declare module 'fastify' {
   export interface FastifyInstance {
     config: Config
+    verifyJWT?: preHandlerAsyncHookHandler
     vite: { ready: () => Promise<void> }
   }
   export interface FastifyReply {
     html: () => void
+  }
+}
+
+declare module '@fastify/jwt' {
+  export interface FastifyJWT {
+    userId: string
   }
 }
 
