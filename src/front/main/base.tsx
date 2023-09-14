@@ -1,14 +1,19 @@
-import React from 'react'
+import { StrictMode, Suspense } from 'react'
 import { BrowserRouter } from 'react-router-dom'
 
 import App from './App'
+import { AuthProvider } from './providers/AuthProvider'
 
-export const createApp = () => (
-  <React.StrictMode>
-    <BrowserRouter>
-      <React.Suspense fallback={<h3>Loading…</h3>}>
-        <App />
-      </React.Suspense>
-    </BrowserRouter>
-  </React.StrictMode>
-)
+export const createApp = () => {
+  return (
+    <StrictMode>
+      <BrowserRouter>
+        <Suspense fallback={<h3>Loading…</h3>}>
+          <AuthProvider>
+            <App />
+          </AuthProvider>
+        </Suspense>
+      </BrowserRouter>
+    </StrictMode>
+  )
+}

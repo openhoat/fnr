@@ -16,11 +16,12 @@ const tokenRouter: FastifyPluginAsync = (fastify) => {
   const { config, log } = fastify
   fastify.post<{ Body: { username?: string; password?: string } | undefined }>(
     '/',
-    (request) => {
+    (request, reply) => {
       const { username, password } = request.body || {}
       signIn(config, username, password)
       const token = fastify.jwt.sign({ username })
       log.trace(`generated jwt token: ${token}`)
+      void reply.cookie('token', token, { httpOnly: true, path: '/' })
       return { token }
     },
   )

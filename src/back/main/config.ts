@@ -27,7 +27,7 @@ const configSchema = object({
   authUsername: string().optional(),
   host: string().optional(),
   isDevelopment: boolean().required(),
-  jwtSecret: string().default('mybigsecret'),
+  jwtSecret: string().optional(),
   logLevel: string().oneOf(logLevels).default('info'),
   port: number().default(defaultPort),
 })

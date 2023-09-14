@@ -1,9 +1,9 @@
-import type React from 'react'
+import type { FC } from 'react'
 import { Link } from 'react-router-dom'
 
 import styles from '../styles/HomePage.module.scss'
 
-export const HomePage: React.FC = () => {
+export const HomePage: FC = () => {
   return (
     <div className={styles.container}>
       <h1 className={styles.welcome}>Bienvenue</h1>
@@ -16,6 +16,9 @@ export const HomePage: React.FC = () => {
         </Link>
         <Link to="about">
           <button>About</button>
+        </Link>
+        <Link to="config">
+          <button>Config</button>
         </Link>
       </div>
     </div>

@@ -25,9 +25,14 @@ const jwtPreHandler: preHandlerAsyncHookHandler = async function (
 const jwtPlugin: FastifyPluginAsync = fastifyPlugin(
   async (fastify: FastifyInstance) => {
     const { config, log } = fastify
+    const { jwtSecret } = config
+    if (!jwtSecret) {
+      return Promise.resolve()
+    }
     log.trace('Registering jwt plugin')
     const jwtOptions: FastifyJWTOptions = {
-      secret: config.jwtSecret,
+      cookie: { cookieName: 'token', signed: false },
+      secret: jwtSecret,
     }
     await fastify.register(
       fastifyJwt as FastifyPluginAsync<FastifyJWTOptions>,
