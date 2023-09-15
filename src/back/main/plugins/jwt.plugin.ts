@@ -31,7 +31,7 @@ const jwtPlugin: FastifyPluginAsync = fastifyPlugin(
     }
     log.trace('Registering jwt plugin')
     const jwtOptions: FastifyJWTOptions = {
-      cookie: { cookieName: 'token', signed: false },
+      cookie: { cookieName: 'token', signed: true },
       secret: jwtSecret,
     }
     await fastify.register(

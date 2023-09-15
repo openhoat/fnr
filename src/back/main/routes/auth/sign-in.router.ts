@@ -12,7 +12,7 @@ const signIn = (config: Config, username?: string, password?: string) => {
   }
 }
 
-const tokenRouter: FastifyPluginAsync = (fastify) => {
+const signInRouter: FastifyPluginAsync = (fastify) => {
   const { config, log } = fastify
   fastify.post<{ Body: { username?: string; password?: string } | undefined }>(
     '/',
@@ -25,6 +25,13 @@ const tokenRouter: FastifyPluginAsync = (fastify) => {
         httpOnly: true,
         path: '/',
         sameSite: true,
+        signed: true,
+      })
+      void reply.cookie('authenticated', 'true', {
+        httpOnly: false,
+        path: '/',
+        sameSite: true,
+        signed: true,
       })
       return { token }
     },
@@ -32,4 +39,4 @@ const tokenRouter: FastifyPluginAsync = (fastify) => {
   return Promise.resolve()
 }
 
-export { tokenRouter }
+export { signInRouter }

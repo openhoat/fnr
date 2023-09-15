@@ -1,34 +1,27 @@
-import React, { useCallback, useEffect, useState } from 'react'
-
-import { getBaseUrl } from '../util/helper'
+import React, { useState } from 'react'
+import { useCookies } from 'react-cookie'
 
 export type AuthContextType = {
-  token: string | undefined
-  setToken: (token: string) => void
+  authenticated: boolean
+  setAuthenticated: (authenticated: boolean) => void
 }
 
-export const AuthContext = React.createContext<AuthContextType | null>(null)
+export const AuthContext = React.createContext<AuthContextType>({
+  authenticated: false,
+  setAuthenticated: () => {},
+})
 
 interface Props {
   children: React.ReactNode
 }
 
 export const AuthProvider: React.FC<Props> = ({ children }) => {
-  const [token, setToken] = useState<string | undefined>()
-  const fetchToken = useCallback(async () => {
-    const response = await fetch(`${getBaseUrl()}/auth/token`, {
-      body: JSON.stringify({ password: 'MyBigSecret', username: 'johndoe' }),
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      method: 'post',
-    })
-    const data: { token: string } = await response.json()
-    setToken(data.token)
-  }, [])
-  useEffect(() => void fetchToken(), [fetchToken])
+  const [cookies] = useCookies(['authenticated'])
+  const [authenticated, setAuthenticated] = useState<boolean>(
+    !!cookies.authenticated,
+  )
   return (
-    <AuthContext.Provider value={{ setToken, token }}>
+    <AuthContext.Provider value={{ authenticated, setAuthenticated }}>
       {children}
     </AuthContext.Provider>
   )

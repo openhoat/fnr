@@ -1,9 +1,12 @@
 import type { FC } from 'react'
+import { useContext } from 'react'
 import { Link } from 'react-router-dom'
 
+import { AuthContext } from '../providers/AuthProvider'
 import styles from '../styles/HomePage.module.scss'
 
 export const HomePage: FC = () => {
+  const authContext = useContext(AuthContext)
   return (
     <div className={styles.container}>
       <h1 className={styles.welcome}>Bienvenue</h1>
@@ -20,6 +23,15 @@ export const HomePage: FC = () => {
         <Link to="config">
           <button>Config</button>
         </Link>
+        {authContext?.authenticated ? (
+          <Link to="signout">
+            <button>Sign out</button>
+          </Link>
+        ) : (
+          <Link to="signin">
+            <button>Sign in</button>
+          </Link>
+        )}
       </div>
     </div>
   )
