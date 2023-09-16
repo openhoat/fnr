@@ -2,7 +2,6 @@ const baseDir = __dirname
 
 module.exports = {
   env: {
-    browser: true,
     es2021: true,
     jest: true,
     node: true,
@@ -21,7 +20,7 @@ module.exports = {
   ],
   overrides: [
     {
-      files: ['src/back/test/**/*.ts', 'src/front/test/**/*.spec.ts'],
+      files: ['src/back/test/**/*.[jt]s', 'src/front/test/**/*.spec.[jt]s'],
       rules: {
         'sonarjs/cognitive-complexity': 'off',
         'sonarjs/no-duplicate-string': 'off',
@@ -29,7 +28,7 @@ module.exports = {
     },
     {
       extends: ['plugin:playwright/playwright-test'],
-      files: ['src/front/test/**/*.spec.ts'],
+      files: ['src/front/test/**/*.spec.[jt]s'],
     },
   ],
   parser: '@typescript-eslint/parser',

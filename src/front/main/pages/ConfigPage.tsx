@@ -1,40 +1,42 @@
+import { Banner, ListGroup } from 'flowbite-react'
 import { useAtom } from 'jotai'
 import type { FC } from 'react'
 import { Suspense } from 'react'
-import { Link } from 'react-router-dom'
 
 import configAtom from '../atoms/config'
-import styles from '../styles/HomePage.module.scss'
+import { AppNavbar } from '../components/AppNavbar'
 
 const ConfigData: FC = () => {
   const [config] = useAtom(configAtom)
   return (
-    <ul>
+    <ListGroup key={'configItems'}>
       {Object.keys(config)
         .sort()
         .map((key, index) => (
-          <li key={index}>
+          <ListGroup.Item key={`configItem${index}`}>
             {key}: {`${(config as unknown as Record<string, unknown>)[key]}`}
-          </li>
+          </ListGroup.Item>
         ))}
-    </ul>
+    </ListGroup>
   )
 }
 
 export const ConfigPage: FC = () => {
   return (
-    <div className={styles.container}>
-      <h1 className={styles.welcome}>Config</h1>
-      <div className={styles.content}>
-        <Suspense fallback={<h3>Loading…</h3>}>
-          <ConfigData />
-        </Suspense>
-      </div>
-      <div className={styles.button}>
-        <Link to="/app">
-          <button>Accueil</button>
-        </Link>
-      </div>
-    </div>
+    <>
+      <AppNavbar />
+      <Banner>
+        <div className="left-0 top-0 z-50 flex w-full flex-col justify-between border-b border-gray-200 bg-gray-50 p-4 md:flex-row">
+          <div className="mb-4 md:mb-0 md:mr-4">
+            <h2 className="mb-1 text-base font-semibold text-gray-900">
+              Configuration
+            </h2>
+            <Suspense fallback={<h3>Loading…</h3>}>
+              <ConfigData />
+            </Suspense>
+          </div>
+        </div>
+      </Banner>
+    </>
   )
 }

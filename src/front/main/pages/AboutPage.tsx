@@ -1,8 +1,8 @@
+import { Banner } from 'flowbite-react'
 import type { FC } from 'react'
 import { Fragment, useCallback, useEffect, useState } from 'react'
-import { Link } from 'react-router-dom'
 
-import styles from '../styles/HomePage.module.scss'
+import { AppNavbar } from '../components/AppNavbar'
 import { getBaseUrl } from '../util/helper'
 
 interface Data {
@@ -31,28 +31,32 @@ export const AboutPage: FC = () => {
     void fetchAbout()
   }, [fetchAbout])
   const renderError = () => {
-    return <p>Error!</p>
+    return <>Error!</>
   }
   const renderLoading = () => {
-    return <p>Loading…</p>
+    return <>Loading…</>
   }
   const renderData = () => {
-    return <p>Version: {data?.version}</p>
+    return <>Version: {data?.version}</>
   }
   return (
-    <div className={styles.container}>
-      <h1 className={styles.welcome}>About</h1>
-      <div className={styles.content}>
-        <Fragment>
-          {isLoading ? renderLoading() : renderData()}
-          {hasError && renderError()}
-        </Fragment>
-      </div>
-      <div className={styles.button}>
-        <Link to="/app">
-          <button>Accueil</button>
-        </Link>
-      </div>
-    </div>
+    <>
+      <AppNavbar />
+      <Banner>
+        <div className="left-0 top-0 z-50 flex w-full flex-col justify-between border-b border-gray-200 bg-gray-50 p-4 md:flex-row">
+          <div className="mb-4 md:mb-0 md:mr-4">
+            <h2 className="mb-1 text-base font-semibold text-gray-900">
+              About
+            </h2>
+            <p className="flex items-center text-sm font-normal text-gray-500">
+              <Fragment>
+                {isLoading ? renderLoading() : renderData()}
+                {hasError && renderError()}
+              </Fragment>
+            </p>
+          </div>
+        </div>
+      </Banner>
+    </>
   )
 }

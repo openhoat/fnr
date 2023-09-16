@@ -1,38 +1,24 @@
+import { Banner } from 'flowbite-react'
 import type { FC } from 'react'
-import { useContext } from 'react'
-import { Link } from 'react-router-dom'
 
-import { AuthContext } from '../providers/AuthProvider'
-import styles from '../styles/HomePage.module.scss'
+import { AppNavbar } from '../components/AppNavbar'
 
 export const HomePage: FC = () => {
-  const authContext = useContext(AuthContext)
   return (
-    <div className={styles.container}>
-      <h1 className={styles.welcome}>Bienvenue</h1>
-      <div className={styles.content}>
-        Bienvenue sur la page d&lsquo;accueil !
-      </div>
-      <div className={styles.button}>
-        <Link to="hello">
-          <button>Hello</button>
-        </Link>
-        <Link to="about">
-          <button>About</button>
-        </Link>
-        <Link to="config">
-          <button>Config</button>
-        </Link>
-        {authContext?.authenticated ? (
-          <Link to="signout">
-            <button>Sign out</button>
-          </Link>
-        ) : (
-          <Link to="signin">
-            <button>Sign in</button>
-          </Link>
-        )}
-      </div>
-    </div>
+    <>
+      <AppNavbar />
+      <Banner>
+        <div className="left-0 top-0 z-50 flex w-full flex-col justify-between border-b border-gray-200 bg-gray-50 p-4 md:flex-row">
+          <div className="mb-4 md:mb-0 md:mr-4">
+            <h2 className="mb-1 text-base font-semibold text-gray-900">
+              Welcome!
+            </h2>
+            <p className="flex items-center text-sm font-normal text-gray-500">
+              This is the home page.
+            </p>
+          </div>
+        </div>
+      </Banner>
+    </>
   )
 }

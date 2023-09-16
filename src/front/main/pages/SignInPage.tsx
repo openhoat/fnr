@@ -1,9 +1,10 @@
+import { Button, Label, TextInput } from 'flowbite-react'
 import type { FC, SyntheticEvent } from 'react'
 import { useContext, useState } from 'react'
 import { Navigate, useNavigate } from 'react-router-dom'
 
+import { AppNavbar } from '../components/AppNavbar'
 import { AuthContext } from '../providers/AuthProvider'
-import styles from '../styles/HomePage.module.scss'
 import { getBaseUrl } from '../util/helper'
 
 export const SignInPage: FC = () => {
@@ -29,38 +30,38 @@ export const SignInPage: FC = () => {
   }
   return (
     <>
+      <AppNavbar />
       {authenticated ? (
         <Navigate to={'/app'} replace={false} />
       ) : (
-        <div className={styles.container}>
-          <h1 className={styles.welcome}>Sign in</h1>
-          <div className={styles.content}>
-            <h1>Please Log In</h1>
-            <form onSubmit={handleSubmit}>
-              <label>
-                <p>Username</p>
-                <input
-                  id="username"
-                  type="text"
-                  value={username}
-                  onChange={(e) => setUsername(e.target.value)}
-                />
-              </label>
-              <label>
-                <p>Password</p>
-                <input
-                  id="password"
-                  type="password"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                />
-              </label>
-              <div>
-                <button type="submit">Submit</button>
-              </div>
-            </form>
+        <form onSubmit={handleSubmit} className="flex max-w-md flex-col gap-4">
+          <div>
+            <div className="mb-2 block">
+              <Label htmlFor="username" value="Your username" />
+            </div>
+            <TextInput
+              id="username"
+              placeholder="myusername"
+              required
+              type="string"
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
+            />
           </div>
-        </div>
+          <div>
+            <div className="mb-2 block">
+              <Label htmlFor="password1" value="Your password" />
+            </div>
+            <TextInput
+              id="password1"
+              required
+              type="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+            />
+          </div>
+          <Button type="submit">Submit</Button>
+        </form>
       )}
     </>
   )
