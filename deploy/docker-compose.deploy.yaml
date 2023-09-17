@@ -26,6 +26,7 @@ services:
       - "traefik.enable=true"
       - "traefik.http.routers.${APP_IMAGE_NAME}.rule=Host(`${TRAEFIK_APP_VIRTUAL_HOST:-${APP_IMAGE_NAME}.localdomain}`)"
       - "traefik.http.routers.${APP_IMAGE_NAME}.entrypoints=${TRAEFIK_APP_ENTRYPOINTS:-web}"
+      - "traefik.http.routers.${APP_IMAGE_NAME}.tls.certresolver=${TRAEFIK_APP_CERT_RESOLVER:-letsencrypt}"
       - "traefik.http.services.${APP_IMAGE_NAME}.loadbalancer.server.port=${PORT}"
     network_mode: bridge
     restart: unless-stopped
