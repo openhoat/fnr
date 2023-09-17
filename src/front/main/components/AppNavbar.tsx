@@ -8,7 +8,7 @@ import { AppNavLink } from './AppNavLink'
 export const AppNavbar: FC = () => {
   const authContext = useContext(AuthContext)
   return (
-    <Navbar fluid rounded>
+    <Navbar fluid>
       <Navbar.Brand href="/app">
         <span className="self-center whitespace-nowrap text-xl font-semibold dark:text-white">
           Node React TypeScript Demo
