@@ -27,4 +27,4 @@ runs:
       run: npm i -g npm@${NPM_VERSION}
     - name: Install dependencies
       shell: bash
-      run: npm ci --prefer-offline --dev --ignore-scripts
+      run: npm ci --prefer-offline --include=dev --ignore-scripts
