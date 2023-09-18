@@ -14,6 +14,7 @@ const errorHandler = function (
   request: FastifyRequest,
   reply: FastifyReply,
 ) {
+  this.log.trace(err)
   let statusCode
   let error
   let message
