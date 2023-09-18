@@ -66,10 +66,7 @@
     "test:back:unit": "wireit",
     "test:back:unit:open": "wireit",
     "test:front": "wireit",
-    "test:front:e2e": "wireit",
-    "test:front:e2e:codegen": "wireit",
-    "test:front:e2e:ui": "wireit",
-    "test:front:e2e:open": "wireit",
+    "test:front:unit": "wireit",
     "validate": "wireit",
     "validate:docker": "bin/test-docker-container.sh beauty-plan-web",
     "with:depcheck": "npx -y depcheck@1.4.3",
@@ -534,50 +531,23 @@
     },
     "test:front": {
       "dependencies": [
-        "test:front:e2e"
+        "test:front:unit"
       ]
     },
-    "test:front:e2e": {
-      "command": "playwright test",
-      "dependencies": [
-        "build:back",
-        "build:front"
-      ],
+    "test:front:unit": {
+      "command": "jest -c src/front/test/unit/jest.config.ts",
       "files": [
-        "src/**",
-        "playwright*.ts"
+        "src/front/test/unit/**",
+        "src/front/test/*"
       ],
-      "output": [],
-      "env": {
-        "CI": {
-          "external": true
-        }
-      }
-    },
-    "test:front:e2e:codegen": {
-      "command": "playwright codegen",
-      "dependencies": [
-        "start"
-      ]
-    },
-    "test:front:e2e:ui": {
-      "command": "playwright test --ui",
-      "dependencies": [
-        "build:back",
-        "build:front"
-      ],
-      "files": [
-        "src/**",
-        "playwright*.ts"
+      "output": [
+        "dist/test/front/unit-tests-report.html"
       ],
       "env": {
         "CI": {
           "external": true
         }
       }
-    },
-    "test:front:e2e:open": {
-      "command": "npm run with:opener dist/test/front/e2e/index.html"
     },
     "validate": {
       "dependencies": [
@@ -672,6 +642,7 @@
     "@types/common-tags": "1.8.2",
     "@types/find-root": "1.1.2",
     "@types/jest": "29.5.4",
+    "@types/jest-when": "3.5.3",
     "@types/node": "20.5.9",
     "@types/react": "18.2.21",
     "@types/react-dom": "18.2.7",
