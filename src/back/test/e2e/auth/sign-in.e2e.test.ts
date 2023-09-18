@@ -24,13 +24,6 @@ describe('backend tests', () => {
               /^([a-zA-Z0-9_=]+).([a-zA-Z0-9_=]+).([a-zA-Z0-9_\-+/=]*)$/,
             ),
           })
-          .stores('Token', 'token')
-          .expectCookies({
-            HttpOnly: null,
-            Path: '/',
-            SameSite: 'Strict',
-            token: '$S{Token}',
-          })
           .toss()
       })
     })

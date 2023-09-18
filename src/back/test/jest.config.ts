@@ -23,7 +23,7 @@ const jestConfig: JestConfig = {
   reporters: buildReporters(),
   rootDir: baseDir,
   setupFilesAfterEnv: [join(baseDir, 'src', 'back', 'test', 'jest-custom.ts')],
-  silent: true,
+  silent: false,
   testEnvironment: 'node',
   testMatch: ['<rootDir>/src/back/test/**/*.test.[jt]s'],
   transform: {
