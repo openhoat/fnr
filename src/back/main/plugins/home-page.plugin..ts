@@ -1,4 +1,3 @@
-import { readFile } from 'node:fs/promises'
 import { join } from 'node:path'
 
 import type { FastifyStaticOptions } from '@fastify/static'
@@ -35,20 +34,20 @@ const homePagePlugin: FastifyPluginAsync = fastifyPlugin(
       log.debug('Vite plugin successfully registered')
       return
     }
-    const homePageFile = join(baseDir, 'dist', 'client', 'index.html')
-    const homePageContent = await readFile(homePageFile, 'utf-8')
-    fastify.get('/app', (__, reply) => {
-      void reply.type('text/html')
-      void reply.send(homePageContent)
-    })
     const fastifyStaticOptions: FastifyStaticOptions = {
+      decorateReply: false,
       prefix: '/app/assets',
       root: join(baseDir, 'dist', 'client', 'assets'),
     }
     await fastify.register(fastifyStatic, fastifyStaticOptions)
+    const homePageFile = join(baseDir, 'dist', 'client', 'index.html')
+    fastify.get('/app', (__, reply) => {
+      void reply.type('text/html')
+      void reply.sendFile(homePageFile)
+    })
     fastify.get('/app/*', (__, reply) => {
       void reply.type('text/html')
-      void reply.send(homePageContent)
+      void reply.sendFile(homePageFile)
     })
   },
 )

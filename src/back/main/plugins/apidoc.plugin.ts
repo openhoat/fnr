@@ -19,7 +19,6 @@ const apidocPlugin = fastifyPlugin(async (fastify: FastifyInstance) => {
   void fastify.register(fastifyStatic, {
     prefix,
     root,
-    decorateReply: false,
   })
   fastify.get(prefix, async (__, reply) => {
     await reply.sendFile('index.html', root)

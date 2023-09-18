@@ -25,10 +25,10 @@ const plugins: FastifyPluginAsync = fastifyPlugin(
         origin: config.corsOrigin,
       })
     }
-    await registerPlugin(fastify, 'homePage', homePagePlugin)
     await registerPlugin(fastify, 'jwt', jwtPlugin)
     await registerPlugin(fastify, 'apidoc', apidocPlugin)
     await registerPlugin(fastify, 'swaggerUi', swaggerUiPlugin)
+    await registerPlugin(fastify, 'homePage', homePagePlugin)
     log.info('All plugins registered')
   },
 )
