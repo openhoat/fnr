@@ -7,6 +7,7 @@ ignores:
     - '@swc/cli'
     - '@swc/core'
     - '@swc/jest'
+    - '@types/jest-when'
     - '@typescript-eslint/eslint-plugin'
     - '@vitejs/plugin-react'
     - autoprefixer
