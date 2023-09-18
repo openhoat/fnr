@@ -68,7 +68,7 @@
     "test:front": "wireit",
     "test:front:unit": "wireit",
     "validate": "wireit",
-    "validate:docker": "bin/test-docker-container.sh beauty-plan-web",
+    "validate:ci": "wireit",
     "with:depcheck": "npx -y depcheck@1.4.3",
     "with:npm-check-updates": "npx -y npm-check-updates@16.7.12",
     "with:opener": "npx -y opener@1.5.2",
@@ -555,6 +555,13 @@
         "build",
         "lint",
         "cover"
+      ]
+    },
+    "validate:ci": {
+      "dependencies": [
+        "deps:check",
+        "build",
+        "lint"
       ]
     },
     "with:depcheck": {

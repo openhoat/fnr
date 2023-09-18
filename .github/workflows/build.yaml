@@ -27,4 +27,4 @@ jobs:
           node-version: ${{env.NODE_VERSION}}
           npm-version: ${{env.NPM_VERSION}}
       - name: Check project
-        run: npm run validate
+        run: npm run validate:ci
