@@ -1,0 +1,45 @@
+name: build
+
+env:
+  NODE_VERSION: '18.17.1'
+  NPM_VERSION: '9.8.1'
+
+on:
+  push:
+    branches:
+      - main
+      - develop
+  pull_request:
+    branches:
+      - main
+      - develop
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out repository code
+        uses: actions/checkout@v3
+      - name: Install project prerequisite
+        uses: ./.github/actions/install-action
+        with:
+          node-version: ${{env.NODE_VERSION}}
+          npm-version: ${{env.NPM_VERSION}}
+      - name: Check project
+        run: npm run validate
+
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out repository code
+        uses: actions/checkout@v3
+      - name: Install project prerequisite
+        uses: ./.github/actions/install-action
+      - name: Run tests
+        run: npm run cover
+      - name: Upload lcov coverage report file to Codecov
+        uses: codecov/codecov-action@v3
+        with:
+          file: ${{ github.workspace }}/dist/coverage/coverage.lcov
