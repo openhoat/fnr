@@ -1,3 +1,6 @@
+[![build](https://github.com/openhoat/template-node-react-ts/actions/workflows/build.yaml/badge.svg)](https://github.com/openhoat/template-node-react-ts/actions)
+[![codecov](https://codecov.io/gh/openhoat/template-node-react-ts/graph/badge.svg?token=2C93UD9SLJ)](https://codecov.io/gh/openhoat/template-node-react-ts)
+
 # Node React TS template
 
 ## Getting started
