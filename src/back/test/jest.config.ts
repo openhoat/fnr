@@ -14,7 +14,7 @@ const jestConfig: JestConfig = {
   coverageDirectory: join(baseDir, 'dist', 'coverage', 'back', 'all'),
   coverageReporters: ['text', 'json', 'cobertura', 'lcov', 'html'],
   displayName: name,
-  globalSetup: join(__dirname, 'jest-global-setup.ts'),
+  globalSetup: join(baseDir, 'src', 'back', 'test', 'jest-global-setup.ts'),
   modulePathIgnorePatterns: [
     '<rootDir>/dist/',
     '<rootDir>/lib/',
@@ -22,7 +22,7 @@ const jestConfig: JestConfig = {
   ],
   reporters: buildReporters(),
   rootDir: baseDir,
-  setupFilesAfterEnv: [join(__dirname, 'jest-custom.ts')],
+  setupFilesAfterEnv: [join(baseDir, 'src', 'back', 'test', 'jest-custom.ts')],
   silent: true,
   testEnvironment: 'node',
   testMatch: ['<rootDir>/src/back/test/**/*.test.[jt]s'],
