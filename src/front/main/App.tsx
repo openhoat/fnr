@@ -17,8 +17,8 @@ const App: FC = () => {
       <Routes>
         <Route path="/app" element={<AppLayout />}>
           <Route path="" element={<HomePage />} />
-          <Route path="signin" element={<SignInPage />} />
-          <Route path="signout" element={<SignOutPage />} />
+          <Route path="sign-in" element={<SignInPage />} />
+          <Route path="sign-out" element={<SignOutPage />} />
           <Route element={<ProtectRoutes />}>
             <Route path="about" element={<AboutPage />} />
             <Route path="config" element={<ConfigPage />} />

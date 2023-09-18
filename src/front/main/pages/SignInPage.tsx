@@ -13,7 +13,7 @@ export const SignInPage: FC = () => {
   const [username, setUsername] = useState<string>('')
   const [password, setPassword] = useState<string>('')
   const fetchToken = async (username: string, password: string) => {
-    await fetch(`${getBaseUrl()}/auth/signin`, {
+    await fetch(`${getBaseUrl()}/auth/sign-in`, {
       body: JSON.stringify({ password, username }),
       headers: {
         'Content-Type': 'application/json',

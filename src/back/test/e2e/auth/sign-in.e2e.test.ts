@@ -5,7 +5,7 @@ import { getTestCase, registerHooks } from '../util/server-test-hooks'
 describe('backend tests', () => {
   describe('backend server e2e tests', () => {
     registerHooks()
-    describe('POST /auth/token', () => {
+    describe('POST /auth/sign-in', () => {
       test('should respond a token with secured cookie given credentials', async () => {
         // Given
         const password = 'MyBigSecret'
@@ -15,7 +15,7 @@ describe('backend tests', () => {
           .step('Create a token')
           .spec()
           // When
-          .post('/auth/token')
+          .post('/auth/sign-in')
           .withBody({ password, username })
           // Then
           .expectStatus(200)

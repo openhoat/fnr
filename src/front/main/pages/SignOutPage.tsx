@@ -9,7 +9,7 @@ import { getBaseUrl } from '../util/helper'
 export const SignOutPage: FC = () => {
   const { setAuthenticated } = useContext(AuthContext)
   const fetchSignOut = useCallback(async () => {
-    await fetch(`${getBaseUrl()}/auth/signout`, {
+    await fetch(`${getBaseUrl()}/auth/sign-out`, {
       method: 'post',
     })
   }, [])

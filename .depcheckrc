@@ -9,6 +9,7 @@ ignores:
     - '@swc/jest'
     - '@typescript-eslint/eslint-plugin'
     - '@vitejs/plugin-react'
+    - autoprefixer
     - commitlint
     - cross-env
     - dotenv-cli
@@ -21,6 +22,7 @@ ignores:
     - eslint-plugin-simple-import-sort
     - eslint-plugin-sonarjs
     - eslint-plugin-sort-keys-shorthand
+    - flowbite
     - jest
     - jest-html-reporter
     - jest-when
@@ -29,6 +31,7 @@ ignores:
     - pactum-matchers
     - pino-pretty
     - prettier
+    - prettier-plugin-tailwindcss
     - react-refresh
     - rimraf
     - ts-node

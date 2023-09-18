@@ -20,9 +20,9 @@ export const AppNavbar: FC = () => {
         <AppNavLink to={'/app/config'} text={'Config'} />
         <AppNavLink to={'/app/about'} text={'About'} />
         {authContext?.authenticated ? (
-          <AppNavLink to={'/app/signout'} text={'Sign out'} />
+          <AppNavLink to={'/app/sign-out'} text={'Sign out'} />
         ) : (
-          <AppNavLink to={'/app/signin'} text={'Sign in'} />
+          <AppNavLink to={'/app/sign-in'} text={'Sign in'} />
         )}
       </Navbar.Collapse>
     </Navbar>

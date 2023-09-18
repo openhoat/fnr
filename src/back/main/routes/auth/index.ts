@@ -4,8 +4,8 @@ import { signInRouter } from './sign-in.router'
 import { signOutRouter } from './sign-out.router'
 
 const authRouter = async (fastify: FastifyInstance) => {
-  await fastify.register(signInRouter, { prefix: '/signin' })
-  await fastify.register(signOutRouter, { prefix: '/signout' })
+  await fastify.register(signInRouter, { prefix: '/sign-in' })
+  await fastify.register(signOutRouter, { prefix: '/sign-out' })
 }
 
 export { authRouter }

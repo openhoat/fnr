@@ -2,10 +2,10 @@ paths:
   token:
     post:
       tags:
-        - Token
-      summary: Token creation
+        - Sign in
+      summary: Sign in
       description: |
-        Generate a token.
+        Validate credentials and get an authorization token.
       requestBody:
         description: Credentials.
         required: true
@@ -20,7 +20,7 @@ paths:
             Set-Cookie:
               schema:
                 type: string
-              description: Token secured HTTP only cookie.
+              description: Token secured HTTP only and authenticated cookies.
           content:
             application/json:
               schema:

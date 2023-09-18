@@ -9,6 +9,6 @@ export const ProtectRoutes: FC = () => {
   return authContext?.authenticated ? (
     <Outlet />
   ) : (
-    <Navigate to="/app/signin" replace={false} />
+    <Navigate to="/app/sign-in" replace={false} />
   )
 }
