@@ -1,8 +1,8 @@
 import { config as dotenvConfig } from 'dotenv'
 import { join } from 'path'
 
-import baseDir from '../main/base-dir'
-import { deleteEnvVars } from './util/env-utils'
+import baseDir from './back/main/base-dir'
+import { deleteEnvVars } from './back/test/util/env-utils'
 
 const jestGlobalSetup = () => {
   deleteEnvVars('NODE_ENV', 'LOG_LEVEL')

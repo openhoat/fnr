@@ -1,8 +1,8 @@
 import type { Config as JestConfig } from 'jest'
 import { resolve } from 'path'
 
+import { baseDir, buildReporters } from '../../../jest-config-helper'
 import jestBaseConfig from '../jest.config'
-import { baseDir, buildReporters } from '../jest-config-helper'
 
 const jestConfig: JestConfig = {
   ...jestBaseConfig,

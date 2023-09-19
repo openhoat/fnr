@@ -1,4 +1,4 @@
-import type { ExpectExtensionable } from './types/jest-custom'
+import type { ExpectExtensionable } from './back/test/types/jest-custom'
 
 const expectExtension: ExpectExtensionable = {
   async toBeRejectedWith(promise: Promise<unknown>, opt?) {

@@ -18,7 +18,6 @@
     "clean:npm:deps": "wireit",
     "clean:wireit": "wireit",
     "cover": "wireit",
-    "cover:open": "wireit",
     "cover:back": "wireit",
     "cover:back:open": "wireit",
     "cover:back:e2e": "wireit",
@@ -27,6 +26,7 @@
     "cover:back:integration:open": "wireit",
     "cover:back:unit": "wireit",
     "cover:back:unit:open": "wireit",
+    "cover:open": "wireit",
     "deps:check": "wireit",
     "deps:version:check": "wireit",
     "deps:version:update": "wireit",
@@ -165,20 +165,27 @@
       "command": "rimraf .wireit"
     },
     "cover": {
+      "command": "jest --coverage --runInBand -c src/jest.config.ts",
+      "files": [
+        "src/**"
+      ],
+      "output": [
+        "dist/coverage/all/**",
+        "dist/test/back/**"
+      ],
       "dependencies": [
-        "cover:back"
-      ]
-    },
-    "cover:open": {
-      "dependencies": [
-        "cover:back:open"
-      ]
+        "build:apidoc"
+      ],
+      "env": {
+        "CI": {
+          "external": true
+        }
+      }
     },
     "cover:back": {
       "command": "jest --coverage --runInBand -c src/back/test/jest.config.ts",
       "files": [
-        "src/back/main/**",
-        "src/back/test/**"
+        "src/back/**"
       ],
       "output": [
         "dist/coverage/back/all/**",
@@ -261,6 +268,9 @@
     },
     "cover:back:unit:open": {
       "command": "npm run with:opener dist/coverage/back/unit/index.html"
+    },
+    "cover:open": {
+      "command": "npm run with:opener dist/coverage/all/index.html"
     },
     "deps:check": {
       "command": "npm run with:depcheck",
