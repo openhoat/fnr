@@ -26,11 +26,11 @@ jobs:
         with:
           node-version: ${{env.NODE_VERSION}}
           npm-version: ${{env.NPM_VERSION}}
-      - name: Check project
+      - name: Validate project
         run: npm run validate
       - name: Upload lcov coverage report file to Codecov
         uses: codecov/codecov-action@v3
         env:
           CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
         with:
-          file: ${{ github.workspace }}/dist/coverage/back/all/lcov.info
+          file: ${{ github.workspace }}/dist/coverage/all/lcov.info
