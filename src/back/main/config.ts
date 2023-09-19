@@ -25,6 +25,7 @@ const defaultPort = 3000
 const configSchema = object({
   authPassword: string().optional(),
   authUsername: string().optional(),
+  baseDir: string().required(),
   cookieSecret: string().optional(),
   corsOrigin: string().optional(),
   host: string().optional(),
@@ -55,6 +56,7 @@ const envConfig = envVarNames.reduce(
 
 const rawConfig = configSchema.validateSync({
   ...envConfig,
+  baseDir,
   isDevelopment,
 })
 

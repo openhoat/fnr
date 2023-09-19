@@ -7,7 +7,7 @@ import fastifyPlugin from 'fastify-plugin'
 
 import { registerPlugin } from '../util/fastify-plugin.registerer'
 import { apidocPlugin } from './apidoc.plugin'
-import { homePagePlugin } from './home-page.plugin.'
+import { homePagePlugin } from './home-page.plugin'
 import { jwtPlugin } from './jwt.plugin'
 import { swaggerUiPlugin } from './swagger-ui.plugin'
 

@@ -3,9 +3,9 @@ import { join } from 'node:path'
 
 import type { FastifyInstance } from 'fastify'
 
-import baseDir from '../../../base-dir'
-
 const aboutRouter = async (fastify: FastifyInstance) => {
+  const { config } = fastify
+  const { baseDir } = config
   const { version } = JSON.parse(
     await readFile(join(baseDir, 'package.json'), 'utf8'),
   )

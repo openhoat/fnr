@@ -6,10 +6,9 @@ import Boom from '@hapi/boom'
 import type { FastifyPluginAsync } from 'fastify'
 import { join } from 'path'
 
-import baseDir from '../base-dir'
-
 const swaggerUiPlugin: FastifyPluginAsync = async (fastify) => {
   const { config } = fastify
+  const { baseDir } = config
   const validate = config.authUsername
     ? (username: string, password: string): Promise<void> => {
         if (

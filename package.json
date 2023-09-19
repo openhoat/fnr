@@ -7,14 +7,8 @@
     "build": "wireit",
     "build:apidoc": "wireit",
     "build:back": "wireit",
-    "build:back:main": "wireit",
-    "build:back:test": "wireit",
     "build:back:check-typedefs": "wireit",
-    "build:back:check-typedefs:main": "wireit",
-    "build:back:check-typedefs:test": "wireit",
     "build:back:transpile": "wireit",
-    "build:back:transpile:main": "wireit",
-    "build:back:transpile:test": "wireit",
     "build:front": "wireit",
     "build:front:check-typedefs": "wireit",
     "clean": "wireit",
@@ -37,7 +31,6 @@
     "deps:version:check": "wireit",
     "deps:version:update": "wireit",
     "dev": "npm run start:development --watch",
-    "dev:front": "ladle dev",
     "install:husky": "husky install",
     "lint": "wireit",
     "lint:src": "wireit",
@@ -68,7 +61,6 @@
     "test:front": "wireit",
     "test:front:unit": "wireit",
     "validate": "wireit",
-    "validate:ci": "wireit",
     "with:depcheck": "npx -y depcheck@1.4.3",
     "with:npm-check-updates": "npx -y npm-check-updates@16.7.12",
     "with:opener": "npx -y opener@1.5.2",
@@ -100,70 +92,26 @@
         "build:back:transpile"
       ]
     },
-    "build:back:main": {
-      "dependencies": [
-        "build:back:check-typedefs:main",
-        "build:back:transpile:main"
-      ]
-    },
     "build:back:check-typedefs": {
       "command": "tsc --noemit --preserveWatchOutput -p src/back/tsconfig.json",
       "files": [
         "src/back/**/*.ts",
-        "src/**/tsconfig.json"
+        "src/back/tsconfig.json",
+        "src/tsconfig.json",
+        "tsconfig.json"
       ],
       "output": []
-    },
-    "build:back:check-typedefs:main": {
-      "command": "tsc --noemit --preserveWatchOutput -p src/back/main/tsconfig.json",
-      "files": [
-        "src/back/main/**/*.ts",
-        "src/**/tsconfig.json"
-      ],
-      "output": []
-    },
-    "build:back:check-typedefs:test": {
-      "command": "tsc --noemit --preserveWatchOutput -p src/back/test/tsconfig.json",
-      "files": [
-        "src/back/**/*.ts",
-        "src/**/tsconfig.json"
-      ],
-      "output": []
-    },
-    "build:back:test": {
-      "dependencies": [
-        "build:back:check-typedefs:test",
-        "build:back:transpile:test"
-      ]
     },
     "build:back:transpile": {
       "command": "swc -s -d lib src/back",
       "files": [
         "src/back/**/*.ts",
-        "src/**/tsconfig.json"
+        "src/back/tsconfig.json",
+        "src/tsconfig.json",
+        "tsconfig.json"
       ],
       "output": [
         "lib/back/**"
-      ]
-    },
-    "build:back:transpile:main": {
-      "command": "swc -s -d lib src/back/main",
-      "files": [
-        "src/back/main/**/*.ts",
-        "src/**/tsconfig.json"
-      ],
-      "output": [
-        "lib/back/main/**"
-      ]
-    },
-    "build:back:transpile:test": {
-      "command": "swc -s -d lib src/back/test",
-      "files": [
-        "src/back/test/**/*.ts",
-        "src/**/tsconfig.json"
-      ],
-      "output": [
-        "lib/back/test/**"
       ]
     },
     "build:front": {
@@ -352,15 +300,24 @@
     "lint:back:main": {
       "command": "eslint src/back/main",
       "files": [
-        "src/back/main/**"
+        "src/back/main/**",
+        ".eslintrc.js",
+        "tsconfig.json",
+        "src/tsconfig.json",
+        "src/back/tsconfig.json",
+        "src/back/main/tsconfig.json"
       ],
       "output": []
     },
     "lint:back:test": {
       "command": "eslint src/back/test",
       "files": [
-        "src/back/test/**/*.ts",
-        ".eslintrc"
+        "src/back/test/**",
+        ".eslintrc.js",
+        "tsconfig.json",
+        "src/tsconfig.json",
+        "src/back/tsconfig.json",
+        "src/back/test/tsconfig.json"
       ],
       "output": []
     },
@@ -373,14 +330,24 @@
     "lint:front:main": {
       "command": "eslint src/front/main",
       "files": [
-        "src/front/main/**/*.ts[x]"
+        "src/front/main/**",
+        ".eslintrc.js",
+        "tsconfig.json",
+        "src/tsconfig.json",
+        "src/front/tsconfig.json",
+        "src/front/main/tsconfig.json"
       ],
       "output": []
     },
     "lint:front:test": {
       "command": "eslint src/front/test",
       "files": [
-        "src/front/test/**/*.spec.ts"
+        "src/front/test/**",
+        ".eslintrc.js",
+        "tsconfig.json",
+        "src/tsconfig.json",
+        "src/front/tsconfig.json",
+        "src/front/test/tsconfig.json"
       ],
       "output": []
     },
@@ -555,13 +522,6 @@
         "build",
         "lint",
         "cover"
-      ]
-    },
-    "validate:ci": {
-      "dependencies": [
-        "deps:check",
-        "build",
-        "lint"
       ]
     },
     "with:depcheck": {

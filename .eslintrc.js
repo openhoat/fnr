@@ -1,4 +1,6 @@
-const baseDir = __dirname
+const { resolve } = require('node:path')
+
+const baseDir = resolve(__dirname)
 
 module.exports = {
   env: {
@@ -18,24 +20,11 @@ module.exports = {
     'plugin:jsx-a11y/recommended',
     'plugin:prettier/recommended',
   ],
-  overrides: [
-    {
-      files: ['src/back/test/**/*.[jt]s', 'src/front/test/**/*.spec.[jt]s'],
-      rules: {
-        'sonarjs/cognitive-complexity': 'off',
-        'sonarjs/no-duplicate-string': 'off',
-      },
-    },
-    {
-      extends: ['plugin:playwright/playwright-test'],
-      files: ['src/front/test/**/*.spec.[jt]s'],
-    },
-  ],
   parser: '@typescript-eslint/parser',
   parserOptions: {
     createDefaultProgram: true,
     ecmaVersion: 12,
-    project: ['./src/tsconfig.json'],
+    project: ['./tsconfig.json'],
     sourceType: 'module',
     tsconfigRootDir: baseDir,
   },

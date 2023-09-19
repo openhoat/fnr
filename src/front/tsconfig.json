@@ -1,5 +1,4 @@
 {
-  "extends": "../tsconfig.json",
   "compilerOptions": {
     "esModuleInterop": true,
     "jsx": "react-jsx",
@@ -8,17 +7,18 @@
       "esnext"
     ],
     "module": "esnext",
-    "rootDir": "..",
+    "moduleResolution": "bundler",
     "target": "es5",
     "typeRoots": [
+      "../../node_modules/@types",
       "./main/types",
-      "../../node_modules/@types"
+      "./test/types"
     ]
   },
+  "extends": "../tsconfig.json",
   "include": [
     "**/*.ts",
     "**/*.tsx",
-    ".ladle",
     "**/*.[scss|gif|svg]"
   ]
 }

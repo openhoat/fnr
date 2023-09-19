@@ -25,7 +25,7 @@ export const SignInPage: FC = () => {
   const handleSubmit = (event: SyntheticEvent<HTMLFormElement>) => {
     event.preventDefault()
     void fetchToken(username, password).then(() => {
-      navigateTo(-2)
+      navigateTo('/app')
     })
   }
   return (

@@ -1,10 +1,13 @@
 {
-  "extends": "../tsconfig.json",
   "compilerOptions": {
-    "rootDir": ".",
     "typeRoots": [
+      "../../node_modules/@types",
       "./main/types",
-      "../../node_modules/@types"
+      "./test/types"
     ]
-  }
+  },
+  "extends": "../tsconfig.json",
+  "include": [
+    "**/*.ts"
+  ]
 }
