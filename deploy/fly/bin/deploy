@@ -26,5 +26,4 @@ flyctl apps list | tail -n +2 | grep -P "^${APP_IMAGE_NAME}[\t]+" > /dev/null ||
 
 DOCKER_BUILDKIT=0 flyctl deploy \
   -c "${FLY_CONFIG_FILE}" \
-  --local-only \
   --ha=false

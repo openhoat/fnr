@@ -10,7 +10,6 @@ primary_region = "${CLOUD_REGION}"
 [build]
 
   dockerfile = "../app/Dockerfile"
-  image = "${CONTAINER_REGISTRY_PREFIX}${APP_IMAGE_NAME}"
 
     [build.args]
     NODE_VERSION = "${NODE_VERSION}"
