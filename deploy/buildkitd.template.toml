@@ -1,4 +1,0 @@
-debug = true
-[registry."${CONTAINER_REGISTRY}"]
-  http = true
-  insecure = true

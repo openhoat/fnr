@@ -1,0 +1,14 @@
+#!/bin/env bash
+
+THIS_SCRIPT_DIR=$(dirname "$0")
+
+source "${THIS_SCRIPT_DIR}/.common"
+
+VERSION=$("${BIN_DIR}/get-version")
+export VERSION
+
+docker compose \
+  --env-file "${DEPLOY_DIR}/.env" \
+  --env-file "${DEPLOY_DIR}/.env.local" \
+  -f "${DEPLOY_DIR}/docker-compose.yaml" \
+  ${*}

@@ -1,9 +1,0 @@
-#!/bin/env bash
-
-THIS_SCRIPT_DIR=$(dirname "$0")
-
-source "${THIS_SCRIPT_DIR}/.common"
-
-cd "${DEPLOY_DIR}" || exit
-
-http "${WATCHTOWER_API_BASE_URL}"/v1/update "Authorization:Bearer ${WATCHTOWER_API_TOKEN}"

@@ -8,8 +8,8 @@
 /node_modules/
 /tmp/
 
-/.env.local
-/deploy/.buildkitd.toml
+/deploy/fly/fly.toml
+/deploy/rpi/.buildkitd.toml
 
 .npm/
 .envrc

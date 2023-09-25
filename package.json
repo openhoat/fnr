@@ -27,6 +27,11 @@
     "cover:back:unit": "wireit",
     "cover:back:unit:open": "wireit",
     "cover:open": "wireit",
+    "deploy": "wireit",
+    "deploy:fly": "wireit",
+    "deploy:rpi": "wireit",
+    "deploy:rpi:only": "wireit",
+    "deploy:rpi:publish": "wireit",
     "deps:check": "wireit",
     "deps:version:check": "wireit",
     "deps:version:update": "wireit",
@@ -62,6 +67,7 @@
     "test:front:unit": "wireit",
     "validate": "wireit",
     "with:depcheck": "npx -y depcheck@1.4.3",
+    "with:dotenv": "npx -y dotenv-cli@7.3.0",
     "with:npm-check-updates": "npx -y npm-check-updates@16.7.12",
     "with:opener": "npx -y opener@1.5.2",
     "with:redoc-cli": "npx -y @redocly/cli@1.0.0-beta.124",
@@ -271,6 +277,28 @@
     },
     "cover:open": {
       "command": "npm run with:opener dist/coverage/all/index.html"
+    },
+    "deploy": {
+      "command": "deploy/bin/compose up -d"
+    },
+    "deploy:fly": {
+      "command": "npm run with:dotenv -- -e deploy/fly/.env -e deploy/fly/.env.local deploy/fly/bin/deploy",
+      "output": []
+    },
+    "deploy:rpi": {
+      "command": "npm run with:dotenv -- -e deploy/rpi/.env -e deploy/rpi/.env.local deploy/rpi/bin/deploy",
+      "output": [],
+      "dependencies": [
+        "deploy:rpi:publish"
+      ]
+    },
+    "deploy:rpi:only": {
+      "command": "npm run with:dotenv -- -e deploy/rpi/.env -e deploy/rpi/.env.local deploy/rpi/bin/deploy",
+      "output": []
+    },
+    "deploy:rpi:publish": {
+      "command": "npm run with:dotenv -- -e deploy/rpi/.env -e deploy/rpi/.env.local deploy/rpi/bin/publish",
+      "output": []
     },
     "deps:check": {
       "command": "npm run with:depcheck",
@@ -533,45 +561,6 @@
         "lint",
         "cover"
       ]
-    },
-    "with:depcheck": {
-      "command": "npx -y depcheck@1.4.3"
-    },
-    "with:npm-check-updates": {
-      "command": "npx -y npm-check-updates@16.6.2",
-      "files": [
-        "package.json"
-      ],
-      "output": [
-        "node_modules/.bin/npm-check-update"
-      ]
-    },
-    "with:opener": {
-      "command": "npx -y opener@1.5.2",
-      "files": [
-        "package.json"
-      ],
-      "output": [
-        "node_modules/.bin/opener"
-      ]
-    },
-    "with:redoc-cli": {
-      "command": "npx -y @redocly/cli@1.0.0-beta.124",
-      "files": [
-        "package.json"
-      ],
-      "output": [
-        "node_modules/.bin/redoc-cli"
-      ]
-    },
-    "with:release-it": {
-      "command": "npx -y release-it@15.6.0",
-      "files": [
-        "package.json"
-      ],
-      "output": [
-        "node_modules/.bin/release-it"
-      ]
     }
   },
   "engines": {
@@ -630,7 +619,6 @@
     "autoprefixer": "10.4.15",
     "commitlint": "17.7.1",
     "cross-env": "7.0.3",
-    "dotenv-cli": "7.3.0",
     "eslint": "8.48.0",
     "eslint-config-prettier": "9.0.0",
     "eslint-plugin-jsx-a11y": "6.7.1",
