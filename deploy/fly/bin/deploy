@@ -21,6 +21,10 @@ i=32 \
   PORT="${PORT}" \
   envsubst < "${FLY_CONFIG_TEMPLATE_FILE}" > "${FLY_CONFIG_FILE}"
 
+if [[ -z $(flyctl apps list -j | jq -r "map(select(.Name == \"${APP_IMAGE_NAME}\"))[].Name") ]]; then
+  flyctl apps create "${APP_IMAGE_NAME}"
+fi
+
 DOCKER_BUILDKIT=0 flyctl deploy \
   -c "${FLY_CONFIG_FILE}" \
   --local-only \
