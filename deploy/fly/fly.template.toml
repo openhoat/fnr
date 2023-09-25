@@ -1,0 +1,44 @@
+#
+# fly.toml app configuration template file
+#
+# See https://fly.io/docs/reference/configuration/ for information about how to use this file.
+#
+
+app = "${APP_IMAGE_NAME}"
+primary_region = "${CLOUD_REGION}"
+
+[build]
+
+  dockerfile = "../app/Dockerfile"
+  image = "${CONTAINER_REGISTRY_PREFIX}${APP_IMAGE_NAME}"
+
+    [build.args]
+    NODE_VERSION = "${NODE_VERSION}"
+    NPM_VERSION = "${NPM_VERSION}"
+
+[env]
+
+  AUTH_PASSWORD = "${AUTH_PASSWORD}"
+  AUTH_USERNAME = "${AUTH_USERNAME}"
+  COOKIE_SECRET = "${COOKIE_SECRET}"
+  CORS_ORIGIN = "${CORS_ORIGIN}"
+  HOST = "${HOST}"
+  JWT_SECRET = "${JWT_SECRET}"
+  LOG_LEVEL = "${LOG_LEVEL}"
+  PORT = ${PORT}
+
+[http_service]
+
+  internal_port = ${PORT}
+  force_https = true
+  auto_stop_machines = true
+  auto_start_machines = true
+  min_machines_running = 0
+  processes = ["app"]
+
+  [[http_service.checks]]
+    grace_period = "10s"
+    interval = "30s"
+    method = "GET"
+    timeout = "5s"
+    path = "/health"

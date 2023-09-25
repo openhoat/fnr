@@ -1,0 +1,27 @@
+#!/bin/env bash
+
+REL_BASE_DIR='../../..'
+THIS_SCRIPT_DIR=$(dirname "$0")
+
+BASE_DIR=$(cd "${THIS_SCRIPT_DIR}/${REL_BASE_DIR}" && pwd)
+DEPLOY_DIR=$(cd "${BASE_DIR}/deploy" && pwd)
+FLY_CONFIG_TEMPLATE_FILE="${DEPLOY_DIR}/fly/fly.template.toml"
+FLY_CONFIG_FILE="${DEPLOY_DIR}/fly/fly.toml"
+
+cd "${BASE_DIR}" || exit
+
+trap 'rm -f "${FLY_CONFIG_FILE}"' EXIT
+i=32 \
+  APP_IMAGE_NAME="${APP_IMAGE_NAME}" \
+  CLOUD_REGION="${CLOUD_REGION}" \
+  CONTAINER_REGISTRY_PREFIX="${CONTAINER_REGISTRY_PREFIX}" \
+  DEPLOY_DIR="${DEPLOY_DIR}" \
+  NODE_VERSION="${NODE_VERSION}" \
+  NPM_VERSION="${NPM_VERSION}" \
+  PORT="${PORT}" \
+  envsubst < "${FLY_CONFIG_TEMPLATE_FILE}" > "${FLY_CONFIG_FILE}"
+
+DOCKER_BUILDKIT=0 flyctl deploy \
+  -c "${FLY_CONFIG_FILE}" \
+  --local-only \
+  --ha=false
