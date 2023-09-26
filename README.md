@@ -1,5 +1,6 @@
-[![build](https://github.com/openhoat/template-node-react-ts/actions/workflows/build.yaml/badge.svg)](https://github.com/openhoat/template-node-react-ts/actions)
+[![build](https://github.com/openhoat/template-node-react-ts/actions/workflows/build.yaml/badge.svg)](https://github.com/openhoat/template-node-react-ts/actions/workflows/build.yaml)
 [![codecov](https://codecov.io/gh/openhoat/template-node-react-ts/graph/badge.svg?token=2C93UD9SLJ)](https://codecov.io/gh/openhoat/template-node-react-ts)
+[![deploy](https://github.com/openhoat/template-node-react-ts/actions/workflows/deploy.yaml/badge.svg)](https://github.com/openhoat/template-node-react-ts/actions/workflows/deploy.yaml)
 
 # Node React TS template
 
