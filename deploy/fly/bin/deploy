@@ -1,10 +1,9 @@
 #!/bin/env bash
 
-REL_BASE_DIR='../../..'
 THIS_SCRIPT_DIR=$(dirname "$0")
 
-BASE_DIR=$(cd "${THIS_SCRIPT_DIR}/${REL_BASE_DIR}" && pwd)
-DEPLOY_DIR=$(cd "${BASE_DIR}/deploy" && pwd)
+source "${THIS_SCRIPT_DIR}/../../bin/.common"
+
 FLY_CONFIG_TEMPLATE_FILE="${DEPLOY_DIR}/fly/fly.template.toml"
 FLY_CONFIG_FILE="${DEPLOY_DIR}/fly/fly.toml"
 

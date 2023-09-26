@@ -12,10 +12,7 @@ cd "${DEPLOY_DIR}" || exit
 initDockerBuilder
 
 if [[ -z "$PLATFORM" ]]; then
-  docker buildx bake \
-    --push
+  docker buildx bake --push
 else
-  docker buildx bake \
-    --set "*.platform=${PLATFORM}" \
-    --push
+  docker buildx bake --push --set "*.platform=${PLATFORM}"
 fi
