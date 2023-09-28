@@ -1,6 +1,21 @@
+import type { FastifyInstance } from 'fastify'
+
 import server from './server'
 
-server.start().catch((err) => {
-  console.error(err)
-  process.exit(1)
-})
+const bootstrap = async () => {
+  let fastify: FastifyInstance | undefined
+  try {
+    fastify = server.init()
+    await server.configure(fastify)
+    await server.start(fastify)
+  } catch (err) {
+    if (fastify) {
+      fastify.log.error(err)
+    } else {
+      console.error(err)
+    }
+    process.exit(1)
+  }
+}
+
+void bootstrap()

@@ -88,14 +88,7 @@ const configure = async (fastify: FastifyInstance) => {
   log.trace(`Plugins registration details:\n${fastify.printPlugins()}`)
 }
 
-const start = async (fastifyInstance?: FastifyInstance) => {
-  let fastify: FastifyInstance
-  if (fastifyInstance) {
-    fastify = fastifyInstance
-  } else {
-    fastify = init()
-    await configure(fastify)
-  }
+const start = async (fastify: FastifyInstance) => {
   const { log } = fastify
   const fastifyListenOptions: FastifyListenOptions = {
     ...(config.host && { host: config.host }),
