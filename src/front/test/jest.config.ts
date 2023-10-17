@@ -10,6 +10,7 @@ const jestConfig: JestConfig = {
   coverageDirectory: join(baseDir, 'dist', 'coverage', 'front', 'all'),
   testMatch: ['<rootDir>/src/front/test/**/*.test.[jt]s(x)?'],
   transform: {
+    // eslint-disable-next-line @typescript-eslint/naming-convention
     '^.+\\.(t|j)sx?$': '@swc/jest',
   },
 }

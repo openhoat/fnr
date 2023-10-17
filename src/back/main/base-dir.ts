@@ -1,6 +1,6 @@
 import findRoot from 'find-root'
 
-export const findNearestBaseDir = (from = __dirname) => {
+export const findNearestBaseDir = (from = __dirname): string | undefined => {
   try {
     return findRoot(from)
   } catch {

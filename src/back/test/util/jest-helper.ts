@@ -17,6 +17,7 @@ const fromBaseDir: (moduleNameFromBaseDir: string) => string = (
 
 const requireFromBaseDir = <TModule = unknown>(
   moduleNameFromBaseDir: string,
-): TModule => require(fromBaseDir(moduleNameFromBaseDir))
+  // eslint-disable-next-line @typescript-eslint/no-require-imports
+): TModule => require(fromBaseDir(moduleNameFromBaseDir)) as TModule
 
 export { doMockFromBaseDir, fromBaseDir, requireFromBaseDir }

@@ -25,18 +25,9 @@ export interface FastifyPluginRegister<
   >(
     fastify: FastifyInstance,
     name: string,
-    plugin: FastifyPluginCallback<Options, Server, TypeProvider, Logger>,
-    opts?: FastifyRegisterOptions<Options>,
-  ): Promise<void>
-  <
-    Options extends FastifyPluginOptions,
-    Server extends RawServerBase = RawServer,
-    TypeProvider extends FastifyTypeProvider = TypeProviderDefault,
-    Logger extends FastifyBaseLogger = LoggerDefault,
-  >(
-    fastify: FastifyInstance,
-    name: string,
-    plugin: FastifyPluginAsync<Options, Server, TypeProvider, Logger>,
+    plugin:
+      | FastifyPluginAsync<Options, Server, TypeProvider, Logger>
+      | FastifyPluginCallback<Options, Server, TypeProvider, Logger>,
     opts?: FastifyRegisterOptions<Options>,
   ): Promise<void>
   <
@@ -48,8 +39,8 @@ export interface FastifyPluginRegister<
     fastify: FastifyInstance,
     name: string,
     plugin:
-      | FastifyPluginCallback<Options, Server, TypeProvider, Logger>
-      | FastifyPluginAsync<Options, Server, TypeProvider, Logger>,
+      | FastifyPluginAsync<Options, Server, TypeProvider, Logger>
+      | FastifyPluginCallback<Options, Server, TypeProvider, Logger>,
     opts?: FastifyRegisterOptions<Options>,
   ): Promise<void>
 }
@@ -59,7 +50,7 @@ const registerPlugin: FastifyPluginRegister = async function <
 >(
   fastify: FastifyInstance,
   name: string,
-  plugin: FastifyPluginCallback<Options> | FastifyPluginAsync<Options>,
+  plugin: FastifyPluginAsync<Options> | FastifyPluginCallback<Options>,
   opts?: FastifyRegisterOptions<Options>,
 ) {
   const { log } = fastify

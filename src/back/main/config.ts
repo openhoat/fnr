@@ -63,11 +63,12 @@ const rawConfig = configSchema.validateSync({
 export type Config = typeof rawConfig
 
 const config: Config = Object.keys(rawConfig).reduce(
-  (acc, key) => ({
-    ...acc,
-    [key]: (rawConfig as Record<string, unknown>)[key],
-  }),
-  {} as Config,
-)
+  (acc, key): Config =>
+    ({
+      ...acc,
+      [key]: (rawConfig as Record<string, unknown>)[key],
+    }) as Config,
+  {},
+) as Config
 
 export default config

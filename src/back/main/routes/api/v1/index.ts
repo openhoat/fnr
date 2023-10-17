@@ -4,7 +4,7 @@ import { needJwt } from '../../../plugins/jwt.plugin'
 import { aboutRouter } from './about.router'
 import { configRouter } from './config.router'
 
-const apiV1Router = async (fastify: FastifyInstance) => {
+const apiV1Router = async (fastify: FastifyInstance): Promise<void> => {
   const { config } = fastify
   if (config.authUsername) {
     needJwt(fastify)

@@ -14,7 +14,7 @@ const ConfigData: FC = () => {
         .sort()
         .map((key, index) => (
           <ListGroup.Item key={`configItem${index}`}>
-            {key}: {`${(config as unknown as Record<string, unknown>)[key]}`}
+            {key}: {`${(config as unknown as Record<string, string>)[key]}`}
           </ListGroup.Item>
         ))}
     </ListGroup>

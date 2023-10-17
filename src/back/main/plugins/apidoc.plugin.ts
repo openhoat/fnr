@@ -6,7 +6,7 @@ import type { FastifyInstance } from 'fastify'
 
 import { ignoreRejection } from '../util/helper'
 
-const apidocPlugin = async (fastify: FastifyInstance) => {
+const apidocPlugin = async (fastify: FastifyInstance): Promise<void> => {
   const { config, log } = fastify
   const { baseDir } = config
   const root = join(baseDir, 'dist', 'apidoc')

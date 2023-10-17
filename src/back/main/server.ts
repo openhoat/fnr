@@ -5,6 +5,7 @@ import type {
   preHandlerAsyncHookHandler,
 } from 'fastify'
 import Fastify from 'fastify'
+import type { Logger } from 'pino'
 import pino from 'pino'
 
 import type { Config } from './config'
@@ -32,7 +33,7 @@ declare module '@fastify/jwt' {
   }
 }
 
-const newLogger = () =>
+const newLogger = (): Logger =>
   pino({
     level: config.logLevel,
     transport: {
@@ -49,27 +50,27 @@ const init: () => FastifyInstance = () => {
   return Fastify(fastifyOptions)
 }
 
-const configure = async (fastify: FastifyInstance) => {
+const configure = async (fastify: FastifyInstance): Promise<void> => {
   const { log } = fastify
   fastify.config = config
   log.debug(
     `Loaded config:\n\t${Object.keys(config)
       .sort()
       .reduce(
-        (lines, key: string) =>
+        (lines: string[], key: string) =>
           isKey(config, key)
             ? [...lines, [key, config[key]].join(': ')]
             : lines,
-        [] as string[],
+        [],
       )
       .join('\n\t')}`,
   )
   fastify.addHook('onRoute', (route) => {
-    log.debug(`Registered route: ${route.method} ${route.url}`)
+    log.debug(`Registered route: ${route.method.toString()} ${route.url}`)
   })
   fastify.setNotFoundHandler(notFoundHandler)
   fastify.setErrorHandler(errorHandler)
-  fastify.addHook('onRequest', (request) => {
+  fastify.addHook('onRequest', (request): Promise<void> => {
     log.info(
       `Incoming request (#${request.id}): ${request.method} ${request.url}`,
     )
@@ -88,7 +89,7 @@ const configure = async (fastify: FastifyInstance) => {
   log.trace(`Plugins registration details:\n${fastify.printPlugins()}`)
 }
 
-const start = async (fastify: FastifyInstance) => {
+const start = async (fastify: FastifyInstance): Promise<void> => {
   const { log } = fastify
   const fastifyListenOptions: FastifyListenOptions = {
     ...(config.host && { host: config.host }),
@@ -105,7 +106,7 @@ const start = async (fastify: FastifyInstance) => {
   await fastify.listen(fastifyListenOptions)
 }
 
-const stop = async (fastify: FastifyInstance) => {
+const stop = async (fastify: FastifyInstance): Promise<void> => {
   await fastify.close()
 }
 

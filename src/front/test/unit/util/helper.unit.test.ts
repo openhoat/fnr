@@ -11,7 +11,7 @@ describe('frontend tests', () => {
             protocol: 'https:',
           }
           // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-          // @ts-ignore
+          // @ts-expect-error
           // noinspection JSConstantReassignment,ES6ShorthandObjectProperty
           global.window = { location }
           // When

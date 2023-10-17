@@ -3,8 +3,8 @@ import type { FC } from 'react'
 import { useLinkClickHandler, useLocation } from 'react-router-dom'
 
 export interface AppNavLinkProps {
-  to: string
   text: string
+  to: string
 }
 
 export const AppNavLink: FC<AppNavLinkProps> = (props: AppNavLinkProps) => {

@@ -12,7 +12,10 @@ export const SignInPage: FC = () => {
   const navigateTo = useNavigate()
   const [username, setUsername] = useState<string>('')
   const [password, setPassword] = useState<string>('')
-  const fetchToken = async (username: string, password: string) => {
+  const fetchToken = async (
+    username: string,
+    password: string,
+  ): Promise<void> => {
     await fetch(`${getBaseUrl()}/auth/sign-in`, {
       body: JSON.stringify({ password, username }),
       headers: {
@@ -22,7 +25,7 @@ export const SignInPage: FC = () => {
     })
     setAuthenticated(true)
   }
-  const handleSubmit = (event: SyntheticEvent<HTMLFormElement>) => {
+  const handleSubmit = (event: SyntheticEvent<HTMLFormElement>): void => {
     event.preventDefault()
     void fetchToken(username, password).then(() => {
       navigateTo('/app')
@@ -45,7 +48,9 @@ export const SignInPage: FC = () => {
               required
               type="string"
               value={username}
-              onChange={(e) => setUsername(e.target.value)}
+              onChange={(e): void => {
+                setUsername(e.target.value)
+              }}
             />
           </div>
           <div>
@@ -57,7 +62,9 @@ export const SignInPage: FC = () => {
               required
               type="password"
               value={password}
-              onChange={(e) => setPassword(e.target.value)}
+              onChange={(e): void => {
+                setPassword(e.target.value)
+              }}
             />
           </div>
           <Button type="submit">Submit</Button>

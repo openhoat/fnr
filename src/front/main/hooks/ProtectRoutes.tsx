@@ -6,7 +6,7 @@ import { AuthContext } from '../providers/AuthProvider'
 
 export const ProtectRoutes: FC = () => {
   const authContext = useContext(AuthContext)
-  return authContext?.authenticated ? (
+  return authContext.authenticated ? (
     <Outlet />
   ) : (
     <Navigate to="/app/sign-in" replace={false} />

@@ -4,8 +4,8 @@ services:
   app:
     image: "${CONTAINER_REGISTRY_PREFIX}${APP_IMAGE_NAME}:${VERSION:-latest}"
     container_name: "${APP_IMAGE_NAME}"
-    expose:
-      - '${PORT}'
+    ports:
+      - '${PORT}:${PORT}'
     healthcheck:
       test: curl -f -s -o /dev/null http://localhost:${PORT}/health && echo OK
       retries: 3

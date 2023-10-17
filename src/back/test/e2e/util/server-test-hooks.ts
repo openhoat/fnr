@@ -6,9 +6,9 @@ import server from '../../../main/server'
 
 let testCase: E2E
 
-const getTestCase = () => testCase
+const getTestCase = (): E2E => testCase
 
-const startTestServer = async () => {
+const startTestServer = async (): Promise<void> => {
   const fastify = server.init()
   registerHooks.fastify = fastify
   await server.configure(fastify)
@@ -16,7 +16,9 @@ const startTestServer = async () => {
   request.setBaseUrl('http://127.0.0.1:3000')
 }
 
-const registerHooks: (() => void) & { fastify?: FastifyInstance } = () => {
+const registerHooks: (() => void) & {
+  fastify?: FastifyInstance
+} = (): void => {
   beforeAll(async () => {
     await startTestServer()
   })
@@ -28,9 +30,7 @@ const registerHooks: (() => void) & { fastify?: FastifyInstance } = () => {
     testCase = e2e(currentTestName)
   })
   afterEach(async () => {
-    if (testCase) {
-      await testCase.cleanup()
-    }
+    await testCase.cleanup()
   })
   afterAll(async () => {
     const { fastify } = registerHooks

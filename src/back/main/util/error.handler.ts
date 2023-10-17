@@ -3,17 +3,17 @@ import { html } from 'common-tags'
 import type { FastifyInstance, FastifyReply, FastifyRequest } from 'fastify'
 import HttpStatusCodes from 'http-status-codes'
 
-const isBoomType = (err: Error | Boom): err is Boom => {
+const isBoomType = (err: Boom | Error): err is Boom => {
   const boomError = err as { isBoom?: boolean }
   return !!boomError.isBoom
 }
 
 const errorHandler = function (
   this: FastifyInstance,
-  err: Error | Boom,
+  err: Boom | Error,
   request: FastifyRequest,
   reply: FastifyReply,
-) {
+): string | { error: string; message: string; statusCode: number } {
   this.log.trace(err)
   let statusCode
   let error

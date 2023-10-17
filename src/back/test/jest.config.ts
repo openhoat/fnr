@@ -11,6 +11,7 @@ const jestConfig: JestConfig = {
   coverageReporters: ['text', 'json', 'cobertura', 'lcov', 'html'],
   testMatch: ['<rootDir>/src/back/test/**/*.test.[jt]s'],
   transform: {
+    // eslint-disable-next-line @typescript-eslint/naming-convention
     '^.+\\.(t|j)s?$': '@swc/jest',
   },
   verbose: false,

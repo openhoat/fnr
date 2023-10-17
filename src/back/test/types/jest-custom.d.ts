@@ -1,13 +1,13 @@
 declare global {
   type ErrorHandler = (err: unknown) => void
   type ErrorMatcherOptions =
+    | ErrorHandler
     | {
         error?: Error
         handler?: ErrorHandler
+        message?: RegExp | string
         type?: unknown
-        message?: string | RegExp
       }
-    | ErrorHandler
   namespace jest {
     interface Matchers<R> {
       toBeRejectedWith: (opt?: ErrorMatcherOptions) => Promise<R>
@@ -17,8 +17,8 @@ declare global {
     interface Expect {
       toBeRejectedWith: (
         opt?: ErrorMatcherOptions,
-      ) => Promise<jest.CustomMatcherResult>
-      toHaveFailedWith: (opt?: ErrorMatcherOptions) => jest.CustomMatcherResult
+      ) => Promise<CustomMatcherResult>
+      toHaveFailedWith: (opt?: ErrorMatcherOptions) => CustomMatcherResult
     }
   }
 }

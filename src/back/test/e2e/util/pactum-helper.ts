@@ -1,10 +1,15 @@
 import HttpStatusCodes from 'http-status-codes'
 import { handler } from 'pactum'
+import type { PactumResponse } from 'pactum/src/exports/handler'
 import type E2E from 'pactum/src/models/E2E'
+import type Spec from 'pactum/src/models/Spec'
 import { string } from 'pactum-matchers'
 
-handler.addExpectHandler('BadRequestError', (ctx) => {
-  const { data: message = 'Bad Request', res } = ctx
+handler.addExpectHandler('BadRequestError', (ctx): void => {
+  const { data: message = 'Bad Request', res } = ctx as {
+    data: string
+    res: PactumResponse
+  }
   expect(res.statusCode).toBe(HttpStatusCodes.BAD_REQUEST)
   expect(res.json).toStrictEqual({
     message,
@@ -15,7 +20,10 @@ handler.addExpectHandler('BadRequestError', (ctx) => {
 })
 
 handler.addExpectHandler('AuthorizationError', (ctx) => {
-  const { data: message = 'Unauthorized', res } = ctx
+  const { data: message = 'Unauthorized', res } = ctx as {
+    data: string
+    res: PactumResponse
+  }
   expect(res.statusCode).toBe(HttpStatusCodes.UNAUTHORIZED)
   expect(res.json).toStrictEqual({
     message,
@@ -26,7 +34,10 @@ handler.addExpectHandler('AuthorizationError', (ctx) => {
 })
 
 handler.addExpectHandler('NotFoundError', (ctx) => {
-  const { data: message = 'Resource not found', res } = ctx
+  const { data: message = 'Resource not found', res } = ctx as {
+    data: string
+    res: PactumResponse
+  }
   expect(res.statusCode).toBe(HttpStatusCodes.NOT_FOUND)
   expect(res.json).toStrictEqual({
     message,
@@ -37,7 +48,10 @@ handler.addExpectHandler('NotFoundError', (ctx) => {
 })
 
 handler.addSpecHandler('Authorization', (ctx) => {
-  const { data: name = 'Token', spec } = ctx
+  const { data: name = 'Token', spec } = ctx as {
+    data: string
+    spec: Spec
+  }
   void spec.withHeaders('Authorization', `Bearer $S{${name}}`)
 })
 
@@ -45,7 +59,7 @@ const authorizationStep = (
   testCase: E2E,
   credentials: { email: string; password: string },
   name = 'Token',
-) =>
+): Promise<unknown> =>
   testCase
     .step('Get an authorization')
     .spec()

@@ -3,7 +3,7 @@ import type { FastifyPluginAsync } from 'fastify'
 
 import type { Config } from '../../config'
 
-const signIn = (config: Config, username?: string, password?: string) => {
+const signIn = (config: Config, username?: string, password?: string): void => {
   if (
     config.authUsername &&
     (username !== config.authUsername || password !== config.authPassword)
@@ -14,10 +14,11 @@ const signIn = (config: Config, username?: string, password?: string) => {
 
 const signInRouter: FastifyPluginAsync = (fastify) => {
   const { config, log } = fastify
-  fastify.post<{ Body: { username?: string; password?: string } | undefined }>(
+  // eslint-disable-next-line @typescript-eslint/naming-convention
+  fastify.post<{ Body: { password?: string; username?: string } | undefined }>(
     '/',
     (request, reply) => {
-      const { username, password } = request.body || {}
+      const { username, password } = request.body ?? {}
       signIn(config, username, password)
       const token = fastify.jwt.sign({ username })
       log.trace(`generated jwt token: ${token}`)

@@ -1,5 +1,5 @@
 import { Banner } from 'flowbite-react'
-import type { FC } from 'react'
+import type { FC, ReactNode } from 'react'
 import { Fragment, useCallback, useEffect, useState } from 'react'
 
 import { AppNavbar } from '../components/AppNavbar'
@@ -19,7 +19,7 @@ export const AboutPage: FC = () => {
       const response = await fetch(`${getBaseUrl()}/api/v1/about`, {
         credentials: 'same-origin',
       })
-      const responseData: Data = await response.json()
+      const responseData = (await response.json()) as Data
       setData(responseData)
     } catch (err) {
       setError(true)
@@ -30,13 +30,13 @@ export const AboutPage: FC = () => {
   useEffect(() => {
     void fetchAbout()
   }, [fetchAbout])
-  const renderError = () => {
+  const renderError = (): ReactNode => {
     return <>Error!</>
   }
-  const renderLoading = () => {
+  const renderLoading = (): ReactNode => {
     return <>Loading…</>
   }
-  const renderData = () => {
+  const renderData = (): ReactNode => {
     return <>Version: {data?.version}</>
   }
   return (

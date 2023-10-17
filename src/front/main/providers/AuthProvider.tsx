@@ -1,14 +1,15 @@
 import React, { useState } from 'react'
 import { useCookies } from 'react-cookie'
 
-export type AuthContextType = {
+export interface AuthContextType {
   authenticated: boolean
   setAuthenticated: (authenticated: boolean) => void
 }
 
 export const AuthContext = React.createContext<AuthContextType>({
   authenticated: false,
-  setAuthenticated: () => {},
+  // eslint-disable-next-line @typescript-eslint/no-empty-function
+  setAuthenticated: (): void => {},
 })
 
 interface Props {

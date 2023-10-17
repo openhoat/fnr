@@ -2,7 +2,7 @@ import type { FastifyInstance } from 'fastify'
 
 import server from './server'
 
-const bootstrap = async () => {
+const bootstrap = async (): Promise<void> => {
   let fastify: FastifyInstance | undefined
   try {
     fastify = server.init()
