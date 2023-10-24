@@ -1,10 +1,10 @@
-import type { FastifyInstance } from 'fastify'
+import type { FastifyPluginAsync } from 'fastify'
 
 import { apiRouter } from './api'
 import { authRouter } from './auth'
 import { healthcheckRouter } from './healthcheck'
 
-const routes = async (fastify: FastifyInstance): Promise<void> => {
+const routes: FastifyPluginAsync = async (fastify) => {
   await fastify.register(healthcheckRouter)
   await fastify.register(authRouter, { prefix: '/auth' })
   await fastify.register(apiRouter, { prefix: '/api' })

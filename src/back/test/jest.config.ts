@@ -1,5 +1,6 @@
+import { join } from 'node:path'
+
 import type { Config as JestConfig } from 'jest'
-import { join } from 'path'
 
 import globalJestConfig from '../../jest.config'
 import baseDir from '../main/base-dir'

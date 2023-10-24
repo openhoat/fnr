@@ -1,6 +1,6 @@
-import type { FastifyInstance } from 'fastify'
+import type { FastifyPluginAsync } from 'fastify'
 
-const configRouter = (fastify: FastifyInstance): Promise<void> => {
+const configRouter: FastifyPluginAsync = (fastify) => {
   const { config } = fastify
   const { corsOrigin, isDevelopment, logLevel } = config
   const exposedConfig = {

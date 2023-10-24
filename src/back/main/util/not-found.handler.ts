@@ -3,7 +3,7 @@ import type { FastifyRequest } from 'fastify'
 
 const notFoundHandler = (request: FastifyRequest): void => {
   const { method, url } = request
-  throw Boom.notFound(`Route ${request.method} ${request.url} not found`, {
+  throw Boom.notFound(`Route ${method} ${url} not found`, {
     method,
     url,
   })

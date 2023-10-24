@@ -20,9 +20,7 @@ describe('backend tests', () => {
           // Then
           .expectStatus(200)
           .expectJsonMatch({
-            token: regex(
-              /^([a-zA-Z0-9_=]+).([a-zA-Z0-9_=]+).([a-zA-Z0-9_\-+/=]*)$/,
-            ),
+            token: regex(/^([\w=]+).([\w=]+).([\w+/=-]*)$/),
           })
           .toss()
       })

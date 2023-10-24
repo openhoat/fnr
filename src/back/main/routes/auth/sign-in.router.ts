@@ -13,14 +13,14 @@ const signIn = (config: Config, username?: string, password?: string): void => {
 }
 
 const signInRouter: FastifyPluginAsync = (fastify) => {
-  const { config, log } = fastify
+  const { config, jwt, log } = fastify
   // eslint-disable-next-line @typescript-eslint/naming-convention
   fastify.post<{ Body: { password?: string; username?: string } | undefined }>(
     '/',
     (request, reply) => {
       const { username, password } = request.body ?? {}
       signIn(config, username, password)
-      const token = fastify.jwt.sign({ username })
+      const token = jwt.sign({ username })
       log.trace(`generated jwt token: ${token}`)
       void reply.cookie('token', token, {
         httpOnly: true,

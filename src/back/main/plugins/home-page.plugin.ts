@@ -7,19 +7,20 @@ import fastifyVite from '@fastify/vite'
 import type { FastifyInstance, FastifyPluginAsync } from 'fastify'
 
 const homePagePlugin: FastifyPluginAsync = async (fastify: FastifyInstance) => {
-  const { config, log } = fastify
-  const { baseDir } = config
+  const { baseDir, isDevelopment } = fastify.config
   fastify.get('/', (__, reply) => {
     void reply.redirect('/app')
   })
-  if (config.isDevelopment) {
+  if (isDevelopment) {
     const fastifyViteOptions: FastifyViteOptions = {
       dev: true,
       root: baseDir,
       spa: true,
     }
-    log.trace(`Vite plugin options: ${JSON.stringify(fastifyViteOptions)}`)
-    log.trace('Registering vite plugin')
+    fastify.log.trace(
+      `Vite plugin options: ${JSON.stringify(fastifyViteOptions)}`,
+    )
+    fastify.log.trace('Registering vite plugin')
     await fastify.register(fastifyVite, fastifyViteOptions)
     fastify.get('/app', (__, reply) => {
       reply.html()
@@ -28,7 +29,7 @@ const homePagePlugin: FastifyPluginAsync = async (fastify: FastifyInstance) => {
       reply.html()
     })
     await fastify.vite.ready()
-    log.debug('Vite plugin successfully registered')
+    fastify.log.debug('Vite plugin successfully registered')
     return
   }
   const fastifyStaticOptions: FastifyStaticOptions = {

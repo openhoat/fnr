@@ -1,20 +1,17 @@
+import { join } from 'node:path'
+
 import type { FastifyBasicAuthOptions } from '@fastify/basic-auth'
 import fastifyBasicAuth from '@fastify/basic-auth'
 import fastifySwagger from '@fastify/swagger'
 import fastifySwaggerUi from '@fastify/swagger-ui'
 import Boom from '@hapi/boom'
 import type { FastifyPluginAsync } from 'fastify'
-import { join } from 'path'
 
 const swaggerUiPlugin: FastifyPluginAsync = async (fastify) => {
-  const { config } = fastify
-  const { baseDir } = config
-  const validate = config.authUsername
+  const { baseDir, authUsername, authPassword } = fastify.config
+  const validate = authUsername
     ? (username: string, password: string): Promise<void> => {
-        if (
-          username !== config.authUsername ||
-          password !== config.authPassword
-        ) {
+        if (username !== authUsername || password !== authPassword) {
           throw Boom.unauthorized()
         }
         return Promise.resolve()
@@ -46,7 +43,6 @@ const swaggerUiPlugin: FastifyPluginAsync = async (fastify) => {
       tryItOutEnabled: true,
     },
   })
-  return Promise.resolve()
 }
 
 export { swaggerUiPlugin }

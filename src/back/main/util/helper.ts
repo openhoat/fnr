@@ -16,8 +16,8 @@ export const ignoreRejection: IgnoreRejection = async <T>(
   let result: T | undefined
   try {
     result = await p
-  } catch (err) {
-    log?.debug(String(err))
+  } catch (error) {
+    log?.debug(String(error))
   }
   return result
 }

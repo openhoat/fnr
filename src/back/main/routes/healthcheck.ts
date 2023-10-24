@@ -1,6 +1,6 @@
-import type { FastifyInstance } from 'fastify'
+import type { FastifyPluginAsync } from 'fastify'
 
-const healthcheckRouter = (fastify: FastifyInstance): Promise<void> => {
+const healthcheckRouter: FastifyPluginAsync = (fastify) => {
   fastify.get('/health', () => ({ web: { status: 'up' } }))
   return Promise.resolve()
 }

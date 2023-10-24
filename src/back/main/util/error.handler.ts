@@ -20,18 +20,16 @@ const errorHandler = function (
   let message
   if (isBoomType(err)) {
     statusCode = err.output.payload.statusCode
-    if (typeof err.output.payload.error !== 'undefined') {
-      error = err.output.payload.error
-    }
+    error = err.output.payload.error
     message = err.output.payload.message
   }
-  if (typeof statusCode === 'undefined') {
+  if (statusCode === undefined) {
     statusCode = HttpStatusCodes.INTERNAL_SERVER_ERROR
   }
-  if (typeof error === 'undefined') {
+  if (error === undefined) {
     error = err.name || 'Internal Error'
   }
-  if (typeof message === 'undefined') {
+  if (message === undefined) {
     message = err.message || 'Unknown error'
   }
   this.log.error(
@@ -43,22 +41,21 @@ const errorHandler = function (
   )
   void reply.status(statusCode)
   const accept = request.accepts()
-  switch (accept.type('json', 'html')) {
-    case 'html':
-      void reply.type('text/html')
-      return html`<html lang="en">
+  if (accept.type('json', 'html') === 'html') {
+    void reply.type('text/html')
+    return html`
+      <html lang="en">
         <body>
           <h2>${error}</h2>
           <h3>${message}</h3>
         </body>
-      </html>`
-    case 'json':
-    default:
-      return {
-        error,
-        message,
-        statusCode,
-      }
+      </html>
+    `
+  }
+  return {
+    error,
+    message,
+    statusCode,
   }
 }
 

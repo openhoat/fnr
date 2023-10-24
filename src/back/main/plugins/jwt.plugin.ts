@@ -43,13 +43,14 @@ const jwtPlugin: FastifyPluginAsync = fastifyPlugin(
   },
 )
 
-const needJwt = (fastify: FastifyInstance): void => {
+const needJwt: FastifyPluginAsync = (fastify: FastifyInstance) => {
   const { verifyJWT } = fastify
   if (verifyJWT) {
     fastify.addHook('onRequest', async (request, reply) => {
       await verifyJWT.call(fastify, request, reply)
     })
   }
+  return Promise.resolve()
 }
 
 export { jwtPlugin, needJwt }

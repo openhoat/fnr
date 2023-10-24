@@ -70,7 +70,7 @@ const configure = async (fastify: FastifyInstance): Promise<void> => {
   })
   fastify.setNotFoundHandler(notFoundHandler)
   fastify.setErrorHandler(errorHandler)
-  fastify.addHook('onRequest', (request): Promise<void> => {
+  fastify.addHook('onRequest', (request) => {
     log.info(
       `Incoming request (#${request.id}): ${request.method} ${request.url}`,
     )

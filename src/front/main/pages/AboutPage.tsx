@@ -9,6 +9,14 @@ interface Data {
   version: string
 }
 
+const renderError = (): ReactNode => {
+  return <>Error!</>
+}
+
+const renderLoading = (): ReactNode => {
+  return <>Loading…</>
+}
+
 export const AboutPage: FC = () => {
   const [isLoading, setLoading] = useState<boolean>(false)
   const [hasError, setError] = useState<boolean>(false)
@@ -21,7 +29,7 @@ export const AboutPage: FC = () => {
       })
       const responseData = (await response.json()) as Data
       setData(responseData)
-    } catch (err) {
+    } catch {
       setError(true)
     } finally {
       setLoading(false)
@@ -30,12 +38,6 @@ export const AboutPage: FC = () => {
   useEffect(() => {
     void fetchAbout()
   }, [fetchAbout])
-  const renderError = (): ReactNode => {
-    return <>Error!</>
-  }
-  const renderLoading = (): ReactNode => {
-    return <>Loading…</>
-  }
   const renderData = (): ReactNode => {
     return <>Version: {data?.version}</>
   }

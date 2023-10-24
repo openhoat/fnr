@@ -8,12 +8,13 @@ const bootstrap = async (): Promise<void> => {
     fastify = server.init()
     await server.configure(fastify)
     await server.start(fastify)
-  } catch (err) {
+  } catch (error) {
     if (fastify) {
-      fastify.log.error(err)
+      fastify.log.error(error)
     } else {
-      console.error(err)
+      console.error(error)
     }
+    // eslint-disable-next-line unicorn/no-process-exit
     process.exit(1)
   }
 }
