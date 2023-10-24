@@ -4,31 +4,31 @@
 # See https://fly.io/docs/reference/configuration/ for information about how to use this file.
 #
 
-app = "${APP_IMAGE_NAME}"
-primary_region = "${CLOUD_REGION}"
+app = "node-react-ts-demo"
+primary_region = "cdg"
 
 [build]
 
   dockerfile = "../app/Dockerfile"
 
     [build.args]
-    NODE_VERSION = "${NODE_VERSION}"
-    NPM_VERSION = "${NPM_VERSION}"
+    NODE_VERSION = "18.17.1"
+    NPM_VERSION = "9.8.1"
 
 [env]
 
-  AUTH_PASSWORD = "${AUTH_PASSWORD}"
-  AUTH_USERNAME = "${AUTH_USERNAME}"
-  COOKIE_SECRET = "${COOKIE_SECRET}"
-  CORS_ORIGIN = "${CORS_ORIGIN}"
-  HOST = "${HOST}"
-  JWT_SECRET = "${JWT_SECRET}"
-  LOG_LEVEL = "${LOG_LEVEL}"
-  PORT = ${PORT}
+  AUTH_PASSWORD = "MyBigSecret"
+  AUTH_USERNAME = "johndoe"
+  COOKIE_SECRET = "MyBigSecret"
+  CORS_ORIGIN = "https://node-react-ts-demo.headwood.giize.com"
+  HOST = "0.0.0.0"
+  JWT_SECRET = "MyBigSecret"
+  LOG_LEVEL = "debug"
+  PORT = 3000
 
 [http_service]
 
-  internal_port = ${PORT}
+  internal_port = 3000
   force_https = true
   auto_stop_machines = true
   auto_start_machines = true
