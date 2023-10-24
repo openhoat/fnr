@@ -1,7 +1,7 @@
 {
   "$schema": "https://json.schemastore.org/eslintrc.json",
   "env": {
-    "es2021": true,
+    "es2024": true,
     "jest": true,
     "node": true
   },
