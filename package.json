@@ -340,7 +340,7 @@
       "command": "eslint src/back/main",
       "files": [
         "src/back/main/**",
-        ".eslintrc.js",
+        ".eslintrc.json",
         "tsconfig.json",
         "src/tsconfig.json",
         "src/back/tsconfig.json",
@@ -352,7 +352,7 @@
       "command": "eslint src/back/test",
       "files": [
         "src/back/test/**",
-        ".eslintrc.js",
+        ".eslintrc.json",
         "tsconfig.json",
         "src/tsconfig.json",
         "src/back/tsconfig.json",
@@ -370,7 +370,7 @@
       "command": "eslint src/front/main",
       "files": [
         "src/front/main/**",
-        ".eslintrc.js",
+        ".eslintrc.json",
         "tsconfig.json",
         "src/tsconfig.json",
         "src/front/tsconfig.json",
@@ -382,7 +382,7 @@
       "command": "eslint src/front/test",
       "files": [
         "src/front/test/**",
-        ".eslintrc.js",
+        ".eslintrc.json",
         "tsconfig.json",
         "src/tsconfig.json",
         "src/front/tsconfig.json",
