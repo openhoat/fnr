@@ -7,7 +7,7 @@ paths:
   /health:
     $ref: 'health.yaml#/paths/health'
   /auth/token:
-    $ref: 'auth/token.yaml#/paths/token'
+    $ref: 'auth/sign-in.yaml#/paths/token'
   /api/v1/config:
     $ref: 'api/config.yaml#/paths/config'
 components:
