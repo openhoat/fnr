@@ -14,7 +14,6 @@ const signIn = (config: Config, username?: string, password?: string): void => {
 
 const signInRouter: FastifyPluginAsync = (fastify) => {
   const { config, jwt, log } = fastify
-  // eslint-disable-next-line @typescript-eslint/naming-convention
   fastify.post<{ Body: { password?: string; username?: string } | undefined }>(
     '/',
     (request, reply) => {
