@@ -1,11 +1,11 @@
 import { join } from 'node:path'
 
-import { camelCase } from 'change-case'
 import { config as configDotenv } from 'dotenv'
 import { levels } from 'pino'
 import { boolean, number, object, string } from 'yup'
 
 import baseDir from './base-dir'
+import { toCamelCase } from './util/helper'
 
 const isDevelopment = process.env.NODE_ENV === 'development'
 
@@ -48,7 +48,7 @@ const envVarNames = [
 
 const envConfig = envVarNames.reduce(
   (acc, name) =>
-    name ? { ...acc, [camelCase(name)]: process.env[name] } : acc,
+    name ? { ...acc, [toCamelCase(name)]: process.env[name] } : acc,
   {
     // Custom values / env vars
   },
