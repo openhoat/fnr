@@ -10,6 +10,7 @@ ignores:
     - '@types/jest-when'
     - '@typescript-eslint/eslint-plugin'
     - '@vitejs/plugin-react'
+    - '@vitejs/plugin-react-swc'
     - autoprefixer
     - commitlint
     - cross-env
@@ -32,5 +33,7 @@ ignores:
     - prettier-plugin-tailwindcss
     - react-refresh
     - rimraf
+    - sass
     - ts-node
     - typescript
+    - vite
