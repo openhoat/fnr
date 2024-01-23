@@ -9,6 +9,7 @@ import type { FastifyPluginAsync } from 'fastify'
 
 const swaggerUiPlugin: FastifyPluginAsync = async (fastify) => {
   const { baseDir, authUsername, authPassword } = fastify.config
+  const swaggerBaseDir = join(baseDir, 'swagger')
   const validate = authUsername
     ? (username: string, password: string): Promise<void> => {
         if (username !== authUsername || password !== authPassword) {
@@ -17,7 +18,6 @@ const swaggerUiPlugin: FastifyPluginAsync = async (fastify) => {
         return Promise.resolve()
       }
     : undefined
-  const swaggerBaseDir = join(baseDir, 'swagger')
   if (validate) {
     const basicAuthOptions: FastifyBasicAuthOptions = {
       validate,
