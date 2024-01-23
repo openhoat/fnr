@@ -7,8 +7,14 @@ import jestBaseConfig from '../jest.config'
 
 const jestConfig: JestConfig = {
   ...jestBaseConfig,
-  coverageDirectory: resolve(baseDir, 'dist', 'coverage', 'front', 'unit'),
-  reporters: buildReporters('unit'),
+  coverageDirectory: resolve(
+    baseDir,
+    'dist',
+    'coverage',
+    'front',
+    'integration',
+  ),
+  reporters: buildReporters('integration'),
   testMatch: [resolve(__dirname, '**/*.test.[jt]s(x)?')],
 }
 

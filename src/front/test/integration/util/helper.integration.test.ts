@@ -1,8 +1,8 @@
 import { getBaseUrl } from '../../../main/util/helper'
 
 describe('frontend tests', () => {
-  describe('frontend unit tests', () => {
-    describe('helper', () => {
+  describe('frontend integration tests', () => {
+    describe('util', () => {
       describe('getBaseUrl', () => {
         test('should return "https://local.io" given location protocol is "https:" and location host is "local.io"', () => {
           // Given
