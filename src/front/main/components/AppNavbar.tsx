@@ -17,10 +17,12 @@ export const AppNavbar: FC = () => {
       <Navbar.Toggle />
       <Navbar.Collapse>
         <AppNavLink to={'/app'} text={'Home'} />
-        <AppNavLink to={'/app/config'} text={'Config'} />
-        <AppNavLink to={'/app/about'} text={'About'} />
         {authContext.authenticated ? (
-          <AppNavLink to={'/app/sign-out'} text={'Sign out'} />
+          <>
+            <AppNavLink to={'/app/config'} text={'Config'} />
+            <AppNavLink to={'/app/about'} text={'About'} />
+            <AppNavLink to={'/app/sign-out'} text={'Sign out'} />
+          </>
         ) : (
           <AppNavLink to={'/app/sign-in'} text={'Sign in'} />
         )}
