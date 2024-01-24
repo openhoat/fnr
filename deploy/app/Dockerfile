@@ -21,7 +21,7 @@ COPY --from=app-base /usr/src/app/package.json /usr/src/app/package-lock.json ./
 RUN true # See https://github.com/moby/moby/issues/37965
 COPY --from=app-base /usr/src/app/node_modules/ ./node_modules
 RUN true
-COPY .swcrc postcss.config.ts tailwind.config.ts vite.config.js tsconfig.json ./
+COPY .swcrc postcss.config.mjs tailwind.config.ts vite.config.mjs tsconfig.json ./
 RUN true
 COPY ./src/ ./src
 RUN true
