@@ -29,6 +29,7 @@ ignores:
     - jsdoc-tsimport-plugin
     - pactum-matchers
     - pino-pretty
+    - postcss
     - prettier
     - prettier-plugin-tailwindcss
     - react-refresh

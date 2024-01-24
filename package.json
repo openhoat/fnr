@@ -132,7 +132,8 @@
         "assets/**",
         "src/front/**/*.ts[x]",
         "src/**/tsconfig.json",
-        "vite.config.js"
+        "vite.config.js",
+        "tailwind.config.ts"
       ],
       "output": [
         "dist/client/**"
@@ -633,11 +634,12 @@
     "jest-html-reporter": "3.10.2",
     "jest-junit": "16.0.0",
     "jest-when": "3.6.0",
-    "jotai": "2.6.2",
+    "jotai": "2.5.1",
     "jsdoc": "4.0.2",
     "jsdoc-tsimport-plugin": "1.0.5",
     "pactum": "3.6.0",
     "pactum-matchers": "1.1.6",
+    "postcss": "8.4.33",
     "prettier": "3.2.4",
     "prettier-plugin-tailwindcss": "0.5.11",
     "react": "18.2.0",
