@@ -10,11 +10,12 @@
 
 /deploy/rpi/.buildkitd.toml
 
-.npm/
+**/.npm/
+**/.swc/
+
 .envrc
 .env.*
 !.env.test
-.swc/
 
 tsconfig.tsbuildinfo
 .tmp_*
