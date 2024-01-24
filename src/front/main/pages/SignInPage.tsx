@@ -37,7 +37,10 @@ export const SignInPage: FC = () => {
       {authenticated ? (
         <Navigate to={'/app'} replace={false} />
       ) : (
-        <form onSubmit={handleSubmit} className="flex max-w-md flex-col gap-4">
+        <form
+          onSubmit={handleSubmit}
+          className="flex flex-col p-4 max-w-md gap-4"
+        >
           <div>
             <div className="mb-2 block">
               <Label htmlFor="username" value="Your username" />
