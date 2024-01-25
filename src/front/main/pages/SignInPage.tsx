@@ -58,10 +58,10 @@ export const SignInPage: FC = () => {
           </div>
           <div>
             <div className="mb-2 block">
-              <Label htmlFor="password1" value="Your password" />
+              <Label htmlFor="password" value="Your password" />
             </div>
             <TextInput
-              id="password1"
+              id="password"
               required
               type="password"
               value={password}
@@ -70,7 +70,9 @@ export const SignInPage: FC = () => {
               }}
             />
           </div>
-          <Button type="submit">Submit</Button>
+          <Button id="signInSubmit" type="submit">
+            Submit
+          </Button>
         </form>
       )}
     </>

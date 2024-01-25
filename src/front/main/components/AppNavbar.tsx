@@ -10,7 +10,10 @@ export const AppNavbar: FC = () => {
   return (
     <Navbar fluid>
       <Navbar.Brand href="/app">
-        <span className="self-center whitespace-nowrap text-xl font-semibold dark:text-white">
+        <span
+          id="brandText"
+          className="self-center whitespace-nowrap text-xl font-semibold dark:text-white"
+        >
           Node React TypeScript Demo
         </span>
       </Navbar.Brand>
@@ -19,12 +22,16 @@ export const AppNavbar: FC = () => {
         <AppNavLink to={'/app'} text={'Home'} />
         {authContext.authenticated ? (
           <>
-            <AppNavLink to={'/app/config'} text={'Config'} />
-            <AppNavLink to={'/app/about'} text={'About'} />
-            <AppNavLink to={'/app/sign-out'} text={'Sign out'} />
+            <AppNavLink id="configNavLink" to={'/app/config'} text={'Config'} />
+            <AppNavLink id="aboutNavLink" to={'/app/about'} text={'About'} />
+            <AppNavLink
+              id="signOutNavLink"
+              to={'/app/sign-out'}
+              text={'Sign out'}
+            />
           </>
         ) : (
-          <AppNavLink to={'/app/sign-in'} text={'Sign in'} />
+          <AppNavLink id="signInNavLink" to={'/app/sign-in'} text={'Sign in'} />
         )}
       </Navbar.Collapse>
     </Navbar>
