@@ -1,4 +1,22 @@
+import type { Address } from 'node:cluster'
+
 import type { FastifyBaseLogger } from 'fastify'
+
+export const generateBaseUrl = (
+  address: Address | string | undefined,
+  defaultPort = 3000,
+): string => {
+  const isLinux = process.platform === 'linux'
+  if (typeof address === 'string') {
+    return isLinux ? address.replace('127.0.0.1', 'localhost') : address
+  }
+  const port: number = address?.port ?? defaultPort
+  let hostname: string = address?.address ?? '127.0.0.1'
+  if (isLinux) {
+    hostname = hostname.replace('127.0.0.1', 'localhost')
+  }
+  return `http://${hostname}:${port}}`
+}
 
 export const toWords = (s: string): RegExpMatchArray | null => {
   const regex =

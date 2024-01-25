@@ -13,7 +13,7 @@ import config from './config'
 import { plugins } from './plugins'
 import { routes } from './routes'
 import { errorHandler } from './util/error.handler'
-import { isKey } from './util/helper'
+import { generateBaseUrl, isKey } from './util/helper'
 import { notFoundHandler } from './util/not-found.handler'
 
 declare module 'fastify' {
@@ -89,21 +89,18 @@ const configure = async (fastify: FastifyInstance): Promise<void> => {
   log.trace(`Plugins registration details:\n${fastify.printPlugins()}`)
 }
 
-const start = async (fastify: FastifyInstance): Promise<void> => {
+const start = async (fastify: FastifyInstance): Promise<string> => {
   const { log } = fastify
   const fastifyListenOptions: FastifyListenOptions = {
     ...(config.host && { host: config.host }),
-    listenTextResolver: (address) => {
-      const addressToConnect =
-        process.platform === 'linux'
-          ? address.replace('127.0.0.1', 'localhost')
-          : address
-      return `Server listening at ${addressToConnect}`
-    },
+    listenTextResolver: () => 'Server is listening',
     port: config.port,
   }
   log.trace(`Fastify listen options : ${JSON.stringify(fastifyListenOptions)}`)
-  await fastify.listen(fastifyListenOptions)
+  const address = await fastify.listen(fastifyListenOptions)
+  const baseUrl = generateBaseUrl(address)
+  log.info(`Server is ready: visit ${baseUrl}/`)
+  return baseUrl
 }
 
 const stop = async (fastify: FastifyInstance): Promise<void> => {
