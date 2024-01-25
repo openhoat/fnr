@@ -26,6 +26,8 @@ jobs:
         with:
           node-version: ${{env.NODE_VERSION}}
           npm-version: ${{env.NPM_VERSION}}
+      - name: Install puppeteer chrome browser
+        run: npx puppeteer browsers install chrome
       - name: Validate project
         run: npm run validate
       - name: Upload lcov coverage report file to Codecov
