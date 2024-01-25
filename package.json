@@ -26,6 +26,8 @@
     "cover:back:integration:open": "wireit",
     "cover:back:unit": "wireit",
     "cover:back:unit:open": "wireit",
+    "cover:front:integration": "wireit",
+    "cover:front:integration:open": "wireit",
     "cover:open": "wireit",
     "deploy": "wireit",
     "deploy:fly": "wireit",
@@ -64,6 +66,9 @@
     "test:back:unit": "wireit",
     "test:back:unit:open": "wireit",
     "test:front": "wireit",
+    "test:front:e2e": "wireit",
+    "test:front:e2e:open": "wireit",
+    "test:front:integration": "wireit",
     "test:front:unit": "wireit",
     "validate": "wireit",
     "with:depcheck": "npx -y depcheck@1.4.3",
@@ -275,6 +280,30 @@
     },
     "cover:back:unit:open": {
       "command": "npm run with:opener dist/coverage/back/unit/index.html"
+    },
+    "cover:front:integration": {
+      "command": "jest --coverage -c src/front/test/integration/jest.config.ts",
+      "files": [
+        "src/jest.config.ts",
+        "src/jest-config-helper.ts",
+        "src/jest-custom.ts",
+        "src/jest-global-setup.ts",
+        "src/front/test/jest.config.ts",
+        "src/front/test/integration/jest.config.ts",
+        "src/front/test/integration/**",
+        "src/front/test/*"
+      ],
+      "output": [
+        "dist/test/front/integration-tests-report.html"
+      ],
+      "env": {
+        "CI": {
+          "external": true
+        }
+      }
+    },
+    "cover:front:integration:open": {
+      "command": "npm run with:opener dist/coverage/front/integration/index.html"
     },
     "cover:open": {
       "command": "npm run with:opener dist/coverage/all/index.html"
@@ -541,6 +570,51 @@
         "test:front:unit"
       ]
     },
+    "test:front:e2e": {
+      "command": "jest --runInBand -c src/front/test/e2e/jest.config.ts",
+      "files": [
+        "src/jest.config.ts",
+        "src/jest-config-helper.ts",
+        "src/jest-custom.ts",
+        "src/jest-global-setup.ts",
+        "src/front/test/jest.config.ts",
+        "src/front/test/e2e/jest.config.ts",
+        "src/front/main/**",
+        "src/front/test/e2e/**",
+        "src/front/test/*",
+        "src/back/main/**"
+      ],
+      "output": [
+        "dist/test/front/e2e-tests-report.html"
+      ],
+      "dependencies": [
+        "build",
+        "build:apidoc"
+      ],
+      "env": {
+        "CI": {
+          "external": true
+        }
+      }
+    },
+    "test:front:e2e:open": {
+      "command": "npm run with:opener dist/test/back/e2e-tests-report.html"
+    },
+    "test:front:integration": {
+      "command": "jest -c src/front/test/integration/jest.config.ts",
+      "files": [
+        "src/front/test/integration/**",
+        "src/front/test/*"
+      ],
+      "output": [
+        "dist/test/front/integration-tests-report.html"
+      ],
+      "env": {
+        "CI": {
+          "external": true
+        }
+      }
+    },
     "test:front:unit": {
       "command": "jest -c src/front/test/unit/jest.config.ts",
       "files": [
@@ -642,6 +716,7 @@
     "postcss": "8.4.33",
     "prettier": "3.2.4",
     "prettier-plugin-tailwindcss": "0.5.11",
+    "puppeteer": "21.9.0",
     "react": "18.2.0",
     "react-cookie": "7.0.1",
     "react-dom": "18.2.0",

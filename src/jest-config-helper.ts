@@ -1,5 +1,6 @@
+import { join, resolve } from 'node:path'
+
 import type { Config } from '@jest/types'
-import { join, resolve } from 'path'
 
 const baseDir = resolve(__dirname, '..', '..', '..')
 

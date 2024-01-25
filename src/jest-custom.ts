@@ -4,8 +4,8 @@ const expectExtension: ExpectExtensionable = {
   async toBeRejectedWith(promise: Promise<unknown>, opt?) {
     try {
       await promise
-    } catch (err) {
-      handleError(err, opt)
+    } catch (error) {
+      handleError(error, opt)
       return {
         message: () => 'promise is rejected with expected error',
         pass: true,
@@ -16,35 +16,37 @@ const expectExtension: ExpectExtensionable = {
   toHaveFailedWith(fn: () => void, opt?) {
     try {
       fn()
-    } catch (err) {
-      handleError(err, opt)
+    } catch (error) {
+      handleError(error, opt)
       return { message: () => 'function thrown expected error', pass: true }
     }
     return { message: () => 'function did not throw any error', pass: false }
   },
 }
 
-const handleError = (err: unknown, opt?: ErrorMatcherOptions) => {
+const handleError = (error: unknown, opt?: ErrorMatcherOptions): void => {
   if (typeof opt === 'function') {
-    opt(err)
+    opt(error)
     return
   }
   if (opt?.error) {
-    expect(err).toBe(opt.error)
+    expect(error).toBe(opt.error)
     return
   }
   if (opt?.type) {
-    expect(err).toBeInstanceOf(opt.type)
+    expect(error).toBeInstanceOf(opt.type)
   }
   if (opt?.message) {
-    if (typeof opt?.message === 'string') {
-      expect(err).toHaveProperty('message', opt.message)
+    if (typeof opt.message === 'string') {
+      expect(error).toHaveProperty('message', opt.message)
     } else {
-      expect(err).toMatchObject({ message: expect.stringMatching(opt.message) })
+      expect(error).toMatchObject({
+        message: `${expect.stringMatching(opt.message)}`,
+      })
     }
   }
   if (opt?.handler) {
-    opt.handler(err)
+    opt.handler(error)
   }
 }
 
