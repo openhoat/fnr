@@ -594,6 +594,9 @@
       "env": {
         "CI": {
           "external": true
+        },
+        "E2E_TEST_HEADLESS": {
+          "external": true
         }
       }
     },
@@ -675,6 +678,7 @@
     "@babel/eslint-parser": "7.23.3",
     "@babel/preset-react": "7.23.3",
     "@jest/types": "29.6.3",
+    "@material-tailwind/react": "2.1.8",
     "@swc-jotai/react-refresh": "0.1.0",
     "@swc-node/register": "1.6.8",
     "@swc/cli": "0.1.65",
