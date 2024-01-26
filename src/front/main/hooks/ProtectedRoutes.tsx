@@ -4,7 +4,7 @@ import { Navigate, Outlet } from 'react-router-dom'
 
 import { AuthContext } from '../providers/AuthProvider'
 
-export const ProtectRoutes: FC = () => {
+export const ProtectedRoutes: FC = () => {
   const authContext = useContext(AuthContext)
   return authContext.authenticated ? (
     <Outlet />

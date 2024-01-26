@@ -3,7 +3,7 @@ import './index.css'
 import type { FC } from 'react'
 import { Route, Routes } from 'react-router-dom'
 
-import { ProtectRoutes } from './hooks/ProtectRoutes'
+import { ProtectedRoutes } from './hooks/ProtectedRoutes'
 import { AppLayout } from './layouts/AppLayout'
 import { AboutPage } from './pages/AboutPage'
 import { ConfigPage } from './pages/ConfigPage'
@@ -19,7 +19,7 @@ const App: FC = () => {
           <Route path="" element={<HomePage />} />
           <Route path="sign-in" element={<SignInPage />} />
           <Route path="sign-out" element={<SignOutPage />} />
-          <Route element={<ProtectRoutes />}>
+          <Route element={<ProtectedRoutes />}>
             <Route path="about" element={<AboutPage />} />
             <Route path="config" element={<ConfigPage />} />
           </Route>
