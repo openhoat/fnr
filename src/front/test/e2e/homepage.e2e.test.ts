@@ -1,10 +1,9 @@
 import type { FastifyInstance } from 'fastify'
-import type { Browser, BrowserLaunchArgumentOptions, Page } from 'puppeteer'
+import type { Browser, Page } from 'puppeteer'
 import puppeteer from 'puppeteer'
 
 import server from '../../../back/main/server'
-
-const ci = process.env.CI === 'true'
+import { headless } from './headless'
 
 describe('frontend tests', () => {
   describe('frontend e2e tests', () => {
@@ -23,9 +22,6 @@ describe('frontend tests', () => {
         baseUrl = await server.start(fastify)
       })
       beforeEach(async () => {
-        const headless: BrowserLaunchArgumentOptions['headless'] = ci
-          ? 'new'
-          : false
         browser = await puppeteer.launch({ headless })
         page = await browser.newPage()
         await page.goto(`${baseUrl}/app`)
