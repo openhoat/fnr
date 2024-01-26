@@ -1,3 +1,4 @@
+import { ThemeProvider } from '@material-tailwind/react'
 import type { ReactNode } from 'react'
 import { StrictMode, Suspense } from 'react'
 import { BrowserRouter } from 'react-router-dom'
@@ -11,7 +12,9 @@ export const createApp = (): ReactNode => {
       <BrowserRouter>
         <Suspense fallback={<h3>Loading…</h3>}>
           <AuthProvider>
-            <App />
+            <ThemeProvider>
+              <App />
+            </ThemeProvider>
           </AuthProvider>
         </Suspense>
       </BrowserRouter>
