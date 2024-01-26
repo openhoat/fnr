@@ -1,8 +1,8 @@
 import flowbitePlugin from 'flowbite/plugin'
-import customColors from './tailwind.colors.config'
+import withMT from '@material-tailwind/react/utils/withMT'
 
 /** @type {import('tailwindcss').Config} */
-module.exports = {
+module.exports = withMT({
   content: [
     './src/front/main/**/*.{ts,tsx}',
     './assets/index.html',
@@ -10,8 +10,8 @@ module.exports = {
   ],
   theme: {
     extend: {
-      colors: customColors,
+      //   colors: customColors,
     },
     plugins: [flowbitePlugin],
   },
-}
+})
