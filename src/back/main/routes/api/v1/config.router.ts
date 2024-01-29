@@ -3,12 +3,11 @@ import type { FastifyPluginAsync } from 'fastify'
 const configRouter: FastifyPluginAsync = (fastify) => {
   const { config } = fastify
   const { corsOrigin, isDevelopment, logLevel } = config
-  const exposedConfig = {
+  fastify.get('/', () => ({
     corsOrigin,
     isDevelopment,
     logLevel,
-  }
-  fastify.get('/', () => exposedConfig)
+  }))
   return Promise.resolve()
 }
 
