@@ -181,10 +181,6 @@
       "files": [
         "src/**"
       ],
-      "output": [
-        "dist/coverage/all/**",
-        "dist/test/back/**"
-      ],
       "dependencies": [
         "build:apidoc"
       ],
@@ -198,10 +194,6 @@
       "command": "jest --coverage --runInBand -c src/back/test/jest.config.ts",
       "files": [
         "src/back/**"
-      ],
-      "output": [
-        "dist/coverage/back/all/**",
-        "dist/test/back/**"
       ],
       "dependencies": [
         "build:apidoc"
@@ -223,10 +215,6 @@
         "src/back/test/*",
         "dist/front"
       ],
-      "output": [
-        "dist/coverage/back/e2e/**",
-        "dist/test/back/e2e-tests-report.html"
-      ],
       "dependencies": [
         "build:apidoc",
         "build:front"
@@ -246,10 +234,6 @@
         "src/back/test/integration/**",
         "src/back/test/*"
       ],
-      "output": [
-        "dist/coverage/back/integration/**",
-        "dist/test/back/integration-tests-report.html"
-      ],
       "dependencies": [
         "build:apidoc"
       ],
@@ -267,10 +251,6 @@
       "files": [
         "src/back/test/unit/**",
         "src/back/test/*"
-      ],
-      "output": [
-        "dist/coverage/back/unit/**",
-        "dist/test/back/unit-tests-report.html"
       ],
       "env": {
         "CI": {
@@ -608,9 +588,6 @@
       "files": [
         "src/front/test/integration/**",
         "src/front/test/*"
-      ],
-      "output": [
-        "dist/test/front/integration-tests-report.html"
       ],
       "env": {
         "CI": {
