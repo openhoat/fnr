@@ -1,8 +1,13 @@
 #!/bin/env bash
 
 THIS_SCRIPT_DIR=$(dirname "$0")
+REL_BASE_DIR='../..'
 
-source "${THIS_SCRIPT_DIR}/.common"
+BASE_DIR=$(cd "${THIS_SCRIPT_DIR}/${REL_BASE_DIR}" && pwd)
+DEPLOY_DIR=$(cd "${BASE_DIR}/deploy" && pwd)
+BIN_DIR=$(cd "${DEPLOY_DIR}/bin" && pwd)
+VERSION=$("${BIN_DIR}/get-version")
+export BASE_DIR DEPLOY_DIR BIN_DIR VERSION
 
 envFileArgs="--env-file ${DEPLOY_DIR}/.env"
 if [[ -f "${DEPLOY_DIR}/.env.local" ]]; then
