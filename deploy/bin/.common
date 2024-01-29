@@ -1,6 +1,6 @@
 #!/bin/env bash
 
-REL_BASE_DIR='../../..'
+REL_BASE_DIR='../..'
 THIS_SCRIPT_DIR=$(dirname "$0")
 
 BASE_DIR=$(cd "${THIS_SCRIPT_DIR}/${REL_BASE_DIR}" && pwd)
