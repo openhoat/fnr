@@ -25,7 +25,9 @@ const plugins: FastifyPluginAsync = fastifyPlugin(
         origin: config.corsOrigin,
       })
     }
-    await registerPlugin(fastify, 'jwt', jwtPlugin)
+    if (config.jwtSecret) {
+      await registerPlugin(fastify, 'jwt', jwtPlugin)
+    }
     await registerPlugin(fastify, 'apidoc', apidocPlugin)
     await registerPlugin(fastify, 'swaggerUi', swaggerUiPlugin)
     await registerPlugin(fastify, 'homePage', homePagePlugin)

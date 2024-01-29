@@ -12,8 +12,9 @@ const apidocPlugin: FastifyPluginAsync = async (fastify) => {
   const root = join(baseDir, 'dist', 'apidoc')
   const fileStats = await ignoreRejection(stat(root), log)
   if (!fileStats?.isDirectory()) {
-    log.warn(`Directory does not exist (${root}): ignore api doc plugin`)
-    return
+    throw new Error(
+      `Cannot register apidoc plugin: directory does not exist (${root})`,
+    )
   }
   const prefix = '/apidoc'
   void fastify.register(fastifyStatic, {

@@ -27,7 +27,7 @@ const jwtPlugin: FastifyPluginAsync = fastifyPlugin(
     const { config, log } = fastify
     const { jwtSecret } = config
     if (!jwtSecret) {
-      return
+      throw new Error('missing jwtSecret in config')
     }
     log.trace('Registering jwt plugin')
     const jwtOptions: FastifyJWTOptions = {
@@ -43,14 +43,17 @@ const jwtPlugin: FastifyPluginAsync = fastifyPlugin(
   },
 )
 
-const needJwt: FastifyPluginAsync = (fastify: FastifyInstance) => {
-  const { verifyJWT } = fastify
-  if (verifyJWT) {
-    fastify.addHook('onRequest', async (request, reply) => {
-      await verifyJWT.call(fastify, request, reply)
-    })
-  }
-  return Promise.resolve()
-}
+const needJwt: FastifyPluginAsync = fastifyPlugin(
+  (fastify: FastifyInstance) => {
+    const { log, verifyJWT } = fastify
+    if (verifyJWT) {
+      log.debug('Adding onRequest hook for JWT')
+      fastify.addHook('onRequest', async (request, reply) => {
+        await verifyJWT.call(fastify, request, reply)
+      })
+    }
+    return Promise.resolve()
+  },
+)
 
 export { jwtPlugin, needJwt }
