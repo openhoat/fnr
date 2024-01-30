@@ -16,6 +16,7 @@
     "clean:npm:cache": "wireit",
     "clean:npm:cache:npx": "wireit",
     "clean:npm:deps": "wireit",
+    "clean:tsc": "rimraf -g **/tsconfig.tsbuildinfo",
     "clean:wireit": "wireit",
     "cover": "wireit",
     "cover:back": "wireit",
