@@ -7,15 +7,18 @@ export const generateBaseUrl = (
   defaultPort = 3000,
 ): string => {
   const isLinux = process.platform === 'linux'
+  const toLocalhost = (address: string): string =>
+    isLinux
+      ? address
+          .replace('127.0.0.1', 'localhost')
+          .replace('0.0.0.0', 'localhost')
+      : address
   if (typeof address === 'string') {
-    return isLinux ? address.replace('127.0.0.1', 'localhost') : address
+    return toLocalhost(address)
   }
   const port: number = address?.port ?? defaultPort
-  let hostname: string = address?.address ?? '127.0.0.1'
-  if (isLinux) {
-    hostname = hostname.replace('127.0.0.1', 'localhost')
-  }
-  return `http://${hostname}:${port}}`
+  const hostname: string = address?.address ?? '127.0.0.1'
+  return `http://${toLocalhost(hostname)}:${port}}`
 }
 
 export const toWords = (s: string): RegExpMatchArray | null => {
