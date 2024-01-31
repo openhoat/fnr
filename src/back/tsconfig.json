@@ -8,6 +8,6 @@
   },
   "extends": "../tsconfig.json",
   "include": [
-    "**/*.ts"
+    "main/**/*.ts"
   ]
 }

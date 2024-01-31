@@ -23,12 +23,10 @@
     "cover:back:open": "wireit",
     "cover:back:e2e": "wireit",
     "cover:back:e2e:open": "wireit",
-    "cover:back:integration": "wireit",
-    "cover:back:integration:open": "wireit",
     "cover:back:unit": "wireit",
     "cover:back:unit:open": "wireit",
-    "cover:front:integration": "wireit",
-    "cover:front:integration:open": "wireit",
+    "cover:front:unit": "wireit",
+    "cover:front:unit:open": "wireit",
     "cover:open": "wireit",
     "deploy": "wireit",
     "deploy:fly": "wireit",
@@ -43,11 +41,7 @@
     "lint": "wireit",
     "lint:src": "wireit",
     "lint:back": "wireit",
-    "lint:back:main": "wireit",
-    "lint:back:test": "wireit",
     "lint:front": "wireit",
-    "lint:front:main": "wireit",
-    "lint:front:test": "wireit",
     "npip:install": "wireit",
     "prepare": "npm run install:husky",
     "show-env-var-specs": "wireit",
@@ -62,15 +56,13 @@
     "test:back:open": "wireit",
     "test:back:e2e": "wireit",
     "test:back:e2e:open": "wireit",
-    "test:back:integration": "wireit",
-    "test:back:integration:open": "wireit",
     "test:back:unit": "wireit",
     "test:back:unit:open": "wireit",
     "test:front": "wireit",
     "test:front:e2e": "wireit",
     "test:front:e2e:open": "wireit",
-    "test:front:integration": "wireit",
     "test:front:unit": "wireit",
+    "test:front:unit:open": "wireit",
     "validate": "wireit",
     "with:depcheck": "npx -y depcheck@1.4.3",
     "with:dotenv": "npx -y dotenv-cli@7.3.0",
@@ -182,7 +174,11 @@
       "files": [
         "src/**"
       ],
+      "output": [
+        "dist/coverage/all/**"
+      ],
       "dependencies": [
+        "build:front",
         "build:apidoc"
       ],
       "env": {
@@ -196,7 +192,11 @@
       "files": [
         "src/back/**"
       ],
+      "output": [
+        "dist/coverage/back/all/index.html"
+      ],
       "dependencies": [
+        "build:front",
         "build:apidoc"
       ],
       "env": {
@@ -216,8 +216,10 @@
         "src/back/test/*",
         "dist/front"
       ],
+      "output": [
+        "dist/coverage/back/e2e/index.html"
+      ],
       "dependencies": [
-        "build:apidoc",
         "build:front"
       ],
       "env": {
@@ -229,29 +231,14 @@
     "cover:back:e2e:open": {
       "command": "npm run with:opener dist/coverage/back/e2e/index.html"
     },
-    "cover:back:integration": {
-      "command": "jest --coverage --runInBand -c src/back/test/integration/jest.config.ts",
-      "files": [
-        "src/back/test/integration/**",
-        "src/back/test/*"
-      ],
-      "dependencies": [
-        "build:apidoc"
-      ],
-      "env": {
-        "CI": {
-          "external": true
-        }
-      }
-    },
-    "cover:back:integration:open": {
-      "command": "npm run with:opener dist/coverage/back/integration/index.html"
-    },
     "cover:back:unit": {
-      "command": "jest --coverage -c src/back/test/unit/jest.config.ts",
+      "command": "jest --coverage --runInBand -c src/back/test/unit/jest.config.ts",
       "files": [
         "src/back/test/unit/**",
         "src/back/test/*"
+      ],
+      "output": [
+        "dist/coverage/back/integration/index.html"
       ],
       "env": {
         "CI": {
@@ -262,20 +249,20 @@
     "cover:back:unit:open": {
       "command": "npm run with:opener dist/coverage/back/unit/index.html"
     },
-    "cover:front:integration": {
-      "command": "jest --coverage -c src/front/test/integration/jest.config.ts",
+    "cover:front:unit": {
+      "command": "jest --coverage -c src/front/test/unit/jest.config.ts",
       "files": [
         "src/jest.config.ts",
         "src/jest-config-helper.ts",
         "src/jest-custom.ts",
         "src/jest-global-setup.ts",
         "src/front/test/jest.config.ts",
-        "src/front/test/integration/jest.config.ts",
-        "src/front/test/integration/**",
+        "src/front/test/unit/jest.config.ts",
+        "src/front/test/unit/**",
         "src/front/test/*"
       ],
       "output": [
-        "dist/test/front/integration-tests-report.html"
+        "dist/test/front/unit-tests-report.html"
       ],
       "env": {
         "CI": {
@@ -283,8 +270,8 @@
         }
       }
     },
-    "cover:front:integration:open": {
-      "command": "npm run with:opener dist/coverage/front/integration/index.html"
+    "cover:front:unit:open": {
+      "command": "npm run with:opener dist/coverage/front/unit/index.html"
     },
     "cover:open": {
       "command": "npm run with:opener dist/coverage/all/index.html"
@@ -342,12 +329,6 @@
       ]
     },
     "lint:back": {
-      "dependencies": [
-        "lint:back:main",
-        "lint:back:test"
-      ]
-    },
-    "lint:back:main": {
       "command": "eslint src/back/main",
       "files": [
         "src/back/main/**",
@@ -359,25 +340,7 @@
       ],
       "output": []
     },
-    "lint:back:test": {
-      "command": "eslint src/back/test",
-      "files": [
-        "src/back/test/**",
-        ".eslintrc.json",
-        "tsconfig.json",
-        "src/tsconfig.json",
-        "src/back/tsconfig.json",
-        "src/back/test/tsconfig.json"
-      ],
-      "output": []
-    },
     "lint:front": {
-      "dependencies": [
-        "lint:front:main",
-        "lint:front:test"
-      ]
-    },
-    "lint:front:main": {
       "command": "eslint src/front/main",
       "files": [
         "src/front/main/**",
@@ -386,18 +349,6 @@
         "src/tsconfig.json",
         "src/front/tsconfig.json",
         "src/front/main/tsconfig.json"
-      ],
-      "output": []
-    },
-    "lint:front:test": {
-      "command": "eslint src/front/test",
-      "files": [
-        "src/front/test/**",
-        ".eslintrc.json",
-        "tsconfig.json",
-        "src/tsconfig.json",
-        "src/front/tsconfig.json",
-        "src/front/test/tsconfig.json"
       ],
       "output": []
     },
@@ -454,7 +405,8 @@
     },
     "test": {
       "dependencies": [
-        "test:back"
+        "test:back",
+        "test:front"
       ]
     },
     "test:open": {
@@ -507,29 +459,8 @@
     "test:back:e2e:open": {
       "command": "npm run with:opener dist/test/back/e2e-tests-report.html"
     },
-    "test:back:integration": {
-      "command": "jest --runInBand -c src/back/test/integration/jest.config.ts",
-      "files": [
-        "src/back/test/integration/**",
-        "src/back/test/*"
-      ],
-      "output": [
-        "dist/test/back/integration-tests-report.html"
-      ],
-      "dependencies": [
-        "build:apidoc"
-      ],
-      "env": {
-        "CI": {
-          "external": true
-        }
-      }
-    },
-    "test:back:integration:open": {
-      "command": "npm run with:opener dist/test/back/integration-tests-report.html"
-    },
     "test:back:unit": {
-      "command": "jest -c src/back/test/unit/jest.config.ts",
+      "command": "jest --runInBand -c src/back/test/unit/jest.config.ts",
       "files": [
         "src/back/test/unit/**",
         "src/back/test/*"
@@ -548,6 +479,7 @@
     },
     "test:front": {
       "dependencies": [
+        "test:front:e2e",
         "test:front:unit"
       ]
     },
@@ -568,10 +500,6 @@
       "output": [
         "dist/test/front/e2e-tests-report.html"
       ],
-      "dependencies": [
-        "build",
-        "build:apidoc"
-      ],
       "env": {
         "CI": {
           "external": true
@@ -583,18 +511,6 @@
     },
     "test:front:e2e:open": {
       "command": "npm run with:opener dist/test/back/e2e-tests-report.html"
-    },
-    "test:front:integration": {
-      "command": "jest -c src/front/test/integration/jest.config.ts",
-      "files": [
-        "src/front/test/integration/**",
-        "src/front/test/*"
-      ],
-      "env": {
-        "CI": {
-          "external": true
-        }
-      }
     },
     "test:front:unit": {
       "command": "jest -c src/front/test/unit/jest.config.ts",

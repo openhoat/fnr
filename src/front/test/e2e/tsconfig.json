@@ -15,8 +15,9 @@
       "./test/types"
     ]
   },
-  "extends": "../tsconfig.json",
+  "extends": "../../tsconfig.json",
   "include": [
+    "../../../back/main/**/*.ts",
     "main/**/*.ts",
     "main/**/*.tsx",
     "main/**/*.[scss|gif|svg]"

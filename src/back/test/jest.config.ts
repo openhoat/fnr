@@ -10,10 +10,9 @@ const jestConfig: JestConfig = {
   collectCoverageFrom: ['src/back/main/**/!(*.d)*.ts'],
   coverageDirectory: join(baseDir, 'dist', 'coverage', 'back', 'all'),
   coverageReporters: ['text', 'json', 'cobertura', 'lcov', 'html'],
-  testMatch: ['<rootDir>/src/back/test/**/*.test.[jt]s'],
+  testMatch: ['<rootDir>/src/back/test/**/*.test.ts'],
   transform: {
-    // eslint-disable-next-line @typescript-eslint/naming-convention
-    '^.+\\.(t|j)s?$': '@swc/jest',
+    '^.+\\.ts?$': '@swc/jest',
   },
   verbose: false,
 }

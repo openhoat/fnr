@@ -8,9 +8,10 @@ import jestBaseConfig from '../jest.config'
 
 const jestConfig: JestConfig = {
   ...jestBaseConfig,
-  coverageDirectory: resolve(baseDir, 'dist', 'coverage', 'back', 'e2e'),
-  reporters: buildReporters('e2e'),
-  testMatch: ['<rootDir>/src/back/test/e2e/**/*.test.ts'],
+  collectCoverageFrom: ['src/back/main/unit/**/!(*.d)*.ts'],
+  coverageDirectory: resolve(baseDir, 'dist', 'coverage', 'back', 'unit'),
+  reporters: buildReporters('unit'),
+  testMatch: ['<rootDir>/src/back/test/unit/**/*.test.ts'],
 }
 
 export default jestConfig

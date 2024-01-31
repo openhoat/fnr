@@ -1,8 +1,8 @@
-import { join, resolve } from 'node:path'
+import { join } from 'node:path'
 
 import type { Config } from '@jest/types'
 
-const baseDir = resolve(__dirname, '..', '..', '..')
+import baseDir from './back/main/base-dir'
 
 const ci = process.env.CI === 'true'
 
@@ -31,4 +31,4 @@ const buildReporters = (prefix = 'all'): [string, Config.ReporterConfig] => [
       ],
 ]
 
-export { baseDir, buildReporters, ci }
+export { buildReporters, ci }

@@ -36,7 +36,7 @@ const jestConfig: JestConfig = {
     '<rootDir>/src/front/test/**/*.test.[jt]s(x)?',
   ],
   transform: {
-    '^.+\\.(t|j)sx?$': '@swc/jest',
+    '^.+\\.tsx?$': '@swc/jest',
   },
   verbose: false,
 }

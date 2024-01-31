@@ -1,6 +1,6 @@
 import { toCamelCase } from '../../../main/util/helper'
 
-describe('backend integration tests', () => {
+describe('backend unit tests', () => {
   describe('util', () => {
     describe('helper', () => {
       describe('toCamelCase', () => {
