@@ -11,7 +11,6 @@
     "build:back:transpile": "wireit",
     "build:front": "wireit",
     "build:front:check-typedefs": "wireit",
-    "ci:validate": "wireit",
     "clean": "wireit",
     "clean:npm": "wireit",
     "clean:npm:cache": "wireit",
@@ -164,12 +163,6 @@
         "prisma:generate"
       ],
       "output": []
-    },
-    "ci:validate": {
-      "dependencies": [
-        "validate",
-        "prisma:migrate:deploy"
-      ]
     },
     "clean": {
       "command": "rimraf dist lib"

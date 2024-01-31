@@ -29,6 +29,8 @@ jobs:
       - name: Install puppeteer chrome browser
         run: npx puppeteer browsers install chrome
       - name: Validate project
+        env:
+          DATABASE_URL: 'file:test.db'
         run: npm run validate
       - name: Upload lcov coverage report file to Codecov
         uses: codecov/codecov-action@v3
