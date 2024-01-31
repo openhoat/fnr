@@ -1,3 +1,4 @@
+import type { PrismaClient } from '@prisma/client'
 import type { preHandlerAsyncHookHandler } from 'fastify'
 
 import type { Config } from './config'
@@ -6,6 +7,7 @@ import server from './server'
 declare module 'fastify' {
   export interface FastifyInstance {
     config: Config
+    prisma?: PrismaClient
     verifyJWT?: preHandlerAsyncHookHandler
     vite: { ready: () => Promise<void> }
   }
