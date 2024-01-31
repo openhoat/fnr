@@ -12,39 +12,31 @@ RUN npm i -g npm@${NPM_VERSION}
 FROM node-npm AS app-base
 WORKDIR /usr/src/app
 COPY package.json package-lock.json .npmrc ./
-RUN npm ci --prefer-offline --include=dev --ignore-scripts
+RUN npm ci --prefer-offline --include=dev --loglevel verbose
 
 # Built application image
 FROM app-base AS app-build
 WORKDIR /usr/src/app
-COPY --from=app-base /usr/src/app/package.json /usr/src/app/package-lock.json ./
-RUN true # See https://github.com/moby/moby/issues/37965
 COPY --from=app-base /usr/src/app/node_modules/ ./node_modules
-RUN true
+COPY package.json package-lock.json ./
 COPY .swcrc postcss.config.mjs tailwind.config.js vite.config.mjs tsconfig.json ./
-RUN true
-COPY ./src/ ./src
-RUN true
-COPY ./swagger/ ./swagger
-RUN true
-COPY ./assets/ ./assets
+COPY src/ ./src
+COPY swagger/ ./swagger
+COPY assets/ ./assets
+COPY prisma/ ./prisma
 RUN npm run build && npm prune --omit=dev --ignore-scripts
 
 # Application image with dist
 FROM app-base AS app
 WORKDIR /usr/src/app
-COPY --from=app-base /usr/src/app/package.json /usr/src/app/package-lock.json ./
-RUN true # See https://github.com/moby/moby/issues/37965
+RUN mkdir .sqlite
+COPY package.json package-lock.json ./
 COPY --from=app-base /usr/src/app/node_modules/ ./node_modules
-RUN true
+COPY --from=app-build /usr/src/app/node_modules/.prisma/ ./node_modules/.prisma
 COPY --from=app-build /usr/src/app/lib/ ./lib
-RUN true
 COPY --from=app-build /usr/src/app/dist/client/ ./dist/client
-RUN true
 COPY --from=app-build /usr/src/app/dist/apidoc/ ./dist/apidoc
-RUN true
-COPY ./swagger/ ./swagger
-RUN true
-COPY ./assets/ ./assets
+COPY swagger/ ./swagger
+COPY assets/ ./assets
 EXPOSE 3000
 CMD ["node", "lib/back/main/index.js"]
