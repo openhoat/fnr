@@ -1,12 +1,12 @@
 /.idea/
 /.scannerwork/
-/.swc/
 /.vscode/
 /.wireit/
 /dist/
 /lib/
 /node_modules/
 /tmp/
+/.sqlite/
 
 /deploy/rpi/.buildkitd.toml
 
