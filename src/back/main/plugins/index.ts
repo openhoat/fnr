@@ -9,6 +9,7 @@ import { registerPlugin } from '../util/fastify-plugin.registerer'
 import { apidocPlugin } from './apidoc.plugin'
 import { homePagePlugin } from './home-page.plugin'
 import { jwtPlugin } from './jwt.plugin'
+import { prismaPlugin } from './prisma.plugin'
 import { swaggerUiPlugin } from './swagger-ui.plugin'
 
 const plugins: FastifyPluginAsync = fastifyPlugin(
@@ -31,6 +32,7 @@ const plugins: FastifyPluginAsync = fastifyPlugin(
     await registerPlugin(fastify, 'apidoc', apidocPlugin)
     await registerPlugin(fastify, 'swaggerUi', swaggerUiPlugin)
     await registerPlugin(fastify, 'homePage', homePagePlugin)
+    await registerPlugin(fastify, 'prisma', prismaPlugin)
     log.info('All plugins registered')
   },
 )
