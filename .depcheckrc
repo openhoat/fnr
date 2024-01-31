@@ -2,6 +2,7 @@ ignores:
     - '@babel/core'
     - '@babel/eslint-parser'
     - '@babel/preset-react'
+    - '@prisma/client'
     - '@swc-jotai/react-refresh'
     - '@swc-node/register'
     - '@swc/cli'
