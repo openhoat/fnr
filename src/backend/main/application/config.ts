@@ -21,16 +21,29 @@ configDotenv({
 const logLevels = ['silent', ...Object.values(levels.labels)]
 const defaultPort = 0
 const configSchema: Joi.ObjectSchema<Config> = Joi.object({
+  authPassword: Joi.string().optional(),
+  authUsername: Joi.string().optional(),
   baseDir: Joi.string().required(),
+  cookieSecret: Joi.string().optional(),
   corsOrigin: Joi.string().optional(),
   host: Joi.string().hostname().optional(),
   isDevelopment: Joi.boolean().required(),
+  jwtSecret: Joi.string().optional(),
   logLevel: Joi.string()
     .valid(...logLevels)
     .default('info'),
   port: Joi.number().default(defaultPort),
 })
-const envVarNames = ['CORS_ORIGIN', 'HOST', 'LOG_LEVEL', 'PORT']
+const envVarNames = [
+  'AUTH_PASSWORD',
+  'AUTH_USERNAME',
+  'COOKIE_SECRET',
+  'CORS_ORIGIN',
+  'HOST',
+  'JWT_SECRET',
+  'LOG_LEVEL',
+  'PORT',
+]
 const envConfig: ConfigEnvVars = pickFromDict(
   process.env,
   envVarNames,
