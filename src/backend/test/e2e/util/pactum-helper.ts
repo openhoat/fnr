@@ -5,6 +5,19 @@ import type E2E from 'pactum/src/models/E2E'
 
 import { REGEX_PATTERNS } from './regex-helper'
 
+handler.addExpectHandler('BadRequestError', (ctx): void => {
+  const { data: message = 'Bad Request', res } = ctx as {
+    data: string
+    res: PactumResponse
+  }
+  expect(res.statusCode).toBe(HttpStatusCodes.BAD_REQUEST)
+  expect(res.json).toStrictEqual({
+    message,
+    error: 'Bad Request',
+    statusCode: HttpStatusCodes.BAD_REQUEST,
+  })
+})
+
 handler.addExpectHandler('AuthorizationError', (ctx) => {
   const { data: message = 'Unauthorized', res } = ctx as {
     data: string

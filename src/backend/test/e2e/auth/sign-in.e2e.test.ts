@@ -10,7 +10,7 @@ describe('backend tests', () => {
       const authSignInUriPath = '/auth/sign-in'
       test('should respond a token with secured cookie given valid credentials', async () => {
         // Given
-        const username = 'johndoe'
+        const username = 'admin'
         const password = 'MyBigSecret'
         const testCase = getTestCase()
         await authorizationStep(testCase, { password, username })

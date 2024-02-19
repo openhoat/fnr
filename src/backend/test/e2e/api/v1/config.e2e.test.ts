@@ -8,7 +8,7 @@ describe('backend tests', () => {
     describe('GET /api/v1/config', () => {
       test('should respond an object including version', async () => {
         // Given
-        const username = 'johndoe'
+        const username = 'admin'
         const password = 'MyBigSecret'
         const testCase = getTestCase()
         await testCase
