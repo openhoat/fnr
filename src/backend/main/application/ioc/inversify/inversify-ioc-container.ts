@@ -1,9 +1,11 @@
 import { Container } from 'inversify'
 
+import { SimpleUserDomain } from '../../../domain/simple-user.domain'
 import { AppLogger } from '../../../infra/logger/app-logger'
 import { FastifyHttpServer } from '../../../interfaces/http/fastify/fastify-http-server'
 import type { Config } from '../../../types/application/config'
 import type { IocContainer } from '../../../types/application/ioc'
+import type { UserDomain } from '../../../types/domain/user'
 import type { HttpServer } from '../../../types/interfaces/http/server'
 import type { Logger } from '../../../types/util/logger'
 import { recordToString } from '../../../util/helper'
@@ -24,6 +26,10 @@ class InversifyIocContainer implements IocContainer {
     return this.#container.get(IOC_TYPES.Logger)
   }
 
+  get userDomain(): UserDomain {
+    return this.#container.get(IOC_TYPES.UserDomain)
+  }
+
   constructor(config: Config) {
     this.#container = new Container()
     const logger = new AppLogger(config)
@@ -31,6 +37,7 @@ class InversifyIocContainer implements IocContainer {
     logger.debug('Initializing IoC container…')
     this.#registerConfig(config)
     this.#registerLogger(logger)
+    this.#registerUserDomain(config)
     this.#registerHttpServer(logger)
     logger.info('IoC container initialized.')
   }
@@ -47,6 +54,11 @@ class InversifyIocContainer implements IocContainer {
 
   #registerLogger(logger: Logger): void {
     this.#container.bind(IOC_TYPES.Logger).toConstantValue(logger)
+  }
+
+  #registerUserDomain(config: Config): void {
+    const simpleUserDomain = new SimpleUserDomain(config)
+    this.#container.bind(IOC_TYPES.UserDomain).toConstantValue(simpleUserDomain)
   }
 }
 
