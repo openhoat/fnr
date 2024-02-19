@@ -25,6 +25,11 @@ export const AppNavbar: FC = () => {
           <>
             <AppNavLink id="configNavLink" to={'/app/config'} text={'Config'} />
             <AppNavLink
+              id="myAccountNavLink"
+              to={'/app/me'}
+              text={'My account'}
+            />
+            <AppNavLink
               id="signOutNavLink"
               to={'/app/sign-out'}
               text={'Sign out'}

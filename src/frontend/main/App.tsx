@@ -8,6 +8,7 @@ import { AppLayout } from './layouts/AppLayout'
 import { AboutPage } from './pages/AboutPage'
 import { ConfigPage } from './pages/ConfigPage'
 import { HomePage } from './pages/HomePage'
+import { MyAccountPage } from './pages/MyAccountPage'
 import { SignInPage } from './pages/SignInPage'
 import { SignOutPage } from './pages/SignOutPage'
 
@@ -20,6 +21,7 @@ const App: FC = () => (
         <Route path="sign-in" element={<SignInPage />} />
         <Route element={<ProtectedRoutes />}>
           <Route path="config" element={<ConfigPage />} />
+          <Route path="me" element={<MyAccountPage />} />
           <Route path="sign-out" element={<SignOutPage />} />
         </Route>
       </Route>
