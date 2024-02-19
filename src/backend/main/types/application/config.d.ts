@@ -4,6 +4,9 @@ export interface Config {
   baseDir: string
   cookieSecret?: string
   corsOrigin?: string
+  defaultAdminEmail: string
+  defaultAdminPassword: string
+  defaultAdminUsername: string
   host?: string
   isDevelopment: boolean
   jwtSecret?: string
