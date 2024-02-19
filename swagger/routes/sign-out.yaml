@@ -1,0 +1,16 @@
+post:
+  tags:
+    - Sign out
+  summary: Sign out
+  description: |
+    Invalidate authorization token.
+  responses:
+    '200':
+      description: Ok.
+      headers:
+        Set-Cookie:
+          schema:
+            type: string
+          description: Remove authenticated cookies.
+    '401':
+      $ref: '../responses/unauthorized-error.yaml'

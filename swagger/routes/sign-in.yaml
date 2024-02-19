@@ -1,0 +1,29 @@
+post:
+  tags:
+    - Sign in
+  summary: Sign in
+  description: |
+    Validate credentials and get an authorization token.
+  requestBody:
+    description: Credentials.
+    required: true
+    content:
+      application/json:
+        schema:
+          $ref: '../schemas/credentials.yaml'
+  responses:
+    '200':
+      description: JWT.
+      headers:
+        Set-Cookie:
+          schema:
+            type: string
+          description: Token secured HTTP only and authenticated cookies.
+      content:
+        application/json:
+          schema:
+            $ref: '../schemas/token.yaml'
+          example:
+            token: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI4NThkMWI0Ny0yYjA2LTRiMzktOTVjOS1lYzg0NWFiMDFlNzQiLCJpYXQiOjE3MDcyMjYyMDV9.VqQJiiFRUTCM1vJSwyT5VwAtjEYaJR2tZ1GcCCAzABI'
+    '401':
+      $ref: '../responses/unauthorized-error.yaml'
