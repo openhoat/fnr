@@ -1,13 +1,18 @@
 import type { FastifyPluginAsync } from 'fastify'
 
-import { getPackageVersion } from '../../../../../../util/package-version'
+import { aboutQuery } from '../../../../../../../../common/graphql/queries/about.query'
+import type { AboutResolverResponse } from '../../../../../../types/interfaces/graphql/resolvers/about.resolver'
+import { executeGql } from '../../../../graphql/util/helper'
 
-const aboutRouter: FastifyPluginAsync = async (fastify) => {
-  const { iocContainer } = fastify
-  const { config } = iocContainer
-  const { baseDir } = config
-  const version = await getPackageVersion(baseDir)
-  fastify.get('/', () => ({ version }))
+const aboutRouter: FastifyPluginAsync = (fastify) => {
+  fastify.get('/', async (__, reply) => {
+    const { about } = await executeGql<{ about: AboutResolverResponse }>(
+      reply,
+      aboutQuery,
+    )
+    return about
+  })
+  return Promise.resolve()
 }
 
 export { aboutRouter }

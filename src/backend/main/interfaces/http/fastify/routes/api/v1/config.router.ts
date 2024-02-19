@@ -1,20 +1,17 @@
 import type { FastifyPluginAsync } from 'fastify'
 
-import { needJwt } from '../../../plugins/jwt.plugin'
+import { configQuery } from '../../../../../../../../common/graphql/queries/config.query'
+import type { ConfigResolverResponse } from '../../../../../../types/interfaces/graphql/resolvers/config.resolver'
+import { executeGql } from '../../../../graphql/util/helper'
 
-const configRouter: FastifyPluginAsync = async (fastify) => {
-  const { iocContainer, log } = fastify
-  const { config } = iocContainer
-  if (config.authUsername) {
-    log.debug('Register needJwt plugin')
-    await fastify.register(needJwt)
-  }
-  const { corsOrigin, isDevelopment, logLevel } = config
-  fastify.get('/', () => ({
-    corsOrigin,
-    isDevelopment,
-    logLevel,
-  }))
+const configRouter: FastifyPluginAsync = (fastify) => {
+  fastify.get('/', async (__, reply) => {
+    const { config } = await executeGql<{
+      config: ConfigResolverResponse
+    }>(reply, configQuery)
+    return config
+  })
+  return Promise.resolve()
 }
 
 export { configRouter }
