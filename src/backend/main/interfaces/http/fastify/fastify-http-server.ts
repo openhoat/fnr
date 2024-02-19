@@ -12,6 +12,7 @@ import { toLocalhostIfLinux } from '../../../util/url-helper'
 import { buildErrorHandler } from './errors/error.handler'
 import { boomErrorNormalizer } from './errors/normalizers/boom.error.normalizer'
 import { fastifyErrorNormalizer } from './errors/normalizers/fastify.error.normalizer'
+import { prismaErrorNormalizer } from './errors/normalizers/prisma.error.normalizer'
 import { plugins } from './plugins'
 import { routes } from './routes'
 import { notFoundHandler } from './util/not-found.handler'
@@ -54,7 +55,11 @@ class FastifyHttpServer implements HttpServer {
     })
     fastify.setNotFoundHandler(notFoundHandler)
     fastify.setErrorHandler(
-      buildErrorHandler(fastifyErrorNormalizer, boomErrorNormalizer),
+      buildErrorHandler(
+        prismaErrorNormalizer,
+        fastifyErrorNormalizer,
+        boomErrorNormalizer,
+      ),
     )
     fastify.addHook('onRequest', (request) => {
       log.debug(
