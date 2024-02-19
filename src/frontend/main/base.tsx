@@ -4,14 +4,17 @@ import { StrictMode, Suspense } from 'react'
 import { BrowserRouter } from 'react-router-dom'
 
 import App from './App'
+import { AuthProvider } from './providers/AuthProvider'
 
 export const createApp = (): ReactNode => (
   <StrictMode>
     <BrowserRouter>
       <Suspense fallback={<h3>Loading…</h3>}>
-        <ThemeProvider>
-          <App />
-        </ThemeProvider>
+        <AuthProvider>
+          <ThemeProvider>
+            <App />
+          </ThemeProvider>
+        </AuthProvider>
       </Suspense>
     </BrowserRouter>
   </StrictMode>
