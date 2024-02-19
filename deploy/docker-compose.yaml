@@ -6,6 +6,7 @@ services:
       context: ..
       dockerfile: deploy/app/Dockerfile
       args:
+        DATABASE_URL: ${DATABASE_URL}
         NODE_VERSION: ${NODE_VERSION}
         NPM_VERSION: ${NPM_VERSION}
       target: app
@@ -29,6 +30,10 @@ services:
       - AUTH_USERNAME
       - COOKIE_SECRET
       - CORS_ORIGIN
+      - DATABASE_URL
+      - DEFAULT_ADMIN_EMAIL
+      - DEFAULT_ADMIN_PASSWORD
+      - DEFAULT_ADMIN_USERNAME
       - HOST
       - JWT_SECRET
       - LOG_LEVEL

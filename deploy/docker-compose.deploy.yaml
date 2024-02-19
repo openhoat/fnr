@@ -16,6 +16,10 @@ services:
       - AUTH_USERNAME
       - COOKIE_SECRET
       - CORS_ORIGIN
+      - DATABASE_URL
+      - DEFAULT_ADMIN_EMAIL
+      - DEFAULT_ADMIN_PASSWORD
+      - DEFAULT_ADMIN_USERNAME
       - HOST
       - JWT_SECRET
       - LOG_LEVEL
