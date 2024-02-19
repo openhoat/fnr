@@ -1,6 +1,6 @@
 {
   "name": "fnr",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Fullstack Node React",
   "main": "src/backend/main/index.ts",
   "scripts": {
@@ -526,8 +526,11 @@
   },
   "dependencies": {
     "@fastify/accepts": "4.3.0",
+    "@fastify/basic-auth": "5.1.1",
+    "@fastify/cookie": "9.3.1",
     "@fastify/cors": "9.0.1",
     "@fastify/formbody": "7.4.0",
+    "@fastify/jwt": "8.0.0",
     "@fastify/static": "7.0.1",
     "@fastify/swagger": "8.14.0",
     "@fastify/swagger-ui": "2.0.1",
@@ -592,6 +595,7 @@
     "jest-html-reporter": "3.10.2",
     "jest-junit": "16.0.0",
     "jest-when": "3.6.0",
+    "jotai": "2.5.1",
     "jsdoc": "4.0.2",
     "jsdoc-tsimport-plugin": "1.0.5",
     "object-path": "0.11.8",
@@ -602,6 +606,7 @@
     "prettier-plugin-tailwindcss": "0.5.11",
     "puppeteer": "22.0.0",
     "react": "18.2.0",
+    "react-cookie": "7.0.2",
     "react-dom": "18.2.0",
     "react-refresh": "0.14.0",
     "react-router-dom": "6.22.0",
