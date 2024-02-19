@@ -8,6 +8,7 @@ import fastifyPlugin from 'fastify-plugin'
 
 import { registerPlugin } from '../util/fastify-plugin.registerer'
 import { apidocPlugin } from './apidoc.plugin'
+import { graphqlPlugin } from './graphql.plugin'
 import { homePagePlugin } from './home-page.plugin'
 import { jwtPlugin } from './jwt.plugin'
 import { ormPlugin } from './orm.plugin'
@@ -38,6 +39,7 @@ const plugins: FastifyPluginAsync = fastifyPlugin(
     await registerPlugin(fastify, 'swaggerUi', swaggerUiPlugin)
     await registerPlugin(fastify, 'homePage', homePagePlugin)
     await registerPlugin(fastify, 'orm', ormPlugin)
+    await registerPlugin(fastify, 'graphql', graphqlPlugin)
     log.info('All plugins registered')
   },
 )
