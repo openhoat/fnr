@@ -17,6 +17,8 @@ describe('frontend tests', () => {
       let browser: Browser
       let page: Page
       const brandTextSelector = '#brandText'
+      const signInNavLink = '#signInNavLink'
+      const signOutNavLink = '#signOutNavLink'
       beforeAll(async () => {
         saveEnvVars('NODE_ENV')
         process.env.NODE_ENV = 'production'
@@ -45,6 +47,32 @@ describe('frontend tests', () => {
         const text = await page.$eval(brandTextSelector, (e) => e.textContent)
         expect(text).toContain('Node React TS Demo')
       }, 10_000)
+      test('should sign in', async () => {
+        // Given
+        await page.waitForSelector(signInNavLink)
+        // When
+        await page.click(signInNavLink)
+        await page.type('#username', 'johndoe')
+        await page.type('#password', 'MyBigSecret')
+        await page.click('#signInSubmit')
+        // Then
+        await page.waitForSelector(signOutNavLink)
+        await page.waitForSelector('#configNavLink')
+        await page.waitForSelector('#aboutNavLink')
+      })
+      test('should sign out', async () => {
+        // Given
+        await page.waitForSelector(brandTextSelector)
+        await page.click(signInNavLink)
+        await page.type('#username', 'johndoe')
+        await page.type('#password', 'MyBigSecret')
+        await page.click('#signInSubmit')
+        await page.waitForSelector(signOutNavLink)
+        // When
+        await page.click(signOutNavLink)
+        // Then
+        await page.waitForSelector(signInNavLink)
+      })
     })
   })
 })
