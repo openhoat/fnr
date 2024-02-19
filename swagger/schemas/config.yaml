@@ -1,0 +1,7 @@
+type: object
+required:
+  - isDevelopoment
+properties:
+  isDevelopoment:
+    type: boolean
+    description: True if development mode is enabled.

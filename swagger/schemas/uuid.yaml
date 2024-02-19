@@ -1,0 +1,3 @@
+type: string
+description: Object unique identifier with uuid format
+default: e3a80031-0cb0-4fde-b31f-a3867f612066

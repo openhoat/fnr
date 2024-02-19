@@ -1,0 +1,17 @@
+type: object
+properties:
+  id:
+    type: string
+    description: User ID.
+  username:
+    type: string
+    description: Username.
+  email:
+    type: string
+    description: User email.
+  role:
+    type: string
+    enum:
+      - admin
+      - user
+    description: User role.

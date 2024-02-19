@@ -24,6 +24,6 @@ post:
           schema:
             $ref: '../schemas/token.yaml'
           example:
-            token: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI4NThkMWI0Ny0yYjA2LTRiMzktOTVjOS1lYzg0NWFiMDFlNzQiLCJpYXQiOjE3MDcyMjYyMDV9.VqQJiiFRUTCM1vJSwyT5VwAtjEYaJR2tZ1GcCCAzABI'
+            token: '2023-02-15T13:41:50.000Z'
     '401':
       $ref: '../responses/unauthorized-error.yaml'

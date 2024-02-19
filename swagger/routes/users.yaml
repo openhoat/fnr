@@ -1,0 +1,48 @@
+get:
+  tags:
+    - Users
+  summary: Users
+  description: |
+    Users list.
+  responses:
+    '200':
+      description: Ok.
+      content:
+        application/json:
+          schema:
+            $ref: '../schemas/users.yaml'
+          example:
+            - id: '858d1b47-2b06-4b39-95c9-ec845ab01e74'
+              username: admin
+              email: admin@local.io
+              role: admin
+  security:
+    - bearerAuth: [ ]
+post:
+  tags:
+    - Users
+  summary: New user
+  description: |
+    Register a new user.
+  requestBody:
+    description: |
+      User payload.
+    required: true
+    content:
+      application/json:
+        schema:
+          $ref: '../schemas/user-payload.yaml'
+  responses:
+    '200':
+      description: Ok.
+      content:
+        application/json:
+          schema:
+            $ref: '../schemas/users.yaml'
+          example:
+            - id: '858d1b47-2b06-4b39-95c9-ec845ab01e74'
+              username: admin
+              email: admin@local.io
+              role: admin
+  security:
+      - bearerAuth: [ ]

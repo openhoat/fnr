@@ -12,6 +12,14 @@ paths:
     $ref: 'routes/sign-in.yaml'
   /auth/sign-out:
     $ref: 'routes/sign-out.yaml'
+  /api/v1/config:
+    $ref: 'routes/config.yaml'
+  /api/v1/users:
+    $ref: 'routes/users.yaml'
+  /api/v1/users/me:
+    $ref: 'routes/users-me.yaml'
+  /api/v1/users/{id}:
+    $ref: 'routes/users-id.yaml'
 components:
   securitySchemes:
     bearerAuth:

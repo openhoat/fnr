@@ -1,0 +1,17 @@
+get:
+  tags:
+    - Config
+  summary: App configuration
+  description: |
+    Configuration dynamically built by the backend and used in the frontend app.
+  responses:
+    '200':
+      description: Ok.
+      content:
+        application/json:
+          schema:
+            $ref: '../schemas/config.yaml'
+          example:
+            isDevelopment: false
+  security:
+    - bearerAuth: [ ]
