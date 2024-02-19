@@ -5,10 +5,10 @@ const signInRouter: FastifyPluginAsync = (fastify) => {
   const { userDomain } = iocContainer
   fastify.post<{ Body: { password?: string; username?: string } | undefined }>(
     '/',
-    (request, reply) => {
-      const { username = '', password = '' } = request.body ?? {}
-      userDomain.signIn(username, password)
-      const token = jwt.sign({ username })
+    async (request, reply) => {
+      const { username, password } = request.body ?? {}
+      const { id: userId } = await userDomain.signIn(username, password)
+      const token = jwt.sign({ userId })
       log.trace(`Generated jwt token: ${token}`)
       void reply.cookie('token', token, {
         httpOnly: true,
