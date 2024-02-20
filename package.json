@@ -100,7 +100,7 @@
       ]
     },
     "build:backend:check-typedefs": {
-      "command": "tsc --noemit --preserveWatchOutput -p src/backend/tsconfig.json",
+      "command": "tsc --noemit --preserveWatchOutput -p src/backend/main/tsconfig.json",
       "files": [
         "tsconfig.json",
         "src/tsconfig.json",
@@ -114,7 +114,7 @@
       "output": []
     },
     "build:backend:transpile": {
-      "command": "swc -s --strip-leading-paths -d lib src/backend/main",
+      "command": "swc -s --strip-leading-paths -d lib src/backend/main src/common",
       "files": [
         "tsconfig.json",
         "src/tsconfig.json",
@@ -137,6 +137,7 @@
       "files": [
         "assets/**",
         "src/frontend/**/*.ts[x]",
+        "src/common/**/*.ts",
         "src/**/tsconfig.json",
         "vite.config.js",
         "tailwind.config.ts"

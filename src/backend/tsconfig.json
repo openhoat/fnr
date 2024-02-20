@@ -1,13 +1,8 @@
 {
   "compilerOptions": {
-    "typeRoots": [
-      "../../node_modules/@types",
-      "./main/types",
-      "./test/types"
-    ]
+    "rootDir": "..",
+    "typeRoots": ["../../node_modules/@types", "./main/types", "./test/types"]
   },
   "extends": "../tsconfig.json",
-  "include": [
-    "main/**/*.ts"
-  ]
+  "include": ["main/**/*.ts", "../common/**/*.ts"]
 }
