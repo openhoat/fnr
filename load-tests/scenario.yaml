@@ -37,4 +37,15 @@ scenarios:
           expect:
             - equals:
                 - "{{ version }}"
-                - "0.0.1"
+                - "0.0.2"
+      - post:
+          url: "/auth/sign-in"
+          json:
+            username: "johndoe"
+            password: "MyBigSecret"
+          expect:
+            - statusCode: 200
+      - post:
+          url: "/auth/sign-out"
+          expect:
+            - statusCode: 204
