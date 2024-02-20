@@ -91,7 +91,7 @@ scenarios:
                 - "Unauthorized"
             - equals:
                 - "{{ message }}"
-                - "Unauthorized"
+                - "Failed auth policy check on config"
             - equals:
                 - "{{ statusCode }}"
                 - "401"
@@ -111,7 +111,7 @@ scenarios:
                 - "Unauthorized"
             - equals:
                 - "{{ message }}"
-                - "Unauthorized"
+                - "Failed auth policy check on me"
             - equals:
                 - "{{ statusCode }}"
                 - "401"
