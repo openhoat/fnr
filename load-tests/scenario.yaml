@@ -16,8 +16,6 @@ config:
   ensure:
     thresholds:
       - http.response_time.max: 200
-    conditions:
-      - expression: "http.codes.200 == http.requests"
 scenarios:
   - flow:
       - get:
@@ -37,15 +35,83 @@ scenarios:
           expect:
             - equals:
                 - "{{ version }}"
-                - "0.0.2"
+                - "0.0.3"
       - post:
           url: "/auth/sign-in"
           json:
-            username: "johndoe"
+            username: "admin"
             password: "MyBigSecret"
           expect:
             - statusCode: 200
+      - get:
+          url: "/api/v1/config"
+          capture:
+            - json: "$.isDevelopment"
+              as: isDevelopment
+          expect:
+            - equals:
+                - "{{ isDevelopment }}"
+                - "false"
+      - get:
+          url: "/api/v1/users/me"
+          capture:
+            - json: "$.email"
+              as: email
+            - json: "$.role"
+              as: role
+            - json: "$.username"
+              as: username
+          expect:
+            - equals:
+                - "{{ email }}"
+                - "admin@local.io"
+            - equals:
+                - "{{ role }}"
+                - "admin"
+            - equals:
+                - "{{ username }}"
+                - "admin"
       - post:
           url: "/auth/sign-out"
           expect:
             - statusCode: 204
+      - get:
+          url: "/api/v1/config"
+          capture:
+            - json: "$.error"
+              as: error
+            - json: "$.message"
+              as: message
+            - json: "$.statusCode"
+              as: statusCode
+          expect:
+            - statusCode: 401
+            - equals:
+                - "{{ error }}"
+                - "Unauthorized"
+            - equals:
+                - "{{ message }}"
+                - "Unauthorized"
+            - equals:
+                - "{{ statusCode }}"
+                - "401"
+      - get:
+          url: "/api/v1/users/me"
+          capture:
+            - json: "$.error"
+              as: error
+            - json: "$.message"
+              as: message
+            - json: "$.statusCode"
+              as: statusCode
+          expect:
+            - statusCode: 401
+            - equals:
+                - "{{ error }}"
+                - "Unauthorized"
+            - equals:
+                - "{{ message }}"
+                - "Unauthorized"
+            - equals:
+                - "{{ statusCode }}"
+                - "401"
