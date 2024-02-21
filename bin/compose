@@ -1,0 +1,83 @@
+#!/bin/env bash
+
+THIS_SCRIPT_DIR=$(dirname "$0")
+REL_BASE_DIR='..'
+BASE_DIR=$(cd "${THIS_SCRIPT_DIR}/${REL_BASE_DIR}" && pwd)
+BIN_DIR=$(cd "${BASE_DIR}/bin" && pwd)
+DOCKER_COMPOSE_BASE_DIR="${1}"
+shift
+
+usage() {
+  echo "Docker compose wrapper that helps loading env vars from multiple environments."
+  echo
+  echo "Syntax: compose docker-compose-dir [-c|e|m]"
+  echo "options:"
+  echo "  -c    Specify the docker context."
+  echo "  -e    Specify the environment to load vars."
+  echo "  -m    Docker compose file suffix to use (deploy or default)."
+  echo
+}
+
+# Options handling
+while getopts "hc:e:m:" option; do
+  case "${option}" in
+    c)
+      DOCKER_CONTEXT="${OPTARG}";;
+    e)
+      DOCKER_ENV="${OPTARG}";;
+    m)
+      DOCKER_MODE="${OPTARG}";;
+    h)
+      usage
+      exit;;
+    ?)
+      echo "Invalid option: ${OPTARG}."
+      exit 1
+      ;;
+  esac
+done
+shift $((OPTIND-1))
+
+# Docker vars
+set -a
+APP_IMAGE_NAME=$("${BIN_DIR}"/get-package-info name)
+COMPOSE_PROJECT_NAME="${APP_IMAGE_NAME}"
+NODE_VERSION=$("${BIN_DIR}"/get-package-info volta.node)
+NPM_VERSION=$("${BIN_DIR}"/get-package-info volta.npm)
+VERSION=$("${BIN_DIR}"/get-package-info version)
+set +a
+
+cd "${DOCKER_COMPOSE_BASE_DIR}" || exit 1
+
+dockerOpts=()
+dockerComposeOpts=()
+if [[ "${DOCKER_MODE}" = "deploy" ]]; then
+  dockerComposeOpts+=('-f' 'docker-compose.deploy.yaml')
+else
+  dockerComposeOpts+=('-f' 'docker-compose.yaml')
+fi
+dockerComposeOpts+=('--env-file' '.env')
+if [[ -f ".env.local" ]]; then
+  dockerComposeOpts+=('--env-file' '.env.local')
+fi
+if [[ -n "${DOCKER_ENV}" ]]; then
+  if [[ -f ".env.${DOCKER_ENV}" ]]; then
+    dockerComposeOpts+=('--env-file' ".env.${DOCKER_ENV}")
+  fi
+  if [[ -f ".env.${DOCKER_ENV}.local" ]]; then
+    dockerComposeOpts+=('--env-file' ".env.${DOCKER_ENV}.local")
+  fi
+fi
+if [[ -n "${DOCKER_CONTEXT}" ]]; then
+  dockerOpts+=('-c' "${DOCKER_CONTEXT}")
+  if [[ -f ".env.${DOCKER_CONTEXT}" ]]; then
+    dockerComposeOpts+=('--env-file' ".env.${DOCKER_CONTEXT}")
+  fi
+  if [[ -f ".env.${DOCKER_CONTEXT}.local" ]]; then
+    dockerComposeOpts+=('--env-file' ".env.${DOCKER_CONTEXT}.local")
+  fi
+fi
+dockerOptsString=$(IFS=$' '; echo "${dockerOpts[*]}")
+dockerComposeOptsString=$(IFS=$' '; echo "${dockerComposeOpts[*]}")
+echo "docker ${dockerOptsString} compose ${dockerComposeOptsString} ${*}…"
+docker ${dockerOptsString} compose ${dockerComposeOptsString} ${*}

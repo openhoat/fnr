@@ -1,0 +1,9 @@
+#!/bin/env node
+
+const { resolve } = require('node:path')
+const { get } = require('object-path')
+
+const [, , path = 'version'] = process.argv
+const packageInfos = require(resolve(__dirname, '..', 'package.json'))
+
+console.log(get(packageInfos, path))
