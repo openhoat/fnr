@@ -1,0 +1,16 @@
+{
+  "compilerOptions": {
+    "rootDir": ".",
+    "typeRoots": [
+      "./backend/main/types",
+      "./backend/test/types",
+      "./frontend/main/types",
+      "../node_modules/@types"
+    ]
+  },
+  "extends": "../tsconfig.json",
+  "include": [
+    "**/*.ts",
+    "**/*.tsx"
+  ]
+}
