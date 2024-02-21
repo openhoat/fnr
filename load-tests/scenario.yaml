@@ -1,0 +1,40 @@
+config:
+  target: http://localhost:3000
+  phases:
+    - duration: 20
+      arrivalRate: 5
+      name: Startup phase
+    - duration: 5
+      arrivalRate: 20
+      name: Peak phase
+    - duration: 10
+      arrivalRate: 2
+      name: Slow-down phase
+  plugins:
+    ensure: {}
+    expect: {}
+  ensure:
+    thresholds:
+      - http.response_time.max: 200
+    conditions:
+      - expression: "http.codes.200 == http.requests"
+scenarios:
+  - flow:
+      - get:
+          url: "/health"
+          capture:
+            - json: "$.web.status"
+              as: status
+          expect:
+            - equals:
+                - "{{ status }}"
+                - "up"
+      - get:
+          url: "/api/v1/about"
+          capture:
+            - json: "$.version"
+              as: version
+          expect:
+            - equals:
+                - "{{ version }}"
+                - "0.0.1"
