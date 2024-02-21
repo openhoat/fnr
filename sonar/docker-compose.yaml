@@ -1,0 +1,17 @@
+version: '3.8'
+
+services:
+
+  sonar-scanner:
+    image: sonarsource/sonar-scanner-cli:5.0.1
+    container_name: sonar-scanner
+    environment:
+      - BROWSERSLIST_IGNORE_OLD_DATA=true
+      - SONAR_HOST_URL=${SONAR_HOST_URL}
+      - SONAR_SCANNER_OPTS=-Dsonar.projectKey=${COMPOSE_PROJECT_NAME}
+      - SONAR_TOKEN=${SONAR_TOKEN}
+    volumes:
+      - ../:/usr/src
+      - ./conf/sonar-scanner.properties:/opt/sonar-scanner/conf/sonar-scanner.properties
+    network_mode: host
+    restart: 'no'
