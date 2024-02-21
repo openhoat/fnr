@@ -1,0 +1,14 @@
+get:
+  tags:
+    - Health
+  summary: Healthcheck
+  description: |
+    Healthcheck used to check if the service is still alive or down, usually consumed by infrastructure probes.
+  responses:
+    '200':
+      description: Ok.
+      content:
+        application/json:
+          schema:
+            $ref: '../schemas/health.yaml'
+  security: []

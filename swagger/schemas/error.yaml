@@ -1,0 +1,15 @@
+type: object
+required:
+  - error
+  - message
+  - statusCode
+properties:
+  error:
+    type: string
+    description: Error type.
+  message:
+    type: string
+    description: Error message.
+  statusCode:
+    type: number
+    description: Status code.

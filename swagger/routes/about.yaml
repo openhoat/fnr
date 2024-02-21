@@ -1,0 +1,15 @@
+get:
+  tags:
+    - About
+  summary: About app
+  description: |
+    Provide informations about the application.
+  responses:
+    '200':
+      description: Ok.
+      content:
+        application/json:
+          schema:
+            $ref: '../schemas/about.yaml'
+          example:
+            version: 1.0.0

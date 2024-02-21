@@ -1,0 +1,16 @@
+openapi: '3.0.2'
+info:
+  title: Fullstack Node React
+  version: '0.0.1'
+  description: Fullstack Node React API Documentation.
+paths:
+  /health:
+    $ref: 'routes/health.yaml'
+  /api/v1/about:
+    $ref: 'routes/about.yaml'
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT

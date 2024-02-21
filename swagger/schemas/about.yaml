@@ -1,0 +1,7 @@
+type: object
+required:
+  - version
+properties:
+  version:
+    type: string
+    description: Appplication version.

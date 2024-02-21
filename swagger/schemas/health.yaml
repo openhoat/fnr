@@ -1,0 +1,15 @@
+type: object
+required:
+  - web
+properties:
+  web:
+    type: object
+    required:
+      - status
+    properties:
+      status:
+        type: string
+        enum:
+          - up
+          - down
+        description: Health status.
