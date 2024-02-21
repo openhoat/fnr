@@ -1,0 +1,43 @@
+#!/bin/env bash
+
+THIS_SCRIPT_DIR=$(dirname "$0")
+source "${THIS_SCRIPT_DIR}/.common"
+
+usage() {
+  echo "Build docker image with buildx bake."
+  echo
+  echo "Syntax: compose [-e]"
+  echo "options:"
+  echo "  -e    Specify the environment to load vars."
+  echo
+}
+
+# Options handling
+while getopts "he:" option; do
+  case "${option}" in
+    e)
+      DOCKER_ENV="${OPTARG}";;
+    h)
+      usage
+      exit;;
+    ?)
+      echo "Invalid option: ${OPTARG}."
+      exit 1
+      ;;
+  esac
+done
+shift $((OPTIND-1))
+
+loadEnv
+createBuildkitdConfigFile
+createDockerBuildxBuilder
+
+dockerBuildxBakeOpts=('buildx')
+dockerBuildxBakeOpts+=('--builder' "${DOCKER_BUILDX_BUILDER_NAME}")
+dockerBuildxBakeOpts+=('bake' '--load')
+if [[ -n "${DOCKER_PLATFORMS}" ]]; then
+  dockerBuildxBakeOpts+=('--set' "*.platform=${DOCKER_PLATFORMS}")
+fi
+dockerBuildxBakeOptsString=$(IFS=$' '; echo "${dockerBuildxBakeOpts[*]}")
+echo "docker ${dockerBuildxBakeOptsString}…"
+docker ${dockerBuildxBakeOptsString}

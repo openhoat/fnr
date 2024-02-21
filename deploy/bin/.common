@@ -1,0 +1,66 @@
+#!/bin/env bash
+
+THIS_SCRIPT_DIR=$(dirname "$0")
+REL_BASE_DIR='../..'
+BASE_DIR=$(cd "${THIS_SCRIPT_DIR}/${REL_BASE_DIR}" && pwd)
+BIN_DIR=$(cd "${BASE_DIR}/bin" && pwd)
+DEPLOY_DIR=$(cd "${BASE_DIR}/deploy" && pwd)
+BUILDKITD_CONFIG_FILENAME=".buildkitd.toml"
+BUILDKITD_CONFIG_FILE="${DEPLOY_DIR}/${BUILDKITD_CONFIG_FILENAME}"
+
+cd "${DEPLOY_DIR}" || exit 1
+
+createBuildkitdConfigFile() {
+  trap 'rm -f "${BUILDKITD_CONFIG_FILE}"' EXIT
+  cat << EOF > "${BUILDKITD_CONFIG_FILE}"
+debug = true
+EOF
+    if [[ -n "${CONTAINER_REGISTRY}" ]]; then
+      cat << EOF >> "${BUILDKITD_CONFIG_FILE}"
+[registry."${CONTAINER_REGISTRY}"]
+  http = true
+  insecure = true
+EOF
+  fi
+}
+
+createDockerBuildxBuilder() {
+  cd "${DEPLOY_DIR}" || exit 1
+  builderContainer=$(docker buildx ls | grep "${DOCKER_BUILDX_BUILDER_NAME}")
+  if [[ -z "${builderContainer}" ]]; then
+    dockerBuildxCreateOpts=('create')
+    dockerBuildxCreateOpts+=('--name' "${DOCKER_BUILDX_BUILDER_NAME}")
+    dockerBuildxCreateOpts+=('--bootstrap')
+    dockerBuildxCreateOpts+=('--config' "${BUILDKITD_CONFIG_FILENAME}")
+    dockerBuildxCreateOptsString=$(IFS=$' '; echo "${dockerBuildxCreateOpts[*]}")
+    echo "docker buildx ${dockerBuildxCreateOptsString}…"
+    docker buildx ${dockerBuildxCreateOptsString}
+  fi
+}
+
+loadEnv() {
+  set -a
+  APP_IMAGE_NAME=$("${BIN_DIR}"/get-package-info name)
+  COMPOSE_PROJECT_NAME="${APP_IMAGE_NAME}"
+  NODE_VERSION=$("${BIN_DIR}"/get-package-info volta.node)
+  NPM_VERSION=$("${BIN_DIR}"/get-package-info volta.npm)
+  VERSION=$("${BIN_DIR}"/get-package-info version)
+  DOCKER_BUILDX_BUILDER_NAME="${APP_IMAGE_NAME}-builder"
+  echo "Loading .env file…"
+  source .env
+  if [[ -f .env.local ]]; then
+    echo "Loading .env.local file…"
+    source .env.local
+  fi
+  if [[ -n "${DOCKER_ENV}" ]]; then
+    if [[ -f ".env.${DOCKER_ENV}" ]]; then
+      echo "Loading .env.${DOCKER_ENV} file…"
+      source ".env.${DOCKER_ENV}"
+    fi
+    if [[ -f ".env.${DOCKER_ENV}.local" ]]; then
+      echo "Loading .env.${DOCKER_ENV}.local file…"
+      source ".env.${DOCKER_ENV}.local"
+    fi
+  fi
+  set +a
+}

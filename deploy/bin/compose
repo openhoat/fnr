@@ -1,0 +1,8 @@
+#!/bin/env bash
+
+THIS_SCRIPT_DIR=$(dirname "$0")
+REL_BASE_DIR='../..'
+BASE_DIR=$(cd "${THIS_SCRIPT_DIR}/${REL_BASE_DIR}" && pwd)
+BIN_DIR=$(cd "${BASE_DIR}/bin" && pwd)
+
+"${BIN_DIR}/compose" deploy ${*}

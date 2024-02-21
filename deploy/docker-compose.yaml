@@ -1,0 +1,43 @@
+version: '3.8'
+
+services:
+  app:
+    build:
+      context: ..
+      dockerfile: deploy/app/Dockerfile
+      args:
+        NODE_VERSION: ${NODE_VERSION}
+        NPM_VERSION: ${NPM_VERSION}
+      target: app
+      # noinspection ComposeUnknownKeys
+      x-bake:
+        output: type=image
+        tags:
+          - "${CONTAINER_REGISTRY_PREFIX}${APP_IMAGE_NAME}:${VERSION}"
+          - "${CONTAINER_REGISTRY_PREFIX}${APP_IMAGE_NAME}:latest"
+    platform: "${DOCKER_PLATFORM}"
+    image: "${CONTAINER_REGISTRY_PREFIX}${APP_IMAGE_NAME}:${VERSION:-latest}"
+    container_name: "${APP_IMAGE_NAME}"
+    ports:
+      - '${PORT}:${PORT}'
+    healthcheck:
+      test: node -e "require('http').get({hostname:'localhost',port:${PORT},path:'/health',timeout:3000})"
+      retries: 3
+      timeout: 3s
+    environment:
+      - CORS_ORIGIN
+      - HOST
+      - LOG_LEVEL
+      - NODE_CLUSTER
+      - NODE_ENV=production
+      - NODE_TLS_REJECT_UNAUTHORIZED
+      - PORT
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.${APP_IMAGE_NAME}.rule=Host(`${TRAEFIK_APP_VIRTUAL_HOST:-${APP_IMAGE_NAME}.localdomain}`)"
+      - "traefik.http.routers.${APP_IMAGE_NAME}.entrypoints=${TRAEFIK_APP_ENTRYPOINTS:-web}"
+      - "traefik.http.routers.${APP_IMAGE_NAME}.tls=${TRAEFIK_APP_TLS:-false}"
+      - "traefik.http.routers.${APP_IMAGE_NAME}.tls.certresolver=${TRAEFIK_APP_CERT_RESOLVER:-letsencrypt}"
+      - "traefik.http.services.${APP_IMAGE_NAME}.loadbalancer.server.port=${PORT}"
+    network_mode: ${DOCKER_NETWORK_MODE}
+    restart: unless-stopped
