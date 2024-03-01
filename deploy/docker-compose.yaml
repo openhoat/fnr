@@ -25,8 +25,12 @@ services:
       retries: 3
       timeout: 3s
     environment:
+      - AUTH_PASSWORD
+      - AUTH_USERNAME
+      - COOKIE_SECRET
       - CORS_ORIGIN
       - HOST
+      - JWT_SECRET
       - LOG_LEVEL
       - NODE_CLUSTER
       - NODE_ENV=production
