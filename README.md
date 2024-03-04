@@ -1,15 +1,15 @@
-[![build](https://github.com/openhoat/template-node-react-ts/actions/workflows/build.yaml/badge.svg)](https://github.com/openhoat/template-node-react-ts/actions/workflows/build.yaml)
-[![codecov](https://codecov.io/gh/openhoat/template-node-react-ts/graph/badge.svg?token=2C93UD9SLJ)](https://codecov.io/gh/openhoat/template-node-react-ts)
-[![deploy](https://github.com/openhoat/template-node-react-ts/actions/workflows/deploy.yaml/badge.svg)](https://github.com/openhoat/template-node-react-ts/actions/workflows/deploy.yaml)
+[![build](https://github.com/openhoat/fnr/actions/workflows/build.yaml/badge.svg)](https://github.com/openhoat/fnr/actions/workflows/build.yaml)
+[![codecov](https://codecov.io/gh/openhoat/fnr/graph/badge.svg?token=2C93UD9SLJ)](https://codecov.io/gh/openhoat/fnr)
+[![deploy](https://github.com/openhoat/fnr/actions/workflows/deploy.yaml/badge.svg)](https://github.com/openhoat/fnr/actions/workflows/deploy.yaml)
 
-# Node React TS template
+# Fullstack Node React TS template
 
 ## Getting started
 
 First step you need to clone the project with this command:
 
 ```shell
-git clone https://github.com/openhoat/template-node-react-ts.git
+git clone https://github.com/openhoat/fnr.git
 ```
 
 Next step you need to install Node.js to install all the dependencies with npm or yarn:
