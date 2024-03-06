@@ -1,19 +1,11 @@
 {
   "$schema": "http://json.schemastore.org/swcrc",
   "jsc": {
-    "experimental": {
-      "plugins": [["@swc-jotai/react-refresh", {}]]
-    },
     "parser": {
       "syntax": "typescript",
       "tsx": false,
       "decorators": true,
       "dynamicImport": true
-    },
-    "transform": {
-      "react": {
-        "runtime": "automatic"
-      }
     },
     "target": "es2020",
     "baseUrl": "./"

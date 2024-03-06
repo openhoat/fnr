@@ -4,7 +4,6 @@
     "typeRoots": [
       "./backend/main/types",
       "./backend/test/types",
-      "./frontend/main/types",
       "../node_modules/@types"
     ]
   },

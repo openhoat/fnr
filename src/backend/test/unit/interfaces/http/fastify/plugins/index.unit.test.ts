@@ -7,7 +7,6 @@ import fastifyGracefulShutdown from 'fastify-graceful-shutdown'
 import type { AppLogger } from '../../../../../../main/infra/logger/app-logger'
 import { plugins } from '../../../../../../main/interfaces/http/fastify/plugins'
 import { apidocPlugin } from '../../../../../../main/interfaces/http/fastify/plugins/apidoc.plugin'
-import { homePagePlugin } from '../../../../../../main/interfaces/http/fastify/plugins/home-page.plugin'
 import { swaggerUiPlugin } from '../../../../../../main/interfaces/http/fastify/plugins/swagger-ui.plugin'
 import type { Config } from '../../../../../../main/types/application/config'
 import type { IocContainer } from '../../../../../../main/types/application/ioc'
@@ -62,10 +61,6 @@ describe('backend unit tests', () => {
             )
             expect(fastify.register).toHaveBeenCalledWith(
               swaggerUiPlugin,
-              undefined,
-            )
-            expect(fastify.register).toHaveBeenCalledWith(
-              homePagePlugin,
               undefined,
             )
           })

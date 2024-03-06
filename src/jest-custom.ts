@@ -1,10 +1,4 @@
-import '@testing-library/jest-dom'
-
-import React from 'react'
-
 import type { ExpectExtensionable } from './backend/test/types/jest-custom'
-
-global.React = React
 
 const expectExtension: ExpectExtensionable = {
   async toBeRejectedWith(promise: Promise<unknown>, opt?) {
