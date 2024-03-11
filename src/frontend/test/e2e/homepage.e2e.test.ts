@@ -52,7 +52,7 @@ describe('frontend tests', () => {
         await page.waitForSelector(signInNavLink)
         // When
         await page.click(signInNavLink)
-        await page.type('#username', 'johndoe')
+        await page.type('#username', 'admin')
         await page.type('#password', 'MyBigSecret')
         await page.click('#signInSubmit')
         // Then
@@ -64,7 +64,7 @@ describe('frontend tests', () => {
         // Given
         await page.waitForSelector(brandTextSelector)
         await page.click(signInNavLink)
-        await page.type('#username', 'johndoe')
+        await page.type('#username', 'admin')
         await page.type('#password', 'MyBigSecret')
         await page.click('#signInSubmit')
         await page.waitForSelector(signOutNavLink)
